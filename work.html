@@ -4,9 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="robots" content="index, follow">
-    <title id="pageTitle">Artwork Detail — Emir Furkan Tekkalmaz</title>
-    <meta name="description" id="metaDescription" content="Artwork detail and specifications by Emir Furkan Tekkalmaz.">
+    <title id="pageTitle">Artwork</title>
+    <meta name="description" id="metaDescription" content="Artwork by Emir Furkan Tekkalmaz.">
+    <meta property="og:title" id="ogTitle" content="Artwork">
+    <meta property="og:description" id="ogDescription" content="Artwork by Emir Furkan Tekkalmaz.">
     <link rel="icon" type="image/png" href="./assets/Emir_Logo.png">
     <link rel="apple-touch-icon" href="./assets/Emir_Logo.png">
     <script>
@@ -234,7 +235,10 @@
                 window.history.pushState({ index: currentIndex }, '', newUrl);
             }
 
-            pageTitle.textContent = `${work.title} — Emir Furkan Tekkalmaz`;
+            document.title = work.title;
+            if (pageTitle) pageTitle.textContent = work.title;
+            const ogTitle = document.getElementById('ogTitle');
+            if (ogTitle) ogTitle.setAttribute('content', work.title);
 
             // Preload new artwork image
             const newImg = new Image();
