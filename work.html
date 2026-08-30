@@ -322,15 +322,18 @@
         });
 
         function setActiveNav(direction) {
-            const prevBtns = [document.getElementById('prevWorkBtn'), document.getElementById('mobilePrevBtn')];
-            const nextBtns = [document.getElementById('nextWorkBtn'), document.getElementById('mobileNextBtn')];
-            
-            if (direction === 'prev') {
-                prevBtns.forEach(b => b && b.classList.add('is-active'));
-                nextBtns.forEach(b => b && b.classList.remove('is-active'));
-            } else if (direction === 'next') {
-                nextBtns.forEach(b => b && b.classList.add('is-active'));
-                prevBtns.forEach(b => b && b.classList.remove('is-active'));
+            // Only apply persistent active highlight on desktop devices with pointer hover
+            if (window.matchMedia('(hover: hover) and (min-width: 769px)').matches) {
+                const prevBtn = document.getElementById('prevWorkBtn');
+                const nextBtn = document.getElementById('nextWorkBtn');
+                
+                if (direction === 'prev') {
+                    if (prevBtn) prevBtn.classList.add('is-active');
+                    if (nextBtn) nextBtn.classList.remove('is-active');
+                } else if (direction === 'next') {
+                    if (nextBtn) nextBtn.classList.add('is-active');
+                    if (prevBtn) prevBtn.classList.remove('is-active');
+                }
             }
         }
 
@@ -345,10 +348,31 @@
             renderWork(currentIndex - 1);
         }
 
-        document.getElementById('prevWorkBtn').addEventListener('click', goToPrev);
-        document.getElementById('nextWorkBtn').addEventListener('click', goToNext);
-        document.getElementById('mobilePrevBtn').addEventListener('click', goToPrev);
-        document.getElementById('mobileNextBtn').addEventListener('click', goToNext);
+        const prevWorkBtn = document.getElementById('prevWorkBtn');
+        const nextWorkBtn = document.getElementById('nextWorkBtn');
+        const mobilePrevBtn = document.getElementById('mobilePrevBtn');
+        const mobileNextBtn = document.getElementById('mobileNextBtn');
+
+        if (prevWorkBtn) prevWorkBtn.addEventListener('click', goToPrev);
+        if (nextWorkBtn) nextWorkBtn.addEventListener('click', goToNext);
+
+        if (mobilePrevBtn) {
+            mobilePrevBtn.addEventListener('click', (e) => {
+                goToPrev();
+                if (document.activeElement && document.activeElement.blur) {
+                    document.activeElement.blur();
+                }
+            });
+        }
+
+        if (mobileNextBtn) {
+            mobileNextBtn.addEventListener('click', (e) => {
+                goToNext();
+                if (document.activeElement && document.activeElement.blur) {
+                    document.activeElement.blur();
+                }
+            });
+        }
 
         // Keyboard navigation
         window.addEventListener('keydown', (e) => {

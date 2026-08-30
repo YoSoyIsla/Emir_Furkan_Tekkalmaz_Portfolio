@@ -970,7 +970,7 @@ body.single-work-body {
         font-size: 1.15rem;
         font-weight: 400;
         line-height: 1;
-        color: var(--text-primary);
+        color: var(--text-primary) !important;
         display: inline-flex;
         align-items: center;
         gap: 0.35rem;
@@ -978,14 +978,15 @@ body.single-work-body {
         background: transparent !important;
         border: none !important;
         padding: 0.5rem 0;
-        transition: color 0.3s ease, opacity 0.3s ease;
+        transition: opacity 0.15s ease;
         text-decoration: none;
+        -webkit-tap-highlight-color: transparent;
+        outline: none !important;
+        opacity: 1 !important;
     }
 
-    .mobile-nav-bar .work-nav-arrow:hover,
     .mobile-nav-bar .work-nav-arrow:active {
-        color: var(--text-muted);
-        opacity: 0.7;
+        opacity: 0.5 !important;
     }
 }
 
