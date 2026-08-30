@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <title>Contact — Emir Furkan Tekkalmaz</title>
+    <meta name="description"
+        content="Get in touch with Emir Furkan Tekkalmaz, Creative Director and UX/UI Designer. Replicated grid layout.">
+    <link rel="icon" type="image/png" href="./assets/Emir_Logo.png">
+    <link rel="apple-touch-icon" href="./assets/Emir_Logo.png">
+    <link rel="preload" as="image" href="./assets/contact/studio_place_holder.jpg">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Sticky Navigation Scaffolding -->
+    <header class="pinned_top">
+        <div class="container_width">
+            <div grid-row="" grid-pad="1" grid-gutter="2">
+                <div grid-col="6" grid-pad="1" class="logo-col">
+                    <h1><a href="index.html" class="nav-logo">Emir Furkan Tekkalmaz</a></h1>
+                </div>
+                <div grid-col="2" grid-pad="1" class="desktop-only about-nav-col">
+                    <a href="about.html" class="nav-link">About</a>
+                </div>
+                <div grid-col="2" grid-pad="1" class="desktop-only contact-nav-col">
+                    <a href="contact.html" class="nav-link active">Contact</a>
+                </div>
+                <div grid-col="2" grid-pad="1" class="desktop-only theme-nav-col">
+                    <button class="theme-toggle-btn nav-link" onclick="toggleTheme()" aria-label="Toggle Theme">
+                        <svg class="theme-icon sun-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="5"></circle>
+                            <line x1="12" y1="1" x2="12" y2="3"></line>
+                            <line x1="12" y1="21" x2="12" y2="23"></line>
+                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                            <line x1="1" y1="12" x2="3" y2="12"></line>
+                            <line x1="21" y1="12" x2="23" y2="12"></line>
+                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                        </svg>
+                        <svg class="theme-icon moon-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                        </svg>
+                    </button>
+                </div>
+                <div grid-col="6" grid-pad="1" class="mobile-only hamburger-col">
+                    <button class="hamburger-btn" id="hamburgerBtn" onclick="toggleMobileMenu()" aria-label="Menu">
+                        <span></span>
+                        <span></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Workspace -->
+    <main class="container_width">
+
+        <!-- Contact Page Grid System -->
+        <div grid-row="" grid-gutter="2" class="contact-grid" grid-responsive="">
+
+            <!-- Left Content Column: Direct Connect Info & Links (Col 1–5) -->
+            <div grid-col="5" class="about-bio">
+                <h2>Get in touch<br>↓</h2>
+                <div class="contact-info">
+                    <p class="inquiries-text">For artwork inquiries, exhibition requests, or general inquiries:</p>
+                    <div class="contact-links-list">
+                        <a href="mailto:emirfurkantekkalmaz@gmail.com" class="contact-link">emirfurkantekkalmaz@gmail.com ↗</a>
+                        <a href="https://www.instagram.com/emir.tekkalmaz/" target="_blank" rel="noopener noreferrer" class="contact-link">Instagram ↗</a>
+                        <a href="https://www.behance.net/emirtekkalmaz" target="_blank" rel="noopener noreferrer" class="contact-link">Behance ↗</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Column 6: Clear Gutter / Tab Space -->
+            <div grid-col="1" class="desktop-only"></div>
+
+            <!-- Right Content Column: studio_place_holder Image & Address (Col 7–12) -->
+            <div grid-col="6">
+                <div class="contact-image-card">
+                    <img src="./assets/contact/studio_place_holder.jpg" alt="Studio" loading="eager" onload="this.classList.add('is-loaded')">
+                </div>
+                <div class="studio-info-block">
+                    <p class="about-section-title">Studio</p>
+                    <address class="contact-address">
+                        Yıldız Mahallesi, Serencebey Yokuşu<br>Beşiktaş / İstanbul, Türkiye
+                    </address>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- Mobile Drawer Overlay -->
+    <div class="drawer-backdrop" id="drawerBackdrop" onclick="toggleMobileMenu()"></div>
+    <div class="mobile-drawer" id="mobileDrawer">
+        <div class="container_width">
+            <nav class="drawer-nav">
+                <a href="about.html" class="drawer-link">About</a>
+                <a href="contact.html" class="drawer-link active">Contact</a>
+                <button class="theme-toggle-btn drawer-link" onclick="toggleTheme()" aria-label="Toggle Theme">
+                    <svg class="theme-icon sun-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                    <svg class="theme-icon moon-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+            </nav>
+        </div>
+    </div>
+
+    <script>
+        // Dark / Light Mode Switcher Logic
+        function initTheme() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            if (savedTheme === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            } else {
+                document.documentElement.removeAttribute('data-theme');
+            }
+        }
+
+        function toggleTheme() {
+            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+            if (isDark) {
+                document.documentElement.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'light');
+            } else {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+            }
+            if (document.activeElement && document.activeElement.blur) {
+                document.activeElement.blur();
+            }
+        }
+
+        initTheme();
+
+        function toggleMobileMenu() {
+            const drawer = document.getElementById('mobileDrawer');
+            const backdrop = document.getElementById('drawerBackdrop');
+            const btn = document.getElementById('hamburgerBtn');
+            if (drawer && backdrop && btn) {
+                const isOpen = drawer.classList.toggle('open');
+                backdrop.classList.toggle('show', isOpen);
+                btn.classList.toggle('open', isOpen);
+                document.body.style.overflow = isOpen ? 'hidden' : '';
+            }
+        }
+
+        // Image Entrance Fade-In
+        document.addEventListener('DOMContentLoaded', () => {
+            const img = document.querySelector('.contact-image-card img');
+            if (img) {
+                if (img.complete) {
+                    img.classList.add('is-loaded');
+                } else {
+                    img.addEventListener('load', () => img.classList.add('is-loaded'));
+                }
+            }
+        });
+    </script>
+
+</body>
+
+</html>

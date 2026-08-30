@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <title>Emir Furkan Tekkalmaz — Portfolio</title>
+    <meta name="description"
+        content="Emir Furkan Tekkalmaz, Creative Director and UX/UI Designer. Replicated grid layout.">
+    <link rel="icon" type="image/png" href="./assets/Emir_Logo.png">
+    <link rel="apple-touch-icon" href="./assets/Emir_Logo.png">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Sticky Navigation Scaffolding -->
+    <header class="pinned_top">
+        <div class="container_width">
+            <div grid-row="" grid-pad="1" grid-gutter="2">
+                <div grid-col="6" grid-pad="1" class="logo-col">
+                    <h1><a href="index.html" class="nav-link">Emir Furkan Tekkalmaz</a></h1>
+                </div>
+                <div grid-col="2" grid-pad="1" class="desktop-only about-nav-col">
+                    <a href="about.html" class="nav-link">About</a>
+                </div>
+                <div grid-col="2" grid-pad="1" class="desktop-only contact-nav-col">
+                    <a href="contact.html" class="nav-link">Contact</a>
+                </div>
+                <div grid-col="2" grid-pad="1" class="desktop-only theme-nav-col">
+                    <button class="theme-toggle-btn nav-link" onclick="toggleTheme()" aria-label="Toggle Theme">
+                        <svg class="theme-icon sun-icon" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="5"></circle>
+                            <line x1="12" y1="1" x2="12" y2="3"></line>
+                            <line x1="12" y1="21" x2="12" y2="23"></line>
+                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                            <line x1="1" y1="12" x2="3" y2="12"></line>
+                            <line x1="21" y1="12" x2="23" y2="12"></line>
+                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                        </svg>
+                        <svg class="theme-icon moon-icon" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                        </svg>
+                    </button>
+                </div>
+                <div grid-col="6" grid-pad="1" class="mobile-only hamburger-col">
+                    <button class="hamburger-btn" id="hamburgerBtn" onclick="toggleMobileMenu()" aria-label="Menu">
+                        <span></span>
+                        <span></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Workspace -->
+    <main class="container_width">
+        <!-- Justified Project Gallery -->
+        <section class="image-gallery">
+            <!-- Row 1: Large Paintings (2 Images) -->
+            <div class="gallery-row row-2">
+                <a href="work.html?id=rhythm_ix" class="gallery-card" style="--ar: 0.781;" aria-label="View Rhythm IX">
+                    <img src="./works/rhythm_ix.png" alt="Rhythm IX" loading="lazy">
+                    <div class="card-caption">
+                        <span class="project-title">Rhythm IX</span>
+                        <span class="project-info">142x250 cm, Private Collection, 2023.</span>
+                    </div>
+                </a>
+                <a href="work.html?id=rhythm_vii" class="gallery-card" style="--ar: 1.207;" aria-label="View Rhythm VII">
+                    <img src="./works/rhythm_vii.png" alt="Rhythm VII" loading="lazy">
+                    <div class="card-caption">
+                        <span class="project-title">Rhythm VII</span>
+                        <span class="project-info">140x180 cm, Private Collection, 2023.</span>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Row 2: Large Paintings (2 Images) -->
+            <div class="gallery-row row-2">
+                <a href="work.html?id=pas_de_quatre" class="gallery-card" style="--ar: 1.253;" aria-label="View Pas De Quatre">
+                    <img src="./works/pas_de_quatre.png" alt="Pas De Quatre" loading="lazy">
+                    <div class="card-caption">
+                        <span class="project-title">Pas De Quatre</span>
+                        <span class="project-info">200x190 cm, Pencil, Charcoal, Acrylic Paint on Canvas, 2024.</span>
+                    </div>
+                </a>
+                <a href="work.html?id=pas_de_quatre_no2" class="gallery-card" style="--ar: 1.207;" aria-label="View Pas De Quatre No.2">
+                    <img src="./works/pas_de_quatre_no2.png" alt="Pas De Quatre No.2" loading="lazy">
+                    <div class="card-caption">
+                        <span class="project-title">Pas De Quatre No.2</span>
+                        <span class="project-info">200x190 cm, Pencil, Charcoal, Acrylic Paint on Canvas, 2024.</span>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Row 3: Smaller Paintings (3 Images) -->
+            <div class="gallery-row row-3">
+                <a href="work.html?id=traces_of_elegance" class="gallery-card" style="--ar: 1.127;" aria-label="View Traces of Elegance">
+                    <img src="./works/traces_of_elegance.png" alt="Traces of Elegance" loading="lazy">
+                    <div class="card-caption">
+                        <span class="project-title">Traces of Elegance</span>
+                        <span class="project-info">110x150 cm, Pencil, Charcoal, Acrylic Paint on Canvas, 2024.</span>
+                    </div>
+                </a>
+                <a href="work.html?id=forty_figures_on_a_canvas" class="gallery-card" style="--ar: 1.290;" aria-label="View Forty Figures on a Canvas">
+                    <img src="./works/forty_figures_on_a_canvas.png" alt="Forty Figures on a Canvas" loading="lazy">
+                    <div class="card-caption">
+                        <span class="project-title">Forty Figures on a Canvas</span>
+                        <span class="project-info">81x100 cm, Private Collection, 2023.</span>
+                    </div>
+                </a>
+                <a href="work.html?id=rhythm_xix" class="gallery-card" style="--ar: 1.358;" aria-label="View Rhythm XIX">
+                    <img src="./works/rhythm_xix.png" alt="Rhythm XIX" loading="lazy">
+                    <div class="card-caption">
+                        <span class="project-title">Rhythm XIX</span>
+                        <span class="project-info">60x80 cm, Pencil, Charcoal, Acrylic Paint on Canvas, 2024.</span>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Row 4: Large Paintings (2 Images) -->
+            <div class="gallery-row row-2">
+                <a href="work.html?id=rhythm_2022" class="gallery-card" style="--ar: 0.796;" aria-label="View Rhythm">
+                    <img src="./works/rhythm_2022.png" alt="Rhythm" loading="lazy">
+                    <div class="card-caption">
+                        <span class="project-title">Rhythm</span>
+                        <span class="project-info">200x270 cm, Mustafa Taviloğlu Collection, 2022.</span>
+                    </div>
+                </a>
+                <a href="work.html?id=rhythm_x" class="gallery-card" style="--ar: 1.186;" aria-label="View Rhythm X">
+                    <img src="./works/rhythm_x.png" alt="Rhythm X" loading="lazy">
+                    <div class="card-caption">
+                        <span class="project-title">Rhythm X</span>
+                        <span class="project-info">200x270 cm, Gökhan Gündoğdu Museum Collection, 2023.</span>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Row 5: Large Paintings (2 Images) -->
+            <div class="gallery-row row-2">
+                <a href="work.html?id=lonj" class="gallery-card" style="--ar: 1.288;" aria-label="View Lonj">
+                    <img src="./works/lonj.png" alt="Lonj" loading="lazy">
+                    <div class="card-caption">
+                        <span class="project-title">Lonj</span>
+                        <span class="project-info">200x270 cm, Private Collection, 2023.</span>
+                    </div>
+                </a>
+                <a href="work.html?id=istanbul_state_symphony_orchestra" class="gallery-card" style="--ar: 1.241;" aria-label="View Istanbul State Symphony Orchestra">
+                    <img src="./works/istanbul_state_symphony_orchestra.png" alt="Istanbul State Symphony Orchestra"
+                        loading="lazy">
+                    <div class="card-caption">
+                        <span class="project-title">Istanbul State Symphony Orchestra</span>
+                        <span class="project-info">200x270 cm, Elgar Cello Concerto in E minor, Op. 85, 2023.</span>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Row 6: Smaller Paintings (3 Images) -->
+            <div class="gallery-row row-3">
+                <a href="work.html?id=giselle_no2" class="gallery-card" style="--ar: 0.961;" aria-label="View Giselle No.2">
+                    <img src="./works/giselle_no2.png" alt="Giselle No.2" loading="lazy">
+                    <div class="card-caption">
+                        <span class="project-title">Giselle No.2</span>
+                        <span class="project-info">80x60 cm, Pencil, Charcoal, Acrylic Paint on Canvas, 2024.</span>
+                    </div>
+                </a>
+                <a href="work.html?id=rhythm_xi" class="gallery-card" style="--ar: 1.248;" aria-label="View Rhythm XI">
+                    <img src="./works/rhythm_xi.png" alt="Rhythm XI" loading="lazy">
+                    <div class="card-caption">
+                        <span class="project-title">Rhythm XI</span>
+                        <span class="project-info">100x80 cm, Private Collection, 2023.</span>
+                    </div>
+                </a>
+                <a href="work.html?id=contemporary_dance_no1" class="gallery-card" style="--ar: 0.755;" aria-label="View Contemporary Dance No.1">
+                    <img src="./works/contemporary_dance_no1.png" alt="Contemporary Dance No.1" loading="lazy">
+                    <div class="card-caption">
+                        <span class="project-title">Contemporary Dance No.1</span>
+                        <span class="project-info">110x130 cm, Private Collection, 2024.</span>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Row 7: Large Paintings (2 Images) -->
+            <div class="gallery-row row-2">
+                <a href="work.html?id=flow" class="gallery-card" style="--ar: 0.749;" aria-label="View Flow">
+                    <img src="./works/flow.png" alt="Flow" loading="lazy">
+                    <div class="card-caption">
+                        <span class="project-title">Flow</span>
+                        <span class="project-info">197x240 cm, Pencil, Charcoal, Acrylic Paint on Canvas, 2025.</span>
+                    </div>
+                </a>
+                <a href="work.html?id=giselle" class="gallery-card" style="--ar: 1.359;" aria-label="View Giselle">
+                    <img src="./works/giselle.png" alt="Giselle" loading="lazy">
+                    <div class="card-caption">
+                        <span class="project-title">Giselle</span>
+                        <span class="project-info">130x150 cm, Pencil, Charcoal, Acrylic Paint on Canvas, 2024.</span>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Row 8: Large Paintings (2 Images) -->
+            <div class="gallery-row row-2">
+                <a href="work.html?id=rhythm_iv" class="gallery-card" style="--ar: 1.361;" aria-label="View Rhythm IV">
+                    <img src="./works/rhythm_iv.png" alt="Rhythm IV" loading="lazy">
+                    <div class="card-caption">
+                        <span class="project-title">Rhythm IV</span>
+                        <span class="project-info">140x180 cm, Private Collection, 2023.</span>
+                    </div>
+                </a>
+                <a href="work.html?id=rakkase" class="gallery-card" style="--ar: 1.263;" aria-label="View Rakkase">
+                    <img src="./works/rakkase.png" alt="Rakkase" loading="lazy">
+                    <div class="card-caption">
+                        <span class="project-title">Rakkase</span>
+                        <span class="project-info">146x114 cm, Private Collection, 2023.</span>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Row 9: Smaller Paintings (3 Images) -->
+            <div class="gallery-row row-3">
+                <a href="work.html?id=philharmonic_orchestra" class="gallery-card" style="--ar: 1.356;" aria-label="View Philharmonic Orchestra">
+                    <img src="./works/philharmonic_orchestra.png" alt="Philharmonic Orchestra" loading="lazy">
+                    <div class="card-caption">
+                        <span class="project-title">Philharmonic Orchestra</span>
+                        <span class="project-info">100x80 cm, Mozart: Symphony No:41 'Jupiter', 2023.</span>
+                    </div>
+                </a>
+                <a href="work.html?id=rhythm_v" class="gallery-card" style="--ar: 1.358;" aria-label="View Rhythm V">
+                    <img src="./works/rhythm_v.png" alt="Rhythm V" loading="lazy">
+                    <div class="card-caption">
+                        <span class="project-title">Rhythm V</span>
+                        <span class="project-info">81x100 cm, Private Collection, 2022.</span>
+                    </div>
+                </a>
+                <a href="work.html?id=rhythm_vi" class="gallery-card" style="--ar: 1.198;" aria-label="View Rhythm VI">
+                    <img src="./works/rhythm_vi.png" alt="Rhythm VI" loading="lazy">
+                    <div class="card-caption">
+                        <span class="project-title">Rhythm VI</span>
+                        <span class="project-info">50x60 cm, Private Collection, 2022.</span>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Row 10: Large Paintings (2 Images) -->
+            <div class="gallery-row row-2">
+                <a href="work.html?id=ophelia" class="gallery-card" style="--ar: 0.794;" aria-label="View Ophelia">
+                    <img src="./works/ophelia.png" alt="Ophelia" loading="lazy">
+                    <div class="card-caption">
+                        <span class="project-title">Ophelia</span>
+                        <span class="project-info">114x146 cm, Pencil, Charcoal, Acrylic Paint on Canvas, 2024.</span>
+                    </div>
+                </a>
+                <a href="work.html?id=ophelia_no2" class="gallery-card" style="--ar: 1.209;" aria-label="View Ophelia No.2">
+                    <img src="./works/ophelia_no2.png" alt="Ophelia No.2" loading="lazy">
+                    <div class="card-caption">
+                        <span class="project-title">Ophelia No.2</span>
+                        <span class="project-info">146x114 cm, Pencil, Charcoal, Acrylic Paint on Canvas, 2024.</span>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Row 11: Smaller Paintings (3 Images) -->
+            <div class="gallery-row row-3">
+                <a href="work.html?id=rhythm_xvii" class="gallery-card" style="--ar: 1.281;" aria-label="View Rhythm XVII">
+                    <img src="./works/rhythm_xvii.png" alt="Rhythm XVII" loading="lazy">
+                    <div class="card-caption">
+                        <span class="project-title">Rhythm XVII</span>
+                        <span class="project-info">50x60 cm, Private Collection, 2024.</span>
+                    </div>
+                </a>
+                <a href="work.html?id=rhythm_xvii_no2" class="gallery-card" style="--ar: 1.754;" aria-label="View Rhythm XVII No.2">
+                    <img src="./works/rhythm_xvii_no2.png" alt="Rhythm XVII No.2" loading="lazy">
+                    <div class="card-caption">
+                        <span class="project-title">Rhythm XVII No.2</span>
+                        <span class="project-info">110x130 cm, Private Collection, 2024.</span>
+                    </div>
+                </a>
+                <a href="work.html?id=reflection" class="gallery-card" style="--ar: 1.233;" aria-label="View Reflection">
+                    <img src="./works/reflection.png" alt="Reflection" loading="lazy">
+                    <div class="card-caption">
+                        <span class="project-title">Reflection</span>
+                        <span class="project-info">50x60 cm, Private Collection, 2022.</span>
+                    </div>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Mobile Drawer Overlay -->
+    <div class="drawer-backdrop" id="drawerBackdrop" onclick="toggleMobileMenu()"></div>
+    <div class="mobile-drawer" id="mobileDrawer">
+        <div class="container_width">
+            <nav class="drawer-nav">
+                <a href="about.html" class="drawer-link">About</a>
+                <a href="contact.html" class="drawer-link">Contact</a>
+                <button class="theme-toggle-btn drawer-link" onclick="toggleTheme()" aria-label="Toggle Theme">
+                    <svg class="theme-icon sun-icon" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                    <svg class="theme-icon moon-icon" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+            </nav>
+        </div>
+    </div>
+
+    <script>
+        // Dark / Light Mode Switcher Logic
+        function initTheme() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            if (savedTheme === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            } else {
+                document.documentElement.removeAttribute('data-theme');
+            }
+        }
+
+        function toggleTheme() {
+            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+            if (isDark) {
+                document.documentElement.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'light');
+            } else {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+            }
+            if (document.activeElement && document.activeElement.blur) {
+                document.activeElement.blur();
+            }
+        }
+
+        initTheme();
+
+        function toggleMobileMenu() {
+            const drawer = document.getElementById('mobileDrawer');
+            const backdrop = document.getElementById('drawerBackdrop');
+            const btn = document.getElementById('hamburgerBtn');
+            if (drawer && backdrop && btn) {
+                const isOpen = drawer.classList.toggle('open');
+                backdrop.classList.toggle('show', isOpen);
+                btn.classList.toggle('open', isOpen);
+                document.body.style.overflow = isOpen ? 'hidden' : '';
+            }
+        }
+
+        // Instant Hover + Progressive Zoom + Scroll Entrance Observer
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.gallery-card');
+
+            // Scroll Entrance Observer
+            const observerOptions = {
+                root: null,
+                rootMargin: '50px 0px 50px 0px',
+                threshold: 0.01
+            };
+
+            const observer = new IntersectionObserver((entries, obs) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const card = entry.target;
+                        const img = card.querySelector('img');
+                        if (img) {
+                            if (img.complete) {
+                                img.classList.add('is-loaded');
+                            } else {
+                                img.addEventListener('load', () => {
+                                    img.classList.add('is-loaded');
+                                });
+                            }
+                        }
+                        card.classList.add('in-view');
+                        obs.unobserve(card);
+                    }
+                });
+            }, observerOptions);
+
+            cards.forEach(card => {
+                observer.observe(card);
+
+                const img = card.querySelector('img');
+                if (!img) return;
+
+                let progressiveTimer = null;
+                let animationFrameId = null;
+
+                function updateOrigin(e) {
+                    const rect = card.getBoundingClientRect();
+                    const x = Math.max(0, Math.min(100, ((e.clientX - rect.left) / rect.width) * 100));
+                    const y = Math.max(0, Math.min(100, ((e.clientY - rect.top) / rect.height) * 100));
+
+                    if (animationFrameId) cancelAnimationFrame(animationFrameId);
+                    animationFrameId = requestAnimationFrame(() => {
+                        img.style.transformOrigin = `${x}% ${y}%`;
+                    });
+                }
+
+                card.addEventListener('mouseenter', (e) => {
+                    updateOrigin(e);
+                    progressiveTimer = setTimeout(() => {
+                        card.classList.add('is-progressive');
+                    }, 120);
+                });
+
+                card.addEventListener('mousemove', (e) => {
+                    updateOrigin(e);
+                });
+
+                card.addEventListener('mouseleave', () => {
+                    if (progressiveTimer) {
+                        clearTimeout(progressiveTimer);
+                        progressiveTimer = null;
+                    }
+                    card.classList.remove('is-progressive');
+                    if (animationFrameId) cancelAnimationFrame(animationFrameId);
+                });
+            });
+        });
+    </script>
+
+</body>
+
+</html>
