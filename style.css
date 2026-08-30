@@ -815,13 +815,18 @@ body.single-work-body {
     color: var(--text-primary);
 }
 
-.work-nav-arrow:hover,
-.work-nav-arrow.is-active {
+.work-nav-arrow:hover {
     color: var(--text-muted);
     opacity: 0.7;
     background: transparent !important;
     box-shadow: none !important;
     transform: translateY(-50%);
+}
+
+.work-nav-arrow:focus,
+.work-nav-arrow:focus-visible {
+    outline: none !important;
+    box-shadow: none !important;
 }
 
 .work-nav-arrow.prev-arrow {

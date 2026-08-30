@@ -327,30 +327,12 @@
             if (animationFrameId) cancelAnimationFrame(animationFrameId);
         });
 
-        function setActiveNav(direction) {
-            // Only apply persistent active highlight on desktop devices with pointer hover
-            if (window.matchMedia('(hover: hover) and (min-width: 769px)').matches) {
-                const prevBtn = document.getElementById('prevWorkBtn');
-                const nextBtn = document.getElementById('nextWorkBtn');
-                
-                if (direction === 'prev') {
-                    if (prevBtn) prevBtn.classList.add('is-active');
-                    if (nextBtn) nextBtn.classList.remove('is-active');
-                } else if (direction === 'next') {
-                    if (nextBtn) nextBtn.classList.add('is-active');
-                    if (prevBtn) prevBtn.classList.remove('is-active');
-                }
-            }
-        }
-
         // Navigation triggers
         function goToNext() {
-            setActiveNav('next');
             renderWork(currentIndex + 1);
         }
 
         function goToPrev() {
-            setActiveNav('prev');
             renderWork(currentIndex - 1);
         }
 
@@ -359,11 +341,26 @@
         const mobilePrevBtn = document.getElementById('mobilePrevBtn');
         const mobileNextBtn = document.getElementById('mobileNextBtn');
 
-        if (prevWorkBtn) prevWorkBtn.addEventListener('click', goToPrev);
-        if (nextWorkBtn) nextWorkBtn.addEventListener('click', goToNext);
+        if (prevWorkBtn) {
+            prevWorkBtn.addEventListener('click', () => {
+                goToPrev();
+                if (document.activeElement && document.activeElement.blur) {
+                    document.activeElement.blur();
+                }
+            });
+        }
+
+        if (nextWorkBtn) {
+            nextWorkBtn.addEventListener('click', () => {
+                goToNext();
+                if (document.activeElement && document.activeElement.blur) {
+                    document.activeElement.blur();
+                }
+            });
+        }
 
         if (mobilePrevBtn) {
-            mobilePrevBtn.addEventListener('click', (e) => {
+            mobilePrevBtn.addEventListener('click', () => {
                 goToPrev();
                 if (document.activeElement && document.activeElement.blur) {
                     document.activeElement.blur();
@@ -372,7 +369,7 @@
         }
 
         if (mobileNextBtn) {
-            mobileNextBtn.addEventListener('click', (e) => {
+            mobileNextBtn.addEventListener('click', () => {
                 goToNext();
                 if (document.activeElement && document.activeElement.blur) {
                     document.activeElement.blur();
