@@ -9,8 +9,8 @@
     <meta name="description" id="metaDescription" content="Artwork detail and specifications by Emir Furkan Tekkalmaz.">
     <link rel="icon" type="image/png" href="./assets/Emir_Logo-BVGLV1ir.png">
     <link rel="apple-touch-icon" href="./assets/Emir_Logo-BVGLV1ir.png">
-  <script type="module" crossorigin src="./assets/work-Bn0S8A8n.js"></script>
-  <link rel="stylesheet" crossorigin href="./assets/style-DjnaDfXC.css">
+  <script type="module" crossorigin src="./assets/work-DTP2-gdP.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/style-EkHqBd82.css">
 </head>
 
 <body>
@@ -19,8 +19,11 @@
     <header class="pinned_top">
         <div class="container_width">
             <div grid-row="" grid-pad="1" grid-gutter="2">
-                <div grid-col="6" grid-pad="1" class="logo-col">
+                <div grid-col="4" grid-pad="1" class="logo-col">
                     <h1><a href="index.html" class="nav-link">Emir Furkan Tekkalmaz</a></h1>
+                </div>
+                <div grid-col="2" grid-pad="1" class="desktop-only artworks-nav-col">
+                    <a href="index.html" class="nav-link">Artworks</a>
                 </div>
                 <div grid-col="2" grid-pad="1" class="desktop-only about-nav-col">
                     <a href="about.html" class="nav-link">About</a>
@@ -61,24 +64,12 @@
     <!-- Main Workspace -->
     <main class="container_width single-work-main">
 
-        <!-- Navigation Controls (Left arrow ← placed to the left of Right arrow →) -->
+        <!-- Navigation Arrows (Desktop fixed flanking / Mobile bottom bar) -->
         <button class="work-nav-arrow prev-arrow" id="prevWorkBtn" aria-label="Previous artwork"
-            title="Previous artwork (Left Arrow ←)">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round"
-                stroke-linejoin="round">
-                <line x1="19" y1="12" x2="5" y2="12"></line>
-                <polyline points="12 19 5 12 12 5"></polyline>
-            </svg>
-        </button>
+            title="Previous artwork (Left Arrow)">←</button>
 
         <button class="work-nav-arrow next-arrow" id="nextWorkBtn" aria-label="Next artwork"
-            title="Next artwork (Right Arrow →)">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round"
-                stroke-linejoin="round">
-                <line x1="5" y1="12" x2="19" y2="12"></line>
-                <polyline points="12 5 19 12 12 19"></polyline>
-            </svg>
-        </button>
+            title="Next artwork (Right Arrow)">→</button>
 
         <div class="single-work-wrapper">
             <!-- Center Prominent Artwork Frame (Left-aligned text matched to card width) -->
@@ -94,22 +85,10 @@
                 </div>
             </div>
 
-            <!-- Mobile Navigation Controls below image on touch screens (Left arrow ← to the left of Right arrow →) -->
+            <!-- Mobile Navigation Bar below image on touch screens -->
             <div class="mobile-only mobile-nav-bar" id="mobileNavBar">
-                <button class="work-nav-arrow prev-arrow" id="mobilePrevBtn" aria-label="Previous artwork (Left Arrow ←)">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25"
-                        stroke-linecap="round" stroke-linejoin="round">
-                        <line x1="19" y1="12" x2="5" y2="12"></line>
-                        <polyline points="12 19 5 12 12 5"></polyline>
-                    </svg>
-                </button>
-                <button class="work-nav-arrow next-arrow" id="mobileNextBtn" aria-label="Next artwork (Right Arrow →)">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25"
-                        stroke-linecap="round" stroke-linejoin="round">
-                        <line x1="5" y1="12" x2="19" y2="12"></line>
-                        <polyline points="12 5 19 12 12 19"></polyline>
-                    </svg>
-                </button>
+                <button class="work-nav-arrow prev-arrow" id="mobilePrevBtn" aria-label="Previous artwork">←</button>
+                <button class="work-nav-arrow next-arrow" id="mobileNextBtn" aria-label="Next artwork">→</button>
             </div>
         </div>
     </main>
