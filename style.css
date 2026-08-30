@@ -973,7 +973,8 @@ body.single-work-body {
         color: var(--text-primary) !important;
         display: inline-flex;
         align-items: center;
-        gap: 0.35rem;
+        justify-content: center;
+        gap: 0.45rem;
         cursor: pointer;
         background: transparent !important;
         border: none !important;
@@ -983,6 +984,22 @@ body.single-work-body {
         -webkit-tap-highlight-color: transparent;
         outline: none !important;
         opacity: 1 !important;
+    }
+
+    .mobile-nav-bar .nav-arrow-symbol {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        line-height: 1;
+        font-size: 1.25rem;
+        transform: translateY(-0.5px);
+    }
+
+    .mobile-nav-bar .nav-arrow-label {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        line-height: 1;
     }
 
     .mobile-nav-bar .work-nav-arrow:active {
