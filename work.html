@@ -206,16 +206,11 @@
         const pageTitle = document.getElementById('pageTitle');
 
         function syncMetaWidth() {
-            if (!metaContainer) return;
-            if (window.innerWidth <= 768) {
-                metaContainer.style.maxWidth = '100%';
-                return;
-            }
-            if (card) {
-                const rect = card.getBoundingClientRect();
-                if (rect.width > 0) {
-                    metaContainer.style.maxWidth = `${rect.width}px`;
-                }
+            if (!metaContainer || !card) return;
+            const rect = card.getBoundingClientRect();
+            if (rect.width > 0) {
+                metaContainer.style.maxWidth = `${rect.width}px`;
+                metaContainer.style.width = `${rect.width}px`;
             }
         }
 
