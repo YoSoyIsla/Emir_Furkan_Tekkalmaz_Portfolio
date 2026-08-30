@@ -61,20 +61,22 @@
     <!-- Main Workspace -->
     <main class="container_width single-work-main">
 
-        <!-- Navigation Arrows (Desktop fixed flanking / Mobile bottom bar) -->
+        <!-- Navigation Controls (Left arrow ← placed to the left of Right arrow →) -->
         <button class="work-nav-arrow prev-arrow" id="prevWorkBtn" aria-label="Previous artwork"
-            title="Previous artwork (Left Arrow)">
+            title="Previous artwork (Left Arrow ←)">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round"
                 stroke-linejoin="round">
-                <polyline points="15 18 9 12 15 6"></polyline>
+                <line x1="19" y1="12" x2="5" y2="12"></line>
+                <polyline points="12 19 5 12 12 5"></polyline>
             </svg>
         </button>
 
         <button class="work-nav-arrow next-arrow" id="nextWorkBtn" aria-label="Next artwork"
-            title="Next artwork (Right Arrow)">
+            title="Next artwork (Right Arrow →)">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round"
                 stroke-linejoin="round">
-                <polyline points="9 18 15 12 9 6"></polyline>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
             </svg>
         </button>
 
@@ -92,18 +94,20 @@
                 </div>
             </div>
 
-            <!-- Mobile Navigation Bar below image on touch screens -->
+            <!-- Mobile Navigation Controls below image on touch screens (Left arrow ← to the left of Right arrow →) -->
             <div class="mobile-only mobile-nav-bar" id="mobileNavBar">
-                <button class="work-nav-arrow prev-arrow" id="mobilePrevBtn" aria-label="Previous artwork">
+                <button class="work-nav-arrow prev-arrow" id="mobilePrevBtn" aria-label="Previous artwork (Left Arrow ←)">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25"
                         stroke-linecap="round" stroke-linejoin="round">
-                        <polyline points="15 18 9 12 15 6"></polyline>
+                        <line x1="19" y1="12" x2="5" y2="12"></line>
+                        <polyline points="12 19 5 12 12 5"></polyline>
                     </svg>
                 </button>
-                <button class="work-nav-arrow next-arrow" id="mobileNextBtn" aria-label="Next artwork">
+                <button class="work-nav-arrow next-arrow" id="mobileNextBtn" aria-label="Next artwork (Right Arrow →)">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25"
                         stroke-linecap="round" stroke-linejoin="round">
-                        <polyline points="9 18 15 12 9 6"></polyline>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                        <polyline points="12 5 19 12 12 19"></polyline>
                     </svg>
                 </button>
             </div>
@@ -115,7 +119,7 @@
     <div class="mobile-drawer" id="mobileDrawer">
         <div class="container_width">
             <nav class="drawer-nav">
-                <a href="index.html" class="drawer-link">Works</a>
+                <a href="index.html" class="drawer-link">Artworks</a>
                 <a href="about.html" class="drawer-link">About</a>
                 <a href="contact.html" class="drawer-link">Contact</a>
                 <button class="theme-toggle-btn drawer-link" onclick="toggleTheme()" aria-label="Toggle Theme">
