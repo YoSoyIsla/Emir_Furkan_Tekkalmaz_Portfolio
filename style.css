@@ -815,7 +815,8 @@ body.single-work-body {
     color: var(--text-primary);
 }
 
-.work-nav-arrow:hover {
+.work-nav-arrow:hover,
+.work-nav-arrow.is-active {
     color: var(--text-muted);
     opacity: 0.7;
     background: transparent !important;
@@ -867,7 +868,7 @@ body.single-work-body {
 
 @media (max-width: 768px) {
 
-    .single-work-main > .work-nav-arrow,
+    .single-work-main>.work-nav-arrow,
     #prevWorkBtn,
     #nextWorkBtn {
         display: none !important;
@@ -1409,6 +1410,7 @@ body.single-work-body {
         margin: 0 !important;
         padding: 0 !important;
         line-height: 1.2 !important;
+        font-size: 1.18rem !important;
     }
 
     /* Restored normal row layout: Logo on left, Hamburger on right */
@@ -1458,7 +1460,7 @@ body.single-work-body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    width: 20px;
+    width: 22px;
     height: 11px;
     padding: 0;
     outline: none;
@@ -1469,7 +1471,7 @@ body.single-work-body {
 .hamburger-btn span {
     display: block;
     width: 100%;
-    height: 1.5px;
+    height: 1.35px;
     background-color: var(--text-primary);
     transform-origin: center;
     -webkit-transform-origin: center;
@@ -1481,11 +1483,11 @@ body.single-work-body {
 
 /* Two-line cross transition */
 .hamburger-btn.open span:nth-child(1) {
-    transform: translateY(4.75px) rotate(45deg);
+    transform: translateY(4.8px) rotate(45deg);
 }
 
 .hamburger-btn.open span:nth-child(2) {
-    transform: translateY(-4.75px) rotate(-45deg);
+    transform: translateY(-4.8px) rotate(-45deg);
 }
 
 /* --- Slide-Down Top Menu Drawer --- */
@@ -1550,8 +1552,8 @@ body.single-work-body {
 }
 
 .mobile-drawer .container_width {
-    padding-left: 1.2rem !important;
-    padding-right: 1.2rem !important;
+    padding-left: 1.4rem !important;
+    padding-right: 1.4rem !important;
     padding-top: 0 !important;
     padding-bottom: 0 !important;
     margin: 0 !important;
@@ -1574,16 +1576,17 @@ body.single-work-body {
 }
 
 .drawer-link {
-    font-size: var(--nav-font-size, 1.1rem);
+    font-size: var(--nav-font-size, 1.18rem);
     font-weight: var(--logo-weight);
     font-style: var(--logo-style);
     font-family: var(--font-serif);
     color: var(--text-primary);
     text-align: left;
-    display: inline-flex;
+    display: flex !important;
+    width: 100% !important;
     align-items: center;
     justify-content: flex-start;
-    padding: 0 !important;
+    padding: 0.35rem 0 !important;
     margin: 0 !important;
     line-height: 1.2 !important;
     cursor: pointer;
@@ -1600,8 +1603,11 @@ body.single-work-body {
 .drawer-nav .theme-toggle-btn {
     justify-content: flex-start;
     align-self: flex-start;
-    padding: 0 !important;
+    padding: 0.35rem 0 !important;
     margin: 0 !important;
+    width: 100% !important;
+    display: flex !important;
+    align-items: center;
     cursor: pointer;
     line-height: 1 !important;
     height: auto !important;

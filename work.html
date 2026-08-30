@@ -321,12 +321,27 @@
             if (animationFrameId) cancelAnimationFrame(animationFrameId);
         });
 
+        function setActiveNav(direction) {
+            const prevBtns = [document.getElementById('prevWorkBtn'), document.getElementById('mobilePrevBtn')];
+            const nextBtns = [document.getElementById('nextWorkBtn'), document.getElementById('mobileNextBtn')];
+            
+            if (direction === 'prev') {
+                prevBtns.forEach(b => b && b.classList.add('is-active'));
+                nextBtns.forEach(b => b && b.classList.remove('is-active'));
+            } else if (direction === 'next') {
+                nextBtns.forEach(b => b && b.classList.add('is-active'));
+                prevBtns.forEach(b => b && b.classList.remove('is-active'));
+            }
+        }
+
         // Navigation triggers
         function goToNext() {
+            setActiveNav('next');
             renderWork(currentIndex + 1);
         }
 
         function goToPrev() {
+            setActiveNav('prev');
             renderWork(currentIndex - 1);
         }
 
