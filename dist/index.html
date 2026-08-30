@@ -10,7 +10,17 @@
         content="Emir Furkan Tekkalmaz, Creative Director and UX/UI Designer. Replicated grid layout.">
     <link rel="icon" type="image/png" href="./assets/Emir_Logo-BVGLV1ir.png">
     <link rel="apple-touch-icon" href="./assets/Emir_Logo-BVGLV1ir.png">
-  <link rel="stylesheet" crossorigin href="./assets/style-EkHqBd82.css">
+    <script>
+        (function () {
+            try {
+                var theme = localStorage.getItem('theme');
+                if (theme === 'dark') {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                }
+            } catch (e) { }
+        })();
+    </script>
+  <link rel="stylesheet" crossorigin href="./assets/style-bkmfXAKl.css">
 </head>
 
 <body>

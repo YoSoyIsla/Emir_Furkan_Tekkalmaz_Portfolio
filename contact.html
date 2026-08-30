@@ -11,6 +11,16 @@
     <link rel="icon" type="image/png" href="./assets/Emir_Logo.png">
     <link rel="apple-touch-icon" href="./assets/Emir_Logo.png">
     <link rel="preload" as="image" href="./assets/contact/studio_place_holder.jpg">
+    <script>
+        (function () {
+            try {
+                var theme = localStorage.getItem('theme');
+                if (theme === 'dark') {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                }
+            } catch (e) { }
+        })();
+    </script>
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -64,14 +74,13 @@
         <div grid-row="" grid-gutter="2" class="contact-grid" grid-responsive="">
 
             <!-- Left Content Column: Direct Connect Info & Links (Col 1–5) -->
-            <div grid-col="5" class="about-bio">
+            <div grid-col="5" class="about-bio contact-bio-col">
                 <h2>Get in touch<br>↓</h2>
                 <div class="contact-info">
                     <p class="inquiries-text">For artwork inquiries, exhibition requests, or general inquiries:</p>
                     <div class="contact-links-list">
                         <a href="mailto:emirfurkantekkalmaz@gmail.com" class="contact-link">emirfurkantekkalmaz@gmail.com ↗</a>
                         <a href="https://www.instagram.com/emir.tekkalmaz/" target="_blank" rel="noopener noreferrer" class="contact-link">Instagram ↗</a>
-                        <a href="https://www.behance.net/emirtekkalmaz" target="_blank" rel="noopener noreferrer" class="contact-link">Behance ↗</a>
                     </div>
                 </div>
             </div>
@@ -80,14 +89,14 @@
             <div grid-col="1" class="desktop-only"></div>
 
             <!-- Right Content Column: studio_place_holder Image & Address (Col 7–12) -->
-            <div grid-col="6">
+            <div grid-col="6" class="contact-image-col">
                 <div class="contact-image-card">
                     <img src="./assets/contact/studio_place_holder.jpg" alt="Studio" loading="eager" onload="this.classList.add('is-loaded')">
                 </div>
                 <div class="studio-info-block">
                     <p class="about-section-title">Studio</p>
                     <address class="contact-address">
-                        Yıldız Mahallesi, Serencebey Yokuşu<br>Beşiktaş / İstanbul, Türkiye
+                        Yıldız Mahallesi, Serencebey Yokuşu,<br>Beşiktaş / İstanbul, Türkiye
                     </address>
                 </div>
             </div>

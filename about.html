@@ -11,6 +11,16 @@
     <link rel="icon" type="image/png" href="./assets/Emir_Logo.png">
     <link rel="apple-touch-icon" href="./assets/Emir_Logo.png">
     <link rel="preload" as="image" href="./assets/about_image.png">
+    <script>
+        (function () {
+            try {
+                var theme = localStorage.getItem('theme');
+                if (theme === 'dark') {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                }
+            } catch (e) { }
+        })();
+    </script>
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -86,15 +96,12 @@
             </div>
         </div>
 
-        <hr>
-
-        <!-- Exhibitions Split Section -->
-        <div grid-row="" grid-pad="1" grid-gutter="2" grid-responsive="">
-            <div grid-col="5" grid-pad="1" class="about-section-title">
-                Exhibitions
-            </div>
-            <div grid-col="1" grid-pad="1" class="desktop-only"></div>
-            <div grid-col="6" grid-pad="1">
+        <!-- Exhibitions Split Section (Starts directly where the image ends vertically on desktop) -->
+        <div grid-row="" grid-gutter="2" class="about-exhibitions-grid" grid-responsive="">
+            <div grid-col="5" class="desktop-only"></div>
+            <div grid-col="1" class="desktop-only"></div>
+            <div grid-col="6" class="about-exhibitions-col">
+                <div class="about-section-title">Exhibitions</div>
                 <ul class="experience-list">
                     <li class="experience-item"><span class="exhibition-date">2024</span><span
                             class="exhibition-name">Frank Art Studio - In Between A Seasonal Dialogue</span></li>
