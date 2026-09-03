@@ -1591,19 +1591,15 @@ body.single-work-body {
     line-height: 1.5;
 }
 
-/* Inquiries intro text & contact links: matched typography and line-height across all viewports */
-.inquiries-text,
-.contact-link {
-    font-family: var(--font-serif);
-    font-size: 1.4rem;
-    line-height: 1.4;
-    font-weight: 500;
-}
-
+/* Inquiries intro text: smaller, standard weight (400) */
 .inquiries-text {
+    font-family: var(--font-serif);
+    font-size: 1.15rem;
+    font-weight: 400;
+    line-height: 1.45;
     color: var(--text-primary);
     margin-top: 2rem;
-    margin-bottom: 2rem;
+    margin-bottom: 1.65rem;
     transition: color 0.3s ease;
 }
 
@@ -1614,7 +1610,12 @@ body.single-work-body {
     margin-top: 0;
 }
 
+/* Contact links: bigger, same medium weight (500) */
 .contact-link {
+    font-family: var(--font-serif);
+    font-size: 1.55rem;
+    font-weight: 500;
+    line-height: 1.35;
     color: var(--text-primary);
     display: inline-block;
     border-bottom: none;
@@ -1638,18 +1639,26 @@ body.single-work-body {
 }
 
 @media (min-width: 1200px) {
-    .inquiries-text,
+    .inquiries-text {
+        font-size: clamp(1.15rem, 0.45vw + 0.85rem, 1.95rem) !important;
+        line-height: 1.45 !important;
+    }
+
     .contact-link {
-        font-size: clamp(1.4rem, 0.7vw + 1rem, 2.6rem) !important;
-        line-height: 1.44 !important;
+        font-size: clamp(1.55rem, 0.75vw + 1.05rem, 2.85rem) !important;
+        line-height: 1.35 !important;
     }
 }
 
 @media (min-width: 2560px) {
-    .inquiries-text,
+    .inquiries-text {
+        font-size: clamp(1.8rem, 0.7vw + 0.9rem, 3.0rem) !important;
+        line-height: 1.45 !important;
+    }
+
     .contact-link {
-        font-size: clamp(2.4rem, 1.0vw + 1rem, 4.2rem) !important;
-        line-height: 1.46 !important;
+        font-size: clamp(2.6rem, 1.0vw + 1.2rem, 4.5rem) !important;
+        line-height: 1.35 !important;
     }
 }
 
@@ -1659,8 +1668,8 @@ body.single-work-body {
     }
 
     .contact-link {
-        font-size: 1.3rem !important;
-        line-height: 1.4 !important;
+        font-size: 1.35rem !important;
+        line-height: 1.35 !important;
     }
 
     .contact-links-list {
