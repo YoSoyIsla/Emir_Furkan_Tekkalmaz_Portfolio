@@ -1701,37 +1701,46 @@ body.single-work-body {
     -webkit-tap-highlight-color: transparent;
 }
 
+/* Expanded comfortable touch hit area on mobile */
+.hamburger-btn::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    bottom: -10px;
+    left: -10px;
+    right: -10px;
+}
+
 .hamburger-btn span {
     position: absolute;
     left: 0;
+    top: 7px;
     width: 100%;
     height: 1.5px;
     background-color: var(--text-primary);
     border-radius: 1px;
     transform-origin: 50% 50%;
     -webkit-transform-origin: 50% 50%;
-    transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), top 0.28s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s ease;
-    will-change: transform, top;
+    transition: transform 0.32s cubic-bezier(0.25, 1, 0.5, 1), background-color 0.3s ease;
+    will-change: transform;
     pointer-events: none;
 }
 
 .hamburger-btn span:nth-child(1) {
-    top: 3px;
+    transform: translateY(-4px) rotate(0deg);
 }
 
 .hamburger-btn span:nth-child(2) {
-    top: 11px;
+    transform: translateY(4px) rotate(0deg);
 }
 
-/* Two-line cross transition: exact centered intersection */
+/* Two-line fluid cross transition: unified translation & rotation */
 .hamburger-btn.open span:nth-child(1) {
-    top: 7px;
-    transform: rotate(45deg);
+    transform: translateY(0) rotate(45deg);
 }
 
 .hamburger-btn.open span:nth-child(2) {
-    top: 7px;
-    transform: rotate(-45deg);
+    transform: translateY(0) rotate(-45deg);
 }
 
 /* --- Slide-Down Top Menu Drawer --- */
