@@ -6,16 +6,16 @@
 
 /* --- Google Fonts --- */
 @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400..800&text=%E2%86%90%E2%86%92%E2%86%91%E2%86%93&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400..800&text=%E2%86%90%E2%86%92%E2%86%91%E2%86%93%E2%86%97&display=swap');
 
-/* Explicit WOFF2 declaration for arrow glyphs (U+2190..U+2193) guaranteeing EB Garamond rendering on Mac CoreText */
+/* Explicit WOFF2 declaration for arrow glyphs (U+2190..U+2193, U+2197) guaranteeing EB Garamond rendering on all devices */
 @font-face {
     font-family: 'EB Garamond';
     font-style: normal;
     font-weight: 400 800;
     font-display: swap;
-    src: url('https://fonts.gstatic.com/l/font?kit=SlGUmQSNjdsmc35JDF1K5FR3Qj4dYjnET-4uwTHl4SnokSsM&skey=fde9b303600e495b&v=v33') format('woff2');
-    unicode-range: U+2190-2193;
+    src: url('https://fonts.gstatic.com/l/font?kit=SlGUmQSNjdsmc35JDF1K5FR3WjP35JsqK_lcpSWWhTyY9To&skey=fde9b303600e495b&v=v33') format('woff2');
+    unicode-range: U+2190-2193, U+2197;
 }
 
 /* --- Custom Variables & Reset --- */
@@ -1506,33 +1506,29 @@ body.single-work-body {
 }
 
 .contact-link {
+    font-family: var(--font-serif);
     font-size: 1.4rem;
     font-weight: 500;
     color: var(--text-primary);
-    display: inline-flex;
-    align-items: center;
-    gap: 0.35rem;
+    display: inline-block;
     border-bottom: none;
+    font-variant-emoji: text;
     transition: color 0.25s ease, opacity 0.25s ease;
 }
 
-.external-arrow-icon {
+.contact-link .arrow-glyph,
+.arrow-glyph {
+    font-family: 'EB Garamond', serif !important;
+    font-style: normal;
+    font-weight: 400;
+    font-variant-emoji: text;
     display: inline-block;
-    width: 0.75em;
-    height: 0.75em;
-    stroke: currentColor;
-    flex-shrink: 0;
-    transition: transform 0.25s cubic-bezier(0.25, 1, 0.5, 1);
-    vertical-align: middle;
+    line-height: 1;
 }
 
 .contact-link:hover {
     color: var(--text-muted);
     opacity: 0.8;
-}
-
-.contact-link:hover .external-arrow-icon {
-    transform: translate(2px, -2px);
 }
 
 .studio-info-block {
