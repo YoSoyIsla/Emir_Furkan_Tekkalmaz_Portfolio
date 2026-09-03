@@ -80,12 +80,8 @@
     --card-bg: transparent;
 }
 
-/* --- Global Responsive Typography & Layout Scaling on Large Displays (1440px+, 1080p, 2K, 4K) --- */
+/* --- Global Responsive Layout Scaling on Large Displays (1440px+, 1080p, 2K, 4K) --- */
 @media (min-width: 1440px) {
-    html {
-        font-size: clamp(16px, 0.22vw + 12.8px, 21px);
-    }
-
     :root {
         --header-height: clamp(44px, 0.28vw + 40px, 54px);
         --nav-font-size: clamp(1.1rem, 0.22vw + 0.8rem, 1.35rem);
@@ -97,18 +93,6 @@
         --radius-container: clamp(2.5px, 0.15vw + 1px, 4.5px);
         --radius-button: clamp(1px, 0.05vw + 0.5px, 2px);
     }
-
-    .about-bio h1 {
-        font-size: clamp(3.8rem, 2.2vw + 1.5rem, 6.2rem);
-        line-height: 1.15;
-        letter-spacing: -0.02rem;
-    }
-
-    .about-bio,
-    .about-bio p {
-        font-size: clamp(1.4rem, 0.7vw + 1rem, 2.6rem);
-        line-height: 1.44;
-    }
 }
 
 /* Ultra-wide Displays (2560px+) - Cap container and center flanking navigators */
@@ -117,18 +101,6 @@
         --radius-card: clamp(3.5px, 0.08vw + 2px, 5.5px);
         --radius-container: clamp(4px, 0.1vw + 2px, 6px);
         --radius-button: clamp(1.5px, 0.05vw + 0.5px, 2.5px);
-    }
-
-    .about-bio h1 {
-        font-size: clamp(6.8rem, 2.4vw + 2.5rem, 9.6rem);
-        line-height: 1.12;
-        letter-spacing: -0.03rem;
-    }
-
-    .about-bio,
-    .about-bio p {
-        font-size: clamp(2.4rem, 1.0vw + 1rem, 4.2rem);
-        line-height: 1.46;
     }
 
     .container_width {
@@ -1321,6 +1293,11 @@ body.single-work-body {
     color: var(--text-primary);
 }
 
+.about-bio p {
+    font-size: 1.45rem;
+    line-height: 1.44;
+}
+
 .about-bio h1 {
     font-size: 2.15rem;
     line-height: 1.2;
@@ -1328,6 +1305,35 @@ body.single-work-body {
     letter-spacing: -0.015rem;
     color: var(--text-primary);
     margin-top: 0;
+}
+
+/* High-Resolution and Ultra-wide Scaling (Cascade order placed directly after base styles) */
+@media (min-width: 1440px) {
+    .about-bio h1 {
+        font-size: clamp(3.8rem, 2.2vw + 1.5rem, 6.2rem) !important;
+        line-height: 1.15 !important;
+        letter-spacing: -0.02rem !important;
+    }
+
+    .about-bio,
+    .about-bio p {
+        font-size: clamp(1.4rem, 0.7vw + 1rem, 2.6rem) !important;
+        line-height: 1.44 !important;
+    }
+}
+
+@media (min-width: 2560px) {
+    .about-bio h1 {
+        font-size: clamp(6.8rem, 2.4vw + 2.5rem, 9.6rem) !important;
+        line-height: 1.12 !important;
+        letter-spacing: -0.03rem !important;
+    }
+
+    .about-bio,
+    .about-bio p {
+        font-size: clamp(2.4rem, 1.0vw + 1rem, 4.2rem) !important;
+        line-height: 1.46 !important;
+    }
 }
 
 .about-bio a {
