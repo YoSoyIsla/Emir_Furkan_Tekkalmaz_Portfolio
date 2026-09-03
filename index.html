@@ -386,26 +386,28 @@
             }
         }
 
-        function getArtworksTargetY() {
-            const hero = document.querySelector('.home-hero');
+        function getArtworksScrollY() {
+            const artworks = document.getElementById('artworks');
+            if (!artworks) return 0;
             const navHeader = document.querySelector('.pinned_top');
-            const navHeight = navHeader ? navHeader.getBoundingClientRect().height : 44;
-            if (hero) {
-                const heroBottom = window.pageYOffset + hero.getBoundingClientRect().bottom;
-                return Math.max(0, Math.round(heroBottom - navHeight));
+            const navHeight = navHeader ? navHeader.offsetHeight : 44;
+            
+            // Calculate absolute layout top in document coordinates (unaffected by transforms, zoom, or current scroll)
+            let top = 0;
+            let el = artworks;
+            while (el) {
+                top += el.offsetTop;
+                el = el.offsetParent;
             }
-            const gallery = document.getElementById('artworks');
-            if (gallery) {
-                const gridGap = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--grid-gap')) || 24;
-                const galleryTop = window.pageYOffset + gallery.getBoundingClientRect().top;
-                return Math.max(0, Math.round(galleryTop - navHeight - gridGap));
-            }
-            return 0;
+            return Math.max(0, top - navHeight);
         }
 
         function scrollToArtworks(e, isInstant = false) {
-            if (e) e.preventDefault();
-            const targetScrollY = getArtworksTargetY();
+            if (e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+            const targetScrollY = getArtworksScrollY();
             window.scrollTo({
                 top: targetScrollY,
                 behavior: isInstant ? 'instant' : 'smooth'
@@ -413,11 +415,14 @@
         }
 
         function handleMobileArtworksClick(e) {
-            if (e) e.preventDefault();
+            if (e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
             toggleMobileMenu();
             setTimeout(() => {
                 scrollToArtworks(null, false);
-            }, 300);
+            }, 250);
         }
 
         // When navigating from a separate route (e.g. /#artworks), mount directly at the anchor without scrolling down
