@@ -1594,12 +1594,12 @@ body.single-work-body {
 /* Inquiries intro text: smaller, standard weight (400) */
 .inquiries-text {
     font-family: var(--font-serif);
-    font-size: 1.15rem;
+    font-size: 0.85rem;
     font-weight: 400;
-    line-height: 1.45;
+    line-height: 1.4;
     color: var(--text-primary);
     margin-top: 2rem;
-    margin-bottom: 1.65rem;
+    margin-bottom: 1.5rem;
     transition: color 0.3s ease;
 }
 
@@ -1640,8 +1640,8 @@ body.single-work-body {
 
 @media (min-width: 1200px) {
     .inquiries-text {
-        font-size: clamp(1.15rem, 0.45vw + 0.85rem, 1.95rem) !important;
-        line-height: 1.45 !important;
+        font-size: clamp(0.95rem, 0.35vw + 0.7rem, 1.5rem) !important;
+        line-height: 1.4 !important;
     }
 
     .contact-link {
@@ -1652,8 +1652,8 @@ body.single-work-body {
 
 @media (min-width: 2560px) {
     .inquiries-text {
-        font-size: clamp(1.8rem, 0.7vw + 0.9rem, 3.0rem) !important;
-        line-height: 1.45 !important;
+        font-size: clamp(1.4rem, 0.5vw + 0.75rem, 2.3rem) !important;
+        line-height: 1.4 !important;
     }
 
     .contact-link {
