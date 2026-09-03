@@ -1,6 +1,17 @@
 // works-data.js - Portfolio Artworks Dataset
 export const WORKS = [
     {
+        id: "aria",
+        title: "Aria",
+        artist: "Emir Furkan Tekkalmaz",
+        year: "2026",
+        dimensions: "72x116 cm",
+        medium: "Pencil, Charcoal, Acrylic Paint on Canvas",
+        collection: "Studio Archive",
+        image: "./works/home_screen.jpg",
+        aspectRatio: 1.61
+    },
+    {
         id: "rhythm_ix",
         title: "Rhythm IX",
         artist: "Emir Furkan Tekkalmaz",
