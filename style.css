@@ -707,6 +707,40 @@ hr {
     #artworks {
         scroll-margin-top: var(--header-height);
     }
+
+    /* Disable scale/zoom effect on images in grid/list views on mobile viewports */
+    .image-gallery .gallery-card img,
+    .gallery-card img,
+    .home-hero .gallery-card img,
+    .home-hero-img,
+    .image-gallery .gallery-card:hover img,
+    .gallery-card:hover img,
+    .home-hero .gallery-card:hover img,
+    .image-gallery .gallery-card.is-progressive img,
+    .gallery-card.is-progressive img,
+    .home-hero .gallery-card.is-progressive img,
+    .image-gallery .gallery-card.is-active img,
+    .gallery-card.is-active img {
+        transform: none !important;
+        transition: opacity 0.6s var(--zoom-easing) !important;
+    }
+
+    /* Confine inspect pinch gestures inside container */
+    .single-work-card {
+        touch-action: none;
+    }
+}
+
+@media (hover: none) {
+    /* Touch devices: keep zoom strictly for desktop hover */
+    .image-gallery .gallery-card:hover img,
+    .gallery-card:hover img,
+    .home-hero .gallery-card:hover img,
+    .image-gallery .gallery-card.is-progressive img,
+    .gallery-card.is-progressive img,
+    .home-hero .gallery-card.is-progressive img {
+        transform: none !important;
+    }
 }
 
 /* --- Dynamic Intrinsic Aspect Ratio Container Layout --- */
@@ -816,7 +850,11 @@ hr {
 }
 
 .image-gallery .gallery-card:hover .card-caption,
-.gallery-card:hover .card-caption {
+.gallery-card:hover .card-caption,
+.image-gallery .gallery-card.is-active .card-caption,
+.gallery-card.is-active .card-caption,
+.home-hero .gallery-card:hover .card-caption,
+.home-hero .gallery-card.is-active .card-caption {
     opacity: 1;
 }
 
