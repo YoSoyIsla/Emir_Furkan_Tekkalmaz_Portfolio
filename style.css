@@ -561,12 +561,12 @@ main>[grid-row]:first-child>[grid-col] {
     }
 
     main {
-        padding-top: var(--header-height) !important;
+        padding-top: calc(var(--header-height) + var(--grid-gap)) !important;
         padding-bottom: 1.25rem;
     }
 
     .single-work-main {
-        padding-top: var(--header-height) !important;
+        padding-top: calc(var(--header-height) + var(--grid-gap)) !important;
         padding-bottom: calc(44px + 1.25rem) !important;
     }
 }
@@ -694,18 +694,18 @@ hr {
 
     main,
     main.home-main {
-        padding-top: var(--header-height) !important;
+        padding-top: calc(var(--header-height) + var(--grid-gap)) !important;
     }
 
     .home-hero {
-        height: calc(100vh - var(--header-height) - var(--grid-gap));
-        height: calc(100dvh - var(--header-height) - var(--grid-gap));
+        height: calc(100vh - var(--header-height) - (var(--grid-gap) * 2));
+        height: calc(100dvh - var(--header-height) - (var(--grid-gap) * 2));
         margin-top: 0;
         margin-bottom: var(--grid-gap);
     }
 
     #artworks {
-        scroll-margin-top: var(--header-height);
+        scroll-margin-top: calc(var(--header-height) + var(--grid-gap));
     }
 
     /* Disable scale/zoom effect on images in grid/list views on mobile viewports */
@@ -1063,7 +1063,7 @@ body.single-work-body {
         height: 100vh !important;
         height: 100dvh !important;
         max-height: 100dvh !important;
-        padding-top: var(--header-height) !important;
+        padding-top: calc(var(--header-height) + var(--grid-gap)) !important;
         padding-bottom: calc(44px + 0.35rem) !important;
         padding-left: 1.25rem !important;
         padding-right: 1.25rem !important;

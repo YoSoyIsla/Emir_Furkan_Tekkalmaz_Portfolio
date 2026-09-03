@@ -391,6 +391,7 @@
             if (!artworks) return 0;
             const navHeader = document.querySelector('.pinned_top');
             const navHeight = navHeader ? navHeader.offsetHeight : 44;
+            const gridGap = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--grid-gap')) || 20;
             
             // Calculate absolute layout top in document coordinates (unaffected by transforms, zoom, or current scroll)
             let top = 0;
@@ -399,7 +400,7 @@
                 top += el.offsetTop;
                 el = el.offsetParent;
             }
-            return Math.max(0, top - navHeight);
+            return Math.max(0, top - navHeight - gridGap);
         }
 
         function scrollToArtworks(e, isInstant = false) {
