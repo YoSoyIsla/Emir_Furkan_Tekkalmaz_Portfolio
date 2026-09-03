@@ -520,7 +520,7 @@
                 });
             });
 
-            // Mobile Tap-to-Reveal Caption & Tint Overlay
+            // Mobile Tap-to-Reveal Caption & Tint Overlay (Remains until touching somewhere else)
             let touchMoved = false;
             let touchStartX = 0;
             let touchStartY = 0;
@@ -531,9 +531,6 @@
                     if (e.touches.length === 1) {
                         touchStartX = e.touches[0].clientX;
                         touchStartY = e.touches[0].clientY;
-                        // Provide instant touch animation feedback
-                        cards.forEach(c => c.classList.remove('is-active'));
-                        card.classList.add('is-active');
                     }
                 }, { passive: true });
 
@@ -543,24 +540,35 @@
                         const dy = Math.abs(e.touches[0].clientY - touchStartY);
                         if (dx > 8 || dy > 8) {
                             touchMoved = true;
-                            card.classList.remove('is-active');
                         }
                     }
                 }, { passive: true });
 
-                card.addEventListener('touchend', () => {
-                    if (touchMoved) {
-                        card.classList.remove('is-active');
+                card.addEventListener('click', (e) => {
+                    const isMobile = window.matchMedia('(hover: none) and (pointer: coarse)').matches || window.innerWidth <= 768;
+                    if (isMobile) {
+                        if (touchMoved) return; // User was scrolling, ignore tap
+
+                        if (!card.classList.contains('is-active')) {
+                            // First tap: reveal tint overlay & text and KEEP IT ACTIVE until user touches somewhere else
+                            e.preventDefault();
+                            cards.forEach(c => c.classList.remove('is-active'));
+                            card.classList.add('is-active');
+                        }
+                        // Second tap on the active card: naturally navigates to the inspect page
                     }
-                }, { passive: true });
+                });
             });
 
-            // Tap outside any card clears active state
-            document.addEventListener('click', (e) => {
+            // Touching or clicking anywhere else dismisses the active card's tint and text
+            const dismissActiveCards = (e) => {
                 if (!e.target.closest('.gallery-card')) {
                     cards.forEach(c => c.classList.remove('is-active'));
                 }
-            });
+            };
+
+            document.addEventListener('touchstart', dismissActiveCards, { passive: true });
+            document.addEventListener('click', dismissActiveCards);
         });
     </script>
 
