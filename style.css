@@ -744,9 +744,16 @@ hr {
         transition: opacity 0.6s var(--zoom-easing) !important;
     }
 
-    /* Confine inspect pinch gestures inside container */
-    .single-work-card {
-        touch-action: none;
+    /* Confine inspect pinch and touch gestures inside container */
+    .single-work-main,
+    .single-work-wrapper,
+    .single-work-frame,
+    .single-work-card,
+    .single-work-card img {
+        touch-action: none !important;
+        -webkit-user-select: none !important;
+        user-select: none !important;
+        -webkit-touch-callout: none !important;
     }
 }
 
