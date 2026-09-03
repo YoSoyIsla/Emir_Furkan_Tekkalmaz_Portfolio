@@ -519,53 +519,6 @@
                     if (animationFrameId) cancelAnimationFrame(animationFrameId);
                 });
             });
-
-            // Mobile Tap-to-Reveal Caption & Tint Overlay
-            let touchMoved = false;
-            let touchStartX = 0;
-            let touchStartY = 0;
-
-            cards.forEach(card => {
-                card.addEventListener('touchstart', (e) => {
-                    touchMoved = false;
-                    if (e.touches.length === 1) {
-                        touchStartX = e.touches[0].clientX;
-                        touchStartY = e.touches[0].clientY;
-                    }
-                }, { passive: true });
-
-                card.addEventListener('touchmove', (e) => {
-                    if (e.touches.length === 1) {
-                        const dx = Math.abs(e.touches[0].clientX - touchStartX);
-                        const dy = Math.abs(e.touches[0].clientY - touchStartY);
-                        if (dx > 8 || dy > 8) {
-                            touchMoved = true;
-                        }
-                    }
-                }, { passive: true });
-
-                card.addEventListener('click', (e) => {
-                    const isTouch = window.matchMedia('(hover: none) and (pointer: coarse)').matches || window.innerWidth <= 768;
-                    if (isTouch) {
-                        if (touchMoved) return; // User was scrolling, ignore tap
-
-                        if (!card.classList.contains('is-active')) {
-                            // First tap: prevent navigation, show tint overlay and caption
-                            e.preventDefault();
-                            cards.forEach(c => c.classList.remove('is-active'));
-                            card.classList.add('is-active');
-                        }
-                        // Second tap: already active, natural navigation proceeds
-                    }
-                });
-            });
-
-            // Tap outside any card clears active state
-            document.addEventListener('click', (e) => {
-                if (!e.target.closest('.gallery-card')) {
-                    cards.forEach(c => c.classList.remove('is-active'));
-                }
-            });
         });
     </script>
 
