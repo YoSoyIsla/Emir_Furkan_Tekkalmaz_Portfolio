@@ -1606,7 +1606,7 @@ body.single-work-body {
 p.inquiries-text,
 .inquiries-text {
     font-family: var(--font-serif);
-    font-size: 1.1rem !important;
+    font-size: 1.15rem !important;
     font-weight: 400 !important;
     line-height: 1.4 !important;
     color: var(--text-primary);
