@@ -882,21 +882,6 @@ hr {
     border-bottom-right-radius: var(--radius-card);
 }
 
-/* Touch & Active reveal */
-.image-gallery .gallery-card.is-active .card-caption,
-.gallery-card.is-active .card-caption,
-.home-hero .gallery-card.is-active .card-caption,
-.image-gallery .gallery-card:active .card-caption,
-.gallery-card:active .card-caption {
-    opacity: 1 !important;
-    visibility: visible !important;
-}
-
-.image-gallery .gallery-card.is-active img,
-.gallery-card.is-active img,
-.home-hero .gallery-card.is-active img {
-    opacity: 0.88 !important;
-}
 
 .card-caption .project-title {
     font-family: var(--font-serif);

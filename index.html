@@ -479,97 +479,50 @@
                 });
             }, observerOptions);
 
+            const isDesktopHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
             cards.forEach(card => {
                 observer.observe(card);
 
-                const img = card.querySelector('img');
-                if (!img) return;
+                if (isDesktopHover) {
+                    const img = card.querySelector('img');
+                    if (!img) return;
 
-                let progressiveTimer = null;
-                let animationFrameId = null;
+                    let progressiveTimer = null;
+                    let animationFrameId = null;
 
-                function updateOrigin(e) {
-                    const rect = card.getBoundingClientRect();
-                    const x = Math.max(0, Math.min(100, ((e.clientX - rect.left) / rect.width) * 100));
-                    const y = Math.max(0, Math.min(100, ((e.clientY - rect.top) / rect.height) * 100));
+                    function updateOrigin(e) {
+                        const rect = card.getBoundingClientRect();
+                        const x = Math.max(0, Math.min(100, ((e.clientX - rect.left) / rect.width) * 100));
+                        const y = Math.max(0, Math.min(100, ((e.clientY - rect.top) / rect.height) * 100));
 
-                    if (animationFrameId) cancelAnimationFrame(animationFrameId);
-                    animationFrameId = requestAnimationFrame(() => {
-                        img.style.transformOrigin = `${x}% ${y}%`;
+                        if (animationFrameId) cancelAnimationFrame(animationFrameId);
+                        animationFrameId = requestAnimationFrame(() => {
+                            img.style.transformOrigin = `${x}% ${y}%`;
+                        });
+                    }
+
+                    card.addEventListener('mouseenter', (e) => {
+                        updateOrigin(e);
+                        progressiveTimer = setTimeout(() => {
+                            card.classList.add('is-progressive');
+                        }, 120);
+                    });
+
+                    card.addEventListener('mousemove', (e) => {
+                        updateOrigin(e);
+                    });
+
+                    card.addEventListener('mouseleave', () => {
+                        if (progressiveTimer) {
+                            clearTimeout(progressiveTimer);
+                            progressiveTimer = null;
+                        }
+                        card.classList.remove('is-progressive');
+                        if (animationFrameId) cancelAnimationFrame(animationFrameId);
                     });
                 }
-
-                card.addEventListener('mouseenter', (e) => {
-                    updateOrigin(e);
-                    progressiveTimer = setTimeout(() => {
-                        card.classList.add('is-progressive');
-                    }, 120);
-                });
-
-                card.addEventListener('mousemove', (e) => {
-                    updateOrigin(e);
-                });
-
-                card.addEventListener('mouseleave', () => {
-                    if (progressiveTimer) {
-                        clearTimeout(progressiveTimer);
-                        progressiveTimer = null;
-                    }
-                    card.classList.remove('is-progressive');
-                    if (animationFrameId) cancelAnimationFrame(animationFrameId);
-                });
             });
-
-            // Mobile Tap-to-Reveal Caption & Tint Overlay (Remains until touching somewhere else)
-            let touchStartX = 0;
-            let touchStartY = 0;
-            let isScrolling = false;
-
-            cards.forEach(card => {
-                card.addEventListener('touchstart', (e) => {
-                    if (e.touches.length === 1) {
-                        touchStartX = e.touches[0].clientX;
-                        touchStartY = e.touches[0].clientY;
-                        isScrolling = false;
-                    }
-                }, { passive: true });
-
-                card.addEventListener('touchmove', (e) => {
-                    if (e.touches.length === 1) {
-                        const dx = Math.abs(e.touches[0].clientX - touchStartX);
-                        const dy = Math.abs(e.touches[0].clientY - touchStartY);
-                        // Standard 16px threshold distinguishing intentional tap from scroll gesture
-                        if (dx > 16 || dy > 16) {
-                            isScrolling = true;
-                        }
-                    }
-                }, { passive: true });
-
-                card.addEventListener('click', (e) => {
-                    const isTouch = window.matchMedia('(hover: none) and (pointer: coarse)').matches || ('ontouchstart' in window) || (window.innerWidth <= 768);
-                    if (isTouch) {
-                        if (isScrolling) return; // User was scrolling, ignore tap
-
-                        if (!card.classList.contains('is-active')) {
-                            // First tap: reveal tint overlay & caption, and keep it active until touching elsewhere
-                            e.preventDefault();
-                            cards.forEach(c => c.classList.remove('is-active'));
-                            card.classList.add('is-active');
-                        }
-                        // Second tap on active card proceeds naturally to the inspect page
-                    }
-                });
-            });
-
-            // Touching or clicking anywhere else dismisses the active card's tint and caption
-            const dismissActiveCards = (e) => {
-                if (!e.target.closest('.gallery-card')) {
-                    cards.forEach(c => c.classList.remove('is-active'));
-                }
-            };
-
-            document.addEventListener('touchstart', dismissActiveCards, { passive: true });
-            document.addEventListener('click', dismissActiveCards);
         });
     </script>
 
