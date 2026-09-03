@@ -99,14 +99,14 @@
     }
 
     .about-bio h1 {
-        font-size: clamp(2.8rem, 1.4vw + 1.2rem, 4.8rem);
+        font-size: clamp(2.8rem, 1.4vw + 1.2rem, 5.6rem);
         line-height: 1.15;
         letter-spacing: -0.02rem;
     }
 
     .about-bio,
     .about-bio p {
-        font-size: clamp(1.4rem, 0.7vw + 1rem, 3rem);
+        font-size: clamp(1.4rem, 0.7vw + 1rem, 2.6rem);
         line-height: 1.44;
     }
 }
@@ -1111,10 +1111,10 @@ body.single-work-body {
         width: 100% !important;
         height: calc(100dvh - var(--header-height) - 44px) !important;
         margin: 0 !important;
-        padding: 1rem 1.25rem !important;
+        padding: clamp(1.25rem, 4.5vh, 2.5rem) 1.25rem 1.5rem 1.25rem !important;
         display: flex !important;
         flex-direction: column !important;
-        justify-content: center !important;
+        justify-content: flex-start !important;
         align-items: center !important;
         overflow: hidden !important;
         box-sizing: border-box !important;
@@ -1126,7 +1126,7 @@ body.single-work-body {
         height: 100% !important;
         display: flex !important;
         flex-direction: column !important;
-        justify-content: center !important;
+        justify-content: flex-start !important;
         align-items: center !important;
         overflow: hidden !important;
         box-sizing: border-box !important;
@@ -1134,7 +1134,12 @@ body.single-work-body {
         padding: 0 !important;
     }
 
+    /* 2-Row CSS Grid Stage: Row 1 = dynamic image space, Row 2 = protected auto footprint */
     .single-work-frame {
+        display: grid !important;
+        grid-template-rows: auto auto !important;
+        grid-template-columns: 100% !important;
+        row-gap: 0.65rem !important;
         width: -webkit-fit-content !important;
         width: -moz-fit-content !important;
         width: fit-content !important;
@@ -1142,15 +1147,15 @@ body.single-work-body {
         height: auto !important;
         max-height: 100% !important;
         margin: 0 auto !important;
-        display: flex !important;
-        flex-direction: column !important;
-        justify-content: center !important;
-        align-items: flex-start !important;
+        padding: 0 !important;
         box-sizing: border-box !important;
+        justify-items: start !important;
+        align-content: start !important;
         flex-shrink: 0 !important;
     }
 
     .single-work-card {
+        grid-row: 1 !important;
         position: relative !important;
         overflow: hidden !important;
         border-radius: var(--radius-card);
@@ -1175,9 +1180,10 @@ body.single-work-body {
     }
 
     .single-work-meta-container {
+        grid-row: 2 !important;
         width: 100% !important;
         max-width: 100% !important;
-        margin-top: 0.55rem !important;
+        margin-top: 0 !important;
         padding: 0 !important;
         box-sizing: border-box !important;
         display: flex !important;

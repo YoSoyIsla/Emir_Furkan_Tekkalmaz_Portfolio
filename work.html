@@ -233,15 +233,16 @@
 
             const navTopH = 44;
             const navBottomH = 44;
-            const verticalBuffer = 32; // 16px top + 16px bottom breathing space
+            const topOffset = Math.min(40, Math.max(20, Math.round(vh * 0.045)));
+            const bottomBuffer = 24;
             const horizontalBuffer = 40; // 20px left + 20px right margin
 
-            const availH = vh - navTopH - navBottomH - verticalBuffer;
+            const availH = vh - navTopH - navBottomH - topOffset - bottomBuffer;
             const availW = vw - horizontalBuffer;
 
-            // Reserve space for metadata text and spacing
+            // Protected footprint for metadata text and grid row gap
             const metaH = metaContainer && metaContainer.offsetHeight > 0 ? metaContainer.offsetHeight : 52;
-            const metaGap = 9;
+            const metaGap = 10;
 
             const maxCardH = Math.max(100, availH - metaH - metaGap);
             const maxCardW = Math.max(100, availW);
