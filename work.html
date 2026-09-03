@@ -100,20 +100,20 @@
                     <div class="single-work-subline" id="singleWorkSubline"></div>
                 </div>
             </div>
-
-            <!-- Mobile Navigation Bar fixed at bottom of screen -->
-            <div class="mobile-only mobile-nav-bar" id="mobileNavBar">
-                <button class="work-nav-arrow prev-arrow" id="mobilePrevBtn" aria-label="Previous artwork">
-                    <span class="nav-arrow-symbol">←</span>
-                    <span class="nav-arrow-label">Previous</span>
-                </button>
-                <button class="work-nav-arrow next-arrow" id="mobileNextBtn" aria-label="Next artwork">
-                    <span class="nav-arrow-label">Next</span>
-                    <span class="nav-arrow-symbol">→</span>
-                </button>
-            </div>
         </div>
     </main>
+
+    <!-- Mobile Navigation Bar fixed at bottom of screen -->
+    <nav class="mobile-only mobile-nav-bar" id="mobileNavBar" aria-label="Artwork navigation">
+        <button class="work-nav-arrow prev-arrow" id="mobilePrevBtn" aria-label="Previous artwork">
+            <span class="nav-arrow-symbol">←</span>
+            <span class="nav-arrow-label">Previous</span>
+        </button>
+        <button class="work-nav-arrow next-arrow" id="mobileNextBtn" aria-label="Next artwork">
+            <span class="nav-arrow-label">Next</span>
+            <span class="nav-arrow-symbol">→</span>
+        </button>
+    </nav>
 
     <!-- Mobile Drawer Overlay -->
     <div class="drawer-backdrop" id="drawerBackdrop" onclick="toggleMobileMenu()"></div>
@@ -211,20 +211,64 @@
         const metaContainer = document.getElementById('singleWorkMetaContainer');
         const pageTitle = document.getElementById('pageTitle');
 
-        function syncMetaWidth() {
-            if (!metaContainer || !card) return;
-            const rect = card.getBoundingClientRect();
-            if (rect.width > 0) {
-                metaContainer.style.maxWidth = `${rect.width}px`;
-                metaContainer.style.width = `${rect.width}px`;
+        function updateMobileLayout() {
+            const isMobile = window.innerWidth <= 768;
+            if (!isMobile) {
+                card.style.width = '';
+                card.style.height = '';
+                if (metaContainer && card) {
+                    const rect = card.getBoundingClientRect();
+                    if (rect.width > 0) {
+                        metaContainer.style.maxWidth = `${rect.width}px`;
+                        metaContainer.style.width = `${rect.width}px`;
+                    }
+                }
+                return;
             }
+
+            const vh = window.innerHeight || document.documentElement.clientHeight;
+            const vw = window.innerWidth || document.documentElement.clientWidth;
+            const work = WORKS[currentIndex];
+            const ar = (work && work.aspectRatio) ? work.aspectRatio : 1.2;
+
+            const navTopH = 44;
+            const navBottomH = 44;
+            const verticalBuffer = 32; // 16px top + 16px bottom breathing space
+            const horizontalBuffer = 40; // 20px left + 20px right margin
+
+            const availH = vh - navTopH - navBottomH - verticalBuffer;
+            const availW = vw - horizontalBuffer;
+
+            // Reserve space for metadata text and spacing
+            const metaH = metaContainer && metaContainer.offsetHeight > 0 ? metaContainer.offsetHeight : 52;
+            const metaGap = 9;
+
+            const maxCardH = Math.max(100, availH - metaH - metaGap);
+            const maxCardW = Math.max(100, availW);
+
+            let w, h;
+            if (maxCardH * ar <= maxCardW) {
+                h = Math.floor(maxCardH);
+                w = Math.floor(maxCardH * ar);
+            } else {
+                w = Math.floor(maxCardW);
+                h = Math.floor(maxCardW / ar);
+            }
+
+            card.style.width = `${w}px`;
+            card.style.height = `${h}px`;
+            metaContainer.style.width = `${w}px`;
+            metaContainer.style.maxWidth = `${w}px`;
         }
 
-        if (typeof ResizeObserver !== 'undefined' && card) {
-            const ro = new ResizeObserver(() => syncMetaWidth());
-            ro.observe(card);
+        function syncMetaWidth() {
+            updateMobileLayout();
         }
+
         window.addEventListener('resize', syncMetaWidth);
+        window.addEventListener('orientationchange', () => {
+            setTimeout(syncMetaWidth, 50);
+        });
 
         let isSwitching = false;
 
