@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title id="pageTitle">Artwork</title>
     <meta name="description" id="metaDescription" content="Artwork by Emir Furkan Tekkalmaz.">
     <meta property="og:title" id="ogTitle" content="Artwork">
@@ -520,20 +520,38 @@
             };
         }
 
-        // Prevent iOS Safari proprietary viewport zoom/gesture hijacking
-        document.addEventListener('gesturestart', (e) => e.preventDefault(), { passive: false });
-        document.addEventListener('gesturechange', (e) => e.preventDefault(), { passive: false });
-        document.addEventListener('gestureend', (e) => e.preventDefault(), { passive: false });
+        // Block iOS Safari proprietary viewport zoom/gesture hijacking
+        const blockNativeGesture = (e) => e.preventDefault();
+        window.addEventListener('gesturestart', blockNativeGesture, { passive: false });
+        window.addEventListener('gesturechange', blockNativeGesture, { passive: false });
+        window.addEventListener('gestureend', blockNativeGesture, { passive: false });
+        document.addEventListener('gesturestart', blockNativeGesture, { passive: false });
+        document.addEventListener('gesturechange', blockNativeGesture, { passive: false });
+        document.addEventListener('gestureend', blockNativeGesture, { passive: false });
 
-        // Bind touch gesture recognizer to the entire stage wrapper for seamless multi-touch tracking
-        const stage = document.querySelector('.single-work-wrapper') || card;
-        let wasPinching = false;
+        // Bind touch gesture controller
+        const inspectionStage = document.getElementById('singleWorkMain') || document.querySelector('.single-work-main') || document.querySelector('.single-work-wrapper') || card;
+        let hasMultiTouch = false;
+        let isPinchSession = false;
+
+        function settleZoom() {
+            if (currentScale < 1.08) {
+                resetZoom(true);
+            } else {
+                currentScale = Math.min(4.0, Math.max(1.0, currentScale));
+                const { maxPanX, maxPanY } = getMaxPan();
+                currentPanX = Math.max(-maxPanX, Math.min(maxPanX, currentPanX));
+                currentPanY = Math.max(-maxPanY, Math.min(maxPanY, currentPanY));
+                applyTransform(true);
+            }
+        }
 
         function startPinch(t1, t2) {
             isPinching = true;
             isPanning = false;
-            wasPinching = true;
-            initialPinchDistance = getTouchDistance(t1, t2);
+            hasMultiTouch = true;
+            isPinchSession = true;
+            initialPinchDistance = Math.hypot(t2.clientX - t1.clientX, t2.clientY - t1.clientY);
             initialScale = currentScale;
             initialPanX = currentPanX;
             initialPanY = currentPanY;
@@ -553,62 +571,57 @@
             img.style.transition = 'none';
         }
 
-        stage.addEventListener('touchstart', (e) => {
-            if (e.touches.length === 2) {
-                // Two-finger pinch start: immediately prevent browser viewport zoom
-                e.preventDefault();
+        inspectionStage.addEventListener('touchstart', (e) => {
+            // Allow native click / navigation on interactive elements (header, drawer, bottom navbar buttons)
+            if (e.target.closest('button, a, .mobile-nav-bar, .pinned_top, .mobile-drawer')) {
+                return;
+            }
+
+            // Immediately prevent native browser scroll, viewport zoom, and swipe-navigation gestures
+            e.preventDefault();
+
+            if (e.touches.length >= 2) {
                 startPinch(e.touches[0], e.touches[1]);
             } else if (e.touches.length === 1) {
-                wasPinching = false;
-                touchStartX = e.touches[0].clientX;
-                touchStartY = e.touches[0].clientY;
+                const t = e.touches[0];
+                touchStartX = t.clientX;
+                touchStartY = t.clientY;
                 touchStartPanX = currentPanX;
                 touchStartPanY = currentPanY;
+                touchStartTime = Date.now();
 
                 if (currentScale > 1.05) {
                     isPanning = true;
+                    isPinching = false;
                     img.style.transition = 'none';
                 } else {
                     isPanning = false;
+                    isPinching = false;
+                    hasMultiTouch = false;
+                    isPinchSession = false;
                 }
-
-                // Double-tap on card to zoom in/out
-                const now = Date.now();
-                if (now - lastTapTime < 300) {
-                    if (currentScale > 1.05) {
-                        resetZoom(true);
-                    } else {
-                        currentScale = 2.5;
-                        const rect = card.getBoundingClientRect();
-                        const tapX = touchStartX - rect.left - rect.width / 2;
-                        const tapY = touchStartY - rect.top - rect.height / 2;
-                        const { maxPanX, maxPanY } = getMaxPan();
-                        currentPanX = Math.max(-maxPanX, Math.min(maxPanX, -tapX * 1.5));
-                        currentPanY = Math.max(-maxPanY, Math.min(maxPanY, -tapY * 1.5));
-                        applyTransform(true);
-                    }
-                    lastTapTime = 0;
-                    return;
-                }
-                lastTapTime = now;
             }
         }, { passive: false });
 
-        stage.addEventListener('touchmove', (e) => {
-            if (e.touches.length === 2) {
-                e.preventDefault(); // Lock container; prevent native page zoom
+        window.addEventListener('touchmove', (e) => {
+            if (e.touches.length >= 2) {
+                e.preventDefault();
+                hasMultiTouch = true;
+                isPinchSession = true;
+
                 if (!isPinching) {
+                    // Late-joining second finger: immediately initialize pinch without dropping input
                     startPinch(e.touches[0], e.touches[1]);
                     return;
                 }
 
-                const newDist = getTouchDistance(e.touches[0], e.touches[1]);
-                if (initialPinchDistance > 10) {
-                    const factor = newDist / initialPinchDistance;
-                    let newScale = initialScale * factor;
-                    // Elastic pinch range: 0.85x to 5x
-                    newScale = Math.max(0.85, Math.min(5.0, newScale));
-                    currentScale = newScale;
+                const currentDist = Math.hypot(e.touches[1].clientX - e.touches[0].clientX, e.touches[1].clientY - e.touches[0].clientY);
+                if (initialPinchDistance > 5) {
+                    const factor = currentDist / initialPinchDistance;
+                    let targetScale = initialScale * factor;
+                    // Elastic pinch range: 0.75x to 5.0x
+                    targetScale = Math.max(0.75, Math.min(5.0, targetScale));
+                    currentScale = targetScale;
 
                     const newMid = getTouchMidpoint(e.touches[0], e.touches[1]);
                     const deltaX = newMid.x - initialMidX;
@@ -618,84 +631,104 @@
 
                     applyTransform(false);
                 }
-            } else if (e.touches.length === 1 && isPanning && currentScale > 1.05) {
-                e.preventDefault(); // Confine panning within container
-                const dx = e.touches[0].clientX - touchStartX;
-                const dy = e.touches[0].clientY - touchStartY;
-                currentPanX = touchStartPanX + dx;
-                currentPanY = touchStartPanY + dy;
+            } else if (e.touches.length === 1) {
+                if (isPanning && currentScale > 1.05) {
+                    e.preventDefault();
+                    const dx = e.touches[0].clientX - touchStartX;
+                    const dy = e.touches[0].clientY - touchStartY;
+                    currentPanX = touchStartPanX + dx;
+                    currentPanY = touchStartPanY + dy;
 
-                // Soft boundary resistance
-                const { maxPanX, maxPanY } = getMaxPan();
-                if (Math.abs(currentPanX) > maxPanX) {
-                    const over = Math.abs(currentPanX) - maxPanX;
-                    currentPanX = Math.sign(currentPanX) * (maxPanX + over * 0.3);
-                }
-                if (Math.abs(currentPanY) > maxPanY) {
-                    const over = Math.abs(currentPanY) - maxPanY;
-                    currentPanY = Math.sign(currentPanY) * (maxPanY + over * 0.3);
-                }
+                    // Soft boundary resistance
+                    const { maxPanX, maxPanY } = getMaxPan();
+                    if (Math.abs(currentPanX) > maxPanX) {
+                        const over = Math.abs(currentPanX) - maxPanX;
+                        currentPanX = Math.sign(currentPanX) * (maxPanX + over * 0.3);
+                    }
+                    if (Math.abs(currentPanY) > maxPanY) {
+                        const over = Math.abs(currentPanY) - maxPanY;
+                        currentPanY = Math.sign(currentPanY) * (maxPanY + over * 0.3);
+                    }
 
-                applyTransform(false);
+                    applyTransform(false);
+                } else if (!hasMultiTouch && currentScale <= 1.05) {
+                    // Single finger at 1.0x: prevent page bounce during horizontal swipe
+                    e.preventDefault();
+                }
             }
         }, { passive: false });
 
-        stage.addEventListener('touchend', (e) => {
+        window.addEventListener('touchend', (e) => {
             if (isPinching) {
                 if (e.touches.length === 1) {
                     // Seamless transition: one finger remaining after pinch converts to pan without jump
                     isPinching = false;
                     startPan(e.touches[0]);
+                    return;
                 } else if (e.touches.length === 0) {
                     isPinching = false;
-                    if (currentScale < 1.08) {
-                        resetZoom(true);
-                    } else {
-                        currentScale = Math.min(4.0, Math.max(1.0, currentScale));
-                        const { maxPanX, maxPanY } = getMaxPan();
-                        currentPanX = Math.max(-maxPanX, Math.min(maxPanX, currentPanX));
-                        currentPanY = Math.max(-maxPanY, Math.min(maxPanY, currentPanY));
-                        applyTransform(true);
-                    }
+                    isPanning = false;
+                    settleZoom();
                 }
             } else if (isPanning) {
                 if (e.touches.length === 0) {
                     isPanning = false;
-                    if (currentScale < 1.08) {
-                        resetZoom(true);
-                    } else {
-                        const { maxPanX, maxPanY } = getMaxPan();
-                        currentPanX = Math.max(-maxPanX, Math.min(maxPanX, currentPanX));
-                        currentPanY = Math.max(-maxPanY, Math.min(maxPanY, currentPanY));
-                        applyTransform(true);
+                    settleZoom();
+                }
+            } else if (e.touches.length === 0) {
+                // Pure single-finger touch ended (strictly guarded against any multi-touch pinch)
+                if (!hasMultiTouch && !isPinchSession && currentScale <= 1.05 && e.changedTouches && e.changedTouches.length === 1) {
+                    const t = e.changedTouches[0];
+                    const diffX = t.clientX - touchStartX;
+                    const diffY = t.clientY - touchStartY;
+                    const duration = Date.now() - touchStartTime;
+
+                    // Single-finger swipe navigation between artworks
+                    if (Math.abs(diffX) > 45 && Math.abs(diffX) > Math.abs(diffY) * 1.3 && duration < 500) {
+                        if (diffX < 0) {
+                            goToNext();
+                        } else {
+                            goToPrev();
+                        }
+                        return;
+                    }
+
+                    // Double-tap on card to zoom in/out
+                    if (Math.abs(diffX) < 15 && Math.abs(diffY) < 15 && duration < 300) {
+                        const now = Date.now();
+                        if (now - lastTapTime < 320) {
+                            if (currentScale > 1.05) {
+                                resetZoom(true);
+                            } else {
+                                currentScale = 2.5;
+                                const rect = card.getBoundingClientRect();
+                                const tapX = t.clientX - rect.left - rect.width / 2;
+                                const tapY = t.clientY - rect.top - rect.height / 2;
+                                const { maxPanX, maxPanY } = getMaxPan();
+                                currentPanX = Math.max(-maxPanX, Math.min(maxPanX, -tapX * 1.5));
+                                currentPanY = Math.max(-maxPanY, Math.min(maxPanY, -tapY * 1.5));
+                                applyTransform(true);
+                            }
+                            lastTapTime = 0;
+                            return;
+                        }
+                        lastTapTime = now;
                     }
                 }
-            } else if (!wasPinching && currentScale <= 1.05 && e.changedTouches && e.changedTouches.length === 1) {
-                // Single-finger swipe navigation between artworks (only if not preceded by pinch)
-                const diffX = e.changedTouches[0].clientX - touchStartX;
-                const diffY = e.changedTouches[0].clientY - touchStartY;
-                if (Math.abs(diffX) > 45 && Math.abs(diffX) > Math.abs(diffY) * 1.3) {
-                    if (diffX < 0) {
-                        goToNext();
-                    } else {
-                        goToPrev();
-                    }
-                }
+            }
+
+            if (e.touches.length === 0) {
+                hasMultiTouch = false;
+                isPinchSession = false;
             }
         });
 
-        stage.addEventListener('touchcancel', () => {
+        window.addEventListener('touchcancel', () => {
             isPinching = false;
             isPanning = false;
-            wasPinching = false;
-            if (currentScale < 1.08) {
-                resetZoom(true);
-            } else {
-                const { maxPanX, maxPanY } = getMaxPan();
-                currentPanX = Math.max(-maxPanX, Math.min(maxPanX, currentPanX));
-                currentPanY = Math.max(-maxPanY, Math.min(maxPanY, currentPanY));
-                applyTransform(true);
-            }
+            hasMultiTouch = false;
+            isPinchSession = false;
+            settleZoom();
         });
 
         // Initialize view

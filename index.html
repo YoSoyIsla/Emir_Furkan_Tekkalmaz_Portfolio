@@ -481,8 +481,34 @@
 
             const isDesktopHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
+            let activeTouchTimeout = null;
+
             cards.forEach(card => {
                 observer.observe(card);
+
+                // Mobile touch interaction: reveal dark tint & caption overlay on tap/touch
+                card.addEventListener('touchstart', () => {
+                    cards.forEach(c => {
+                        if (c !== card) c.classList.remove('is-touched');
+                    });
+                    card.classList.add('is-touched');
+                }, { passive: true });
+
+                card.addEventListener('touchmove', () => {
+                    // Remove overlay when user scrolls page
+                    card.classList.remove('is-touched');
+                }, { passive: true });
+
+                card.addEventListener('touchend', () => {
+                    if (activeTouchTimeout) clearTimeout(activeTouchTimeout);
+                    activeTouchTimeout = setTimeout(() => {
+                        card.classList.remove('is-touched');
+                    }, 350);
+                }, { passive: true });
+
+                card.addEventListener('touchcancel', () => {
+                    card.classList.remove('is-touched');
+                }, { passive: true });
 
                 if (isDesktopHover) {
                     const img = card.querySelector('img');

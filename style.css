@@ -80,8 +80,8 @@
     --card-bg: transparent;
 }
 
-/* --- Global Responsive Layout Scaling on Large Displays (1440px+, 1080p, 2K, 4K) --- */
-@media (min-width: 1440px) {
+/* --- Global Responsive Layout Scaling on Large Displays (1200px+, 1080p, 2K, 4K) --- */
+@media (min-width: 1200px) {
     :root {
         --header-height: clamp(44px, 0.28vw + 40px, 54px);
         --nav-font-size: clamp(1.1rem, 0.22vw + 0.8rem, 1.35rem);
@@ -276,7 +276,7 @@ a:focus-visible {
     height: var(--nav-icon-size, 18px);
     stroke: currentColor;
     display: block;
-    transition: stroke 0.3s ease, width 0.3s ease, height 0.3s ease;
+    transition: stroke 0.3s ease, color 0.3s ease;
 }
 
 .sun-icon {
@@ -729,15 +729,27 @@ hr {
     }
 }
 
-@media (hover: none) {
+@media (hover: none), (pointer: coarse), (max-width: 1024px) {
 
-    /* Touch devices: keep zoom strictly for desktop hover */
+    /* Touch devices & mobile viewports: strictly disable zoom transformation on grid thumbnails (image stays static) */
+    .image-gallery .gallery-card img,
+    .gallery-card img,
+    .home-hero .gallery-card img,
+    .home-hero-img,
     .image-gallery .gallery-card:hover img,
     .gallery-card:hover img,
     .home-hero .gallery-card:hover img,
+    .image-gallery .gallery-card:active img,
+    .gallery-card:active img,
+    .home-hero .gallery-card:active img,
+    .image-gallery .gallery-card.is-touched img,
+    .gallery-card.is-touched img,
+    .home-hero .gallery-card.is-touched img,
     .image-gallery .gallery-card.is-progressive img,
     .gallery-card.is-progressive img,
     .home-hero .gallery-card.is-progressive img,
+    .image-gallery .gallery-card.is-active img,
+    .gallery-card.is-active img,
     .single-work-card:hover img,
     .single-work-card.is-progressive img {
         transform: none !important;
@@ -835,11 +847,22 @@ hr {
         transition: transform var(--zoom-speed-progressive) var(--zoom-easing), transform-origin 0.2s var(--zoom-easing) !important;
     }
 
-    .image-gallery .gallery-card:hover .card-caption,
-    .gallery-card:hover .card-caption,
-    .home-hero .gallery-card:hover .card-caption {
-        opacity: 1;
-    }
+}
+
+/* Card Caption Overlay: Reveal dark tint and info text on desktop hover, mobile tap/touch, and active states */
+.image-gallery .gallery-card:hover .card-caption,
+.gallery-card:hover .card-caption,
+.home-hero .gallery-card:hover .card-caption,
+.image-gallery .gallery-card:active .card-caption,
+.gallery-card:active .card-caption,
+.home-hero .gallery-card:active .card-caption,
+.image-gallery .gallery-card:focus .card-caption,
+.gallery-card:focus .card-caption,
+.home-hero .gallery-card:focus .card-caption,
+.image-gallery .gallery-card.is-touched .card-caption,
+.gallery-card.is-touched .card-caption,
+.home-hero .gallery-card.is-touched .card-caption {
+    opacity: 1;
 }
 
 .card-caption {
@@ -880,6 +903,23 @@ body.single-work-body {
     height: 100vh;
     height: 100dvh;
     overflow: hidden;
+    touch-action: none !important;
+    overscroll-behavior: none !important;
+    -webkit-user-select: none !important;
+    user-select: none !important;
+    -webkit-touch-callout: none !important;
+}
+
+.single-work-main,
+.single-work-wrapper,
+.single-work-frame,
+.single-work-card,
+.single-work-card img {
+    touch-action: none !important;
+    overscroll-behavior: none !important;
+    -webkit-user-select: none !important;
+    user-select: none !important;
+    -webkit-touch-callout: none !important;
 }
 
 .single-work-main {
@@ -1308,8 +1348,9 @@ body.single-work-body {
 }
 
 /* High-Resolution and Ultra-wide Scaling (Cascade order placed directly after base styles) */
-@media (min-width: 1440px) {
-    .about-bio h1 {
+@media (min-width: 1200px) {
+    .about-bio h1,
+    .about-bio > h1 {
         font-size: clamp(3.8rem, 2.2vw + 1.5rem, 6.2rem) !important;
         line-height: 1.15 !important;
         letter-spacing: -0.02rem !important;
@@ -1323,7 +1364,8 @@ body.single-work-body {
 }
 
 @media (min-width: 2560px) {
-    .about-bio h1 {
+    .about-bio h1,
+    .about-bio > h1 {
         font-size: clamp(6.8rem, 2.4vw + 2.5rem, 9.6rem) !important;
         line-height: 1.12 !important;
         letter-spacing: -0.03rem !important;
