@@ -1276,7 +1276,7 @@ body.single-work-body {
         position: static;
         transform: none;
         font-family: var(--font-primary);
-        font-size: 1.15rem;
+        font-size: 1.18rem !important;
         font-weight: var(--nav-weight);
         line-height: 1;
         color: var(--text-primary) !important;
@@ -2031,7 +2031,7 @@ body.single-work-body {
 }
 
 .drawer-link {
-    font-size: var(--nav-font-size, 1.18rem);
+    font-size: 1.18rem !important;
     font-weight: var(--logo-weight);
     font-style: var(--logo-style);
     font-family: var(--font-serif);
