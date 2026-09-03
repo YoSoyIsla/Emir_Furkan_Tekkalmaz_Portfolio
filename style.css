@@ -120,7 +120,7 @@
     }
 
     .about-bio h1 {
-        font-size: clamp(5.6rem, 1.8vw + 1rem, 6.8rem);
+        font-size: clamp(5.6rem, 1.8vw + 2rem, 8rem);
         line-height: 1.12;
         letter-spacing: -0.03rem;
     }
@@ -926,8 +926,8 @@ body.single-work-body {
     height: 100vh;
     height: 100dvh;
     max-height: 100dvh;
-    padding-top: calc(var(--header-height) + 0.75rem);
-    padding-bottom: 1.25rem;
+    padding-top: var(--header-height);
+    padding-bottom: calc(var(--header-height) + 2.5rem);
     overflow: hidden;
     position: relative;
     box-sizing: border-box;
@@ -1118,13 +1118,13 @@ body.single-work-body {
         width: 100% !important;
         height: calc(100dvh - var(--header-height) - 44px) !important;
         margin: 0 !important;
-        padding-top: var(--grid-gap) !important;
-        padding-bottom: calc(var(--grid-gap) + 2.5rem) !important;
+        padding-top: clamp(2.25rem, 6.5vh, 4rem) !important;
+        padding-bottom: 2rem !important;
         padding-left: 1.25rem !important;
         padding-right: 1.25rem !important;
         display: flex !important;
         flex-direction: column !important;
-        justify-content: center !important;
+        justify-content: flex-start !important;
         align-items: center !important;
         overflow: hidden !important;
         box-sizing: border-box !important;
@@ -1136,7 +1136,7 @@ body.single-work-body {
         height: 100% !important;
         display: flex !important;
         flex-direction: column !important;
-        justify-content: center !important;
+        justify-content: flex-start !important;
         align-items: center !important;
         overflow: hidden !important;
         box-sizing: border-box !important;

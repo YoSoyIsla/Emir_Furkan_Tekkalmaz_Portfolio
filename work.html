@@ -233,8 +233,8 @@
 
             const navTopH = 44;
             const navBottomH = 44;
-            const topPadding = 20; // 1.25rem (~var(--grid-gap))
-            const bottomPadding = 60; // 3.75rem (60/40 visual balance raising the floor)
+            const topPadding = Math.min(64, Math.max(36, Math.round(vh * 0.065)));
+            const bottomPadding = 32;
             const horizontalBuffer = 40; // 20px left + 20px right margin
 
             const availH = vh - navTopH - navBottomH - topPadding - bottomPadding;
