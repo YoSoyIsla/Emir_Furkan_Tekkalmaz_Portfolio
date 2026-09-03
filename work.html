@@ -482,39 +482,58 @@
             }
         });
 
-        // --- Mobile Pinch-to-Zoom & Pan Gesture Controller ---
+        // --- Mobile Multi-Touch Engine (Focal Pinch-Zoom & Fluid Pan) ---
         let currentScale = 1;
         let currentPanX = 0;
         let currentPanY = 0;
 
-        let initialPinchDistance = 0;
-        let initialScale = 1;
-        let initialPanX = 0;
-        let initialPanY = 0;
-        let initialMidX = 0;
-        let initialMidY = 0;
+        let pinchInitialDist = 0;
+        let pinchInitialScale = 1;
+        let pinchFocalImgX = 0;
+        let pinchFocalImgY = 0;
 
         let touchStartX = 0;
         let touchStartY = 0;
         let touchStartPanX = 0;
         let touchStartPanY = 0;
+        let touchStartTime = 0;
+
         let isPinching = false;
         let isPanning = false;
         let lastTapTime = 0;
 
-        function getMaxPan() {
+        function getMaxPanForScale(s) {
             if (!card) return { maxPanX: 0, maxPanY: 0 };
             const rect = card.getBoundingClientRect();
             const w = (rect && rect.width > 0) ? rect.width : (card.offsetWidth || window.innerWidth);
             const h = (rect && rect.height > 0) ? rect.height : (card.offsetHeight || window.innerHeight);
-            const maxPanX = Math.max(0, (w * (currentScale - 1)) / 2);
-            const maxPanY = Math.max(0, (h * (currentScale - 1)) / 2);
+            const maxPanX = Math.max(0, (w * (s - 1)) / 2);
+            const maxPanY = Math.max(0, (h * (s - 1)) / 2);
             return { maxPanX, maxPanY };
         }
 
+        function getMaxPan() {
+            return getMaxPanForScale(currentScale);
+        }
+
+        function clampPanWithElasticity(panX, panY, scale) {
+            const { maxPanX, maxPanY } = getMaxPanForScale(scale);
+            let cx = panX;
+            let cy = panY;
+            if (Math.abs(panX) > maxPanX) {
+                const over = Math.abs(panX) - maxPanX;
+                cx = Math.sign(panX) * (maxPanX + over * 0.35);
+            }
+            if (Math.abs(panY) > maxPanY) {
+                const over = Math.abs(panY) - maxPanY;
+                cy = Math.sign(panY) * (maxPanY + over * 0.35);
+            }
+            return { x: cx, y: cy };
+        }
+
         function applyTransform(animated = false) {
-            if (currentScale === 1 && currentPanX === 0 && currentPanY === 0) {
-                img.style.transition = '';
+            if (currentScale <= 1.001 && Math.abs(currentPanX) < 0.5 && Math.abs(currentPanY) < 0.5) {
+                img.style.transition = animated ? 'transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), -webkit-transform 0.25s cubic-bezier(0.16, 1, 0.3, 1)' : '';
                 img.style.removeProperty('transform');
                 img.style.removeProperty('-webkit-transform');
                 return;
@@ -524,7 +543,7 @@
             } else {
                 img.style.transition = 'none';
             }
-            const transformVal = `translate3d(${currentPanX}px, ${currentPanY}px, 0) scale(${currentScale})`;
+            const transformVal = `translate3d(${Math.round(currentPanX * 10) / 10}px, ${Math.round(currentPanY * 10) / 10}px, 0) scale(${Math.round(currentScale * 1000) / 1000})`;
             img.style.setProperty('transform', transformVal, 'important');
             img.style.setProperty('-webkit-transform', transformVal, 'important');
             img.style.transformOrigin = '50% 50%';
@@ -552,18 +571,53 @@
             }
         }
 
-        function getTouchDistance(t1, t2) {
-            return Math.hypot(t2.clientX - t1.clientX, t2.clientY - t1.clientY);
+        function settleZoom() {
+            if (currentScale < 1.03) {
+                resetZoom(true);
+            } else {
+                currentScale = Math.min(4.0, Math.max(1.0, currentScale));
+                const { maxPanX, maxPanY } = getMaxPanForScale(currentScale);
+                currentPanX = Math.max(-maxPanX, Math.min(maxPanX, currentPanX));
+                currentPanY = Math.max(-maxPanY, Math.min(maxPanY, currentPanY));
+                applyTransform(true);
+            }
         }
 
-        function getTouchMidpoint(t1, t2) {
-            return {
-                x: (t1.clientX + t2.clientX) / 2,
-                y: (t1.clientY + t2.clientY) / 2
-            };
+        // True Focal-Point Pinch Initialization
+        function startPinch(t1, t2) {
+            isPinching = true;
+            isPanning = false;
+            img.style.transition = 'none';
+
+            pinchInitialDist = Math.hypot(t2.clientX - t1.clientX, t2.clientY - t1.clientY);
+            pinchInitialScale = currentScale;
+
+            const rect = card.getBoundingClientRect();
+            const cx = rect.left + rect.width / 2;
+            const cy = rect.top + rect.height / 2;
+
+            const midX = (t1.clientX + t2.clientX) / 2;
+            const midY = (t1.clientY + t2.clientY) / 2;
+            const focalX = midX - cx;
+            const focalY = midY - cy;
+
+            // Compute the unscaled artwork point currently directly under the finger midpoint
+            pinchFocalImgX = (focalX - currentPanX) / currentScale;
+            pinchFocalImgY = (focalY - currentPanY) / currentScale;
         }
 
-        // Block iOS Safari proprietary viewport zoom/gesture hijacking in capture phase
+        function startPan(t) {
+            isPanning = true;
+            isPinching = false;
+            touchStartX = t.clientX;
+            touchStartY = t.clientY;
+            touchStartPanX = currentPanX;
+            touchStartPanY = currentPanY;
+            touchStartTime = Date.now();
+            img.style.transition = 'none';
+        }
+
+        // Block iOS Safari gesture hijacking
         const blockNativeGesture = (e) => {
             e.preventDefault();
             e.stopPropagation();
@@ -573,53 +627,12 @@
             document.addEventListener(type, blockNativeGesture, { passive: false, capture: true });
         });
 
-        // Bind touch gesture controller
-        let hasMultiTouch = false;
-        let isPinchSession = false;
-        let pinchId1 = null;
-        let pinchId2 = null;
-
-        function settleZoom() {
-            if (currentScale < 1.05) {
-                resetZoom(true);
-            } else {
-                currentScale = Math.min(4.0, Math.max(1.0, currentScale));
-                const { maxPanX, maxPanY } = getMaxPan();
-                currentPanX = Math.max(-maxPanX, Math.min(maxPanX, currentPanX));
-                currentPanY = Math.max(-maxPanY, Math.min(maxPanY, currentPanY));
-                applyTransform(true);
-            }
-        }
-
-        function startPinch(t1, t2) {
-            isPinching = true;
-            isPanning = false;
-            hasMultiTouch = true;
-            isPinchSession = true;
-            pinchId1 = t1.identifier;
-            pinchId2 = t2.identifier;
-            initialPinchDistance = Math.hypot(t2.clientX - t1.clientX, t2.clientY - t1.clientY);
-            initialScale = currentScale;
-            img.style.transition = 'none';
-        }
-
-        function startPan(touch) {
-            isPanning = true;
-            isPinching = false;
-            touchStartX = touch.clientX;
-            touchStartY = touch.clientY;
-            touchStartPanX = currentPanX;
-            touchStartPanY = currentPanY;
-            img.style.transition = 'none';
-        }
-
+        // Window & Stage Touch Listeners
         window.addEventListener('touchstart', (e) => {
-            // Allow native click / navigation on interactive elements (header, drawer, bottom navbar buttons)
             if (e.target.closest('button, a, .mobile-nav-bar, .pinned_top, .mobile-drawer')) {
                 return;
             }
 
-            // Immediately cancel any hover or progressive timer from emulated mouse events
             if (progressiveTimer) {
                 clearTimeout(progressiveTimer);
                 progressiveTimer = null;
@@ -628,7 +641,6 @@
             if (animationFrameId) cancelAnimationFrame(animationFrameId);
 
             if (e.touches.length >= 2) {
-                // Two fingers: exclusively initialize pinch-to-zoom
                 e.preventDefault();
                 startPinch(e.touches[0], e.touches[1]);
             } else if (e.touches.length === 1) {
@@ -639,95 +651,87 @@
                 touchStartPanY = currentPanY;
                 touchStartTime = Date.now();
 
-                if (currentScale > 1.05) {
-                    // When zoomed in (scale > 1): single finger exclusively controls panning
+                if (currentScale > 1.02) {
+                    // Zoomed in: immediately capture for panning
                     e.preventDefault();
                     isPanning = true;
                     isPinching = false;
                     img.style.transition = 'none';
                 } else {
-                    // When scale === 1: allow standard page scroll / swipe gestures (no e.preventDefault)
                     isPanning = false;
                     isPinching = false;
-                    hasMultiTouch = false;
-                    isPinchSession = false;
                 }
             }
         }, { passive: false });
 
         window.addEventListener('touchmove', (e) => {
             if (e.touches.length >= 2) {
-                // Two fingers: exclusively adjust scale (pinch-to-zoom)
+                // Two-finger Focal Pinch Zoom
                 e.preventDefault();
-                hasMultiTouch = true;
-                isPinchSession = true;
-
-                let t1 = null;
-                let t2 = null;
-                if (pinchId1 !== null && pinchId2 !== null) {
-                    for (let i = 0; i < e.touches.length; i++) {
-                        if (e.touches[i].identifier === pinchId1) t1 = e.touches[i];
-                        else if (e.touches[i].identifier === pinchId2) t2 = e.touches[i];
-                    }
-                }
-                if (!t1 || !t2) {
-                    t1 = e.touches[0];
-                    t2 = e.touches[1];
-                    startPinch(t1, t2);
-                    return;
-                }
-
                 if (!isPinching) {
-                    startPinch(t1, t2);
+                    startPinch(e.touches[0], e.touches[1]);
                     return;
                 }
 
+                const t1 = e.touches[0];
+                const t2 = e.touches[1];
                 const currentDist = Math.hypot(t2.clientX - t1.clientX, t2.clientY - t1.clientY);
-                if (initialPinchDistance > 5) {
-                    const factor = currentDist / initialPinchDistance;
-                    let targetScale = initialScale * factor;
-                    targetScale = Math.max(0.8, Math.min(4.5, targetScale));
-                    currentScale = targetScale;
 
-                    // Exclusively scale the image around center without shifting pan offset
+                if (pinchInitialDist > 5) {
+                    const factor = currentDist / pinchInitialDist;
+                    let targetScale = pinchInitialScale * factor;
+                    targetScale = Math.max(0.85, Math.min(4.5, targetScale));
+
+                    const rect = card.getBoundingClientRect();
+                    const cx = rect.left + rect.width / 2;
+                    const cy = rect.top + rect.height / 2;
+
+                    const midX = (t1.clientX + t2.clientX) / 2;
+                    const midY = (t1.clientY + t2.clientY) / 2;
+                    const curFocalX = midX - cx;
+                    const curFocalY = midY - cy;
+
+                    // Keep focal point pinned to the fingers
+                    const targetPanX = curFocalX - pinchFocalImgX * targetScale;
+                    const targetPanY = curFocalY - pinchFocalImgY * targetScale;
+
+                    const clamped = clampPanWithElasticity(targetPanX, targetPanY, targetScale);
+                    currentScale = targetScale;
+                    currentPanX = clamped.x;
+                    currentPanY = clamped.y;
+
                     applyTransform(false);
                 }
             } else if (e.touches.length === 1) {
-                if (isPanning && currentScale > 1.05) {
-                    // One finger when scale > 1: smoothly pan/navigate across the enlarged image
+                if (currentScale > 1.02) {
                     e.preventDefault();
-                    const dx = e.touches[0].clientX - touchStartX;
-                    const dy = e.touches[0].clientY - touchStartY;
-                    let nextPanX = touchStartPanX + dx;
-                    let nextPanY = touchStartPanY + dy;
-
-                    // Soft boundary resistance for natural edge feel
-                    const { maxPanX, maxPanY } = getMaxPan();
-                    if (Math.abs(nextPanX) > maxPanX) {
-                        const over = Math.abs(nextPanX) - maxPanX;
-                        nextPanX = Math.sign(nextPanX) * (maxPanX + over * 0.35);
-                    }
-                    if (Math.abs(nextPanY) > maxPanY) {
-                        const over = Math.abs(nextPanY) - maxPanY;
-                        nextPanY = Math.sign(nextPanY) * (maxPanY + over * 0.35);
+                    if (!isPanning) {
+                        // Safety handoff: ensure panning is engaged
+                        startPan(e.touches[0]);
+                        return;
                     }
 
-                    currentPanX = nextPanX;
-                    currentPanY = nextPanY;
+                    const t = e.touches[0];
+                    const dx = t.clientX - touchStartX;
+                    const dy = t.clientY - touchStartY;
+                    const nextX = touchStartPanX + dx;
+                    const nextY = touchStartPanY + dy;
+
+                    const clamped = clampPanWithElasticity(nextX, nextY, currentScale);
+                    currentPanX = clamped.x;
+                    currentPanY = clamped.y;
                     applyTransform(false);
                 }
-                // When currentScale <= 1.05: do not preventDefault, allow normal page scroll / swipe
+                // When scale <= 1.02: do not preventDefault, standard scroll/swipe applies
             }
         }, { passive: false });
 
         window.addEventListener('touchend', (e) => {
             if (isPinching) {
                 if (e.touches.length === 1) {
-                    // Seamless transition: one finger remaining after pinch converts to pan if scale > 1
+                    // Seamless finger lift: 1 finger remains, seamlessly transfer to single-finger pan!
                     isPinching = false;
-                    pinchId1 = null;
-                    pinchId2 = null;
-                    if (currentScale > 1.05) {
+                    if (currentScale > 1.02) {
                         startPan(e.touches[0]);
                     } else {
                         settleZoom();
@@ -736,87 +740,80 @@
                 } else if (e.touches.length === 0) {
                     isPinching = false;
                     isPanning = false;
-                    pinchId1 = null;
-                    pinchId2 = null;
                     settleZoom();
+                    return;
                 }
-            } else if (isPanning) {
+            }
+
+            if (isPanning) {
                 if (e.touches.length === 0) {
                     isPanning = false;
-                    pinchId1 = null;
-                    pinchId2 = null;
                     settleZoom();
-                }
-            } else if (e.touches.length === 0) {
-                pinchId1 = null;
-                pinchId2 = null;
-                // Single-finger gestures when not zoomed in (scale <= 1.05)
-                if (!hasMultiTouch && !isPinchSession && currentScale <= 1.05 && e.changedTouches && e.changedTouches.length === 1) {
-                    const t = e.changedTouches[0];
-                    const diffX = t.clientX - touchStartX;
-                    const diffY = t.clientY - touchStartY;
-                    const duration = Date.now() - touchStartTime;
-
-                    // Single-finger horizontal swipe navigation between artworks
-                    if (Math.abs(diffX) > 45 && Math.abs(diffX) > Math.abs(diffY) * 1.3 && duration < 500) {
-                        if (diffX < 0) {
-                            goToNext();
-                        } else {
-                            goToPrev();
-                        }
-                        return;
-                    }
-
-                    // Double-tap on card to zoom in
-                    if (Math.abs(diffX) < 15 && Math.abs(diffY) < 15 && duration < 300) {
-                        const now = Date.now();
-                        if (now - lastTapTime < 320) {
-                            currentScale = 2.5;
-                            const rect = card.getBoundingClientRect();
-                            const tapX = t.clientX - rect.left - rect.width / 2;
-                            const tapY = t.clientY - rect.top - rect.height / 2;
-                            const { maxPanX, maxPanY } = getMaxPan();
-                            currentPanX = Math.max(-maxPanX, Math.min(maxPanX, -tapX * 1.5));
-                            currentPanY = Math.max(-maxPanY, Math.min(maxPanY, -tapY * 1.5));
-                            applyTransform(true);
-                            lastTapTime = 0;
-                            return;
-                        }
-                        lastTapTime = now;
-                    }
-                } else if (currentScale > 1.05 && e.changedTouches && e.changedTouches.length === 1) {
-                    // Double-tap while zoomed in: quickly reset back to 1.0
-                    const t = e.changedTouches[0];
-                    const diffX = t.clientX - touchStartX;
-                    const diffY = t.clientY - touchStartY;
-                    const duration = Date.now() - touchStartTime;
-                    if (Math.abs(diffX) < 15 && Math.abs(diffY) < 15 && duration < 300) {
-                        const now = Date.now();
-                        if (now - lastTapTime < 320) {
-                            resetZoom(true);
-                            lastTapTime = 0;
-                            return;
-                        }
-                        lastTapTime = now;
-                    }
+                    return;
                 }
             }
 
             if (e.touches.length === 0) {
-                hasMultiTouch = false;
-                isPinchSession = false;
-                pinchId1 = null;
-                pinchId2 = null;
+                isPinching = false;
+                isPanning = false;
+
+                if (e.changedTouches && e.changedTouches.length === 1) {
+                    const t = e.changedTouches[0];
+                    const diffX = t.clientX - touchStartX;
+                    const diffY = t.clientY - touchStartY;
+                    const duration = Date.now() - touchStartTime;
+
+                    if (currentScale <= 1.02) {
+                        // Swipe navigation between artworks
+                        if (Math.abs(diffX) > 45 && Math.abs(diffX) > Math.abs(diffY) * 1.3 && duration < 500) {
+                            if (diffX < 0) {
+                                goToNext();
+                            } else {
+                                goToPrev();
+                            }
+                            return;
+                        }
+
+                        // Double-tap zoom centered at tap point
+                        if (Math.abs(diffX) < 15 && Math.abs(diffY) < 15 && duration < 300) {
+                            const now = Date.now();
+                            if (now - lastTapTime < 320) {
+                                const targetScale = 2.5;
+                                const rect = card.getBoundingClientRect();
+                                const cx = rect.left + rect.width / 2;
+                                const cy = rect.top + rect.height / 2;
+                                const tapX = t.clientX - cx;
+                                const tapY = t.clientY - cy;
+
+                                const { maxPanX, maxPanY } = getMaxPanForScale(targetScale);
+                                currentScale = targetScale;
+                                currentPanX = Math.max(-maxPanX, Math.min(maxPanX, -tapX * (targetScale - 1)));
+                                currentPanY = Math.max(-maxPanY, Math.min(maxPanY, -tapY * (targetScale - 1)));
+                                applyTransform(true);
+                                lastTapTime = 0;
+                                return;
+                            }
+                            lastTapTime = now;
+                        }
+                    } else {
+                        // Double-tap while zoomed in: smoothly reset back to 1.0
+                        if (Math.abs(diffX) < 15 && Math.abs(diffY) < 15 && duration < 300) {
+                            const now = Date.now();
+                            if (now - lastTapTime < 320) {
+                                resetZoom(true);
+                                lastTapTime = 0;
+                                return;
+                            }
+                            lastTapTime = now;
+                        }
+                    }
+                }
             }
         });
 
         window.addEventListener('touchcancel', () => {
             isPinching = false;
             isPanning = false;
-            hasMultiTouch = false;
-            isPinchSession = false;
-            pinchId1 = null;
-            pinchId2 = null;
             settleZoom();
         });
 
