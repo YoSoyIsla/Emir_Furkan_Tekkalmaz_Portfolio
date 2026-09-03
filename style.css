@@ -1146,13 +1146,10 @@ body.single-work-body {
         width: 100% !important;
         height: calc(100dvh - var(--header-height) - 44px) !important;
         margin: 0 !important;
-        padding-top: clamp(2.25rem, 6.5vh, 4rem) !important;
-        padding-bottom: 2rem !important;
-        padding-left: 1.25rem !important;
-        padding-right: 1.25rem !important;
+        padding: 0 1.25rem !important;
         display: flex !important;
         flex-direction: column !important;
-        justify-content: flex-start !important;
+        justify-content: center !important;
         align-items: center !important;
         overflow: hidden !important;
         box-sizing: border-box !important;
@@ -1164,12 +1161,25 @@ body.single-work-body {
         height: 100% !important;
         display: flex !important;
         flex-direction: column !important;
-        justify-content: flex-start !important;
         align-items: center !important;
         overflow: hidden !important;
         box-sizing: border-box !important;
         margin: 0 !important;
         padding: 0 !important;
+    }
+
+    /* Portrait / Tall Artworks (aspect-ratio < 1.0): Maintain protected top padding and bottom clearance above nav */
+    .single-work-wrapper.is-portrait {
+        justify-content: flex-start !important;
+        padding-top: clamp(2rem, 5.5vh, 3.5rem) !important;
+        padding-bottom: 2rem !important;
+    }
+
+    /* Landscape / Wide Artworks (aspect-ratio >= 1.0): Vertically centered in available stage with subtle 45/55 optical bias */
+    .single-work-wrapper.is-landscape {
+        justify-content: center !important;
+        padding-top: 0 !important;
+        padding-bottom: clamp(1.5rem, 4vh, 3rem) !important;
     }
 
     /* 2-Row CSS Grid Stage: Row 1 = dynamic image space, Row 2 = protected auto footprint */

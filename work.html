@@ -213,9 +213,13 @@
 
         function updateMobileLayout() {
             const isMobile = window.innerWidth <= 768;
+            const wrapper = document.querySelector('.single-work-wrapper');
             if (!isMobile) {
                 card.style.width = '';
                 card.style.height = '';
+                if (wrapper) {
+                    wrapper.classList.remove('is-landscape', 'is-portrait');
+                }
                 if (metaContainer && card) {
                     const rect = card.getBoundingClientRect();
                     if (rect.width > 0) {
@@ -230,36 +234,63 @@
             const vw = window.innerWidth || document.documentElement.clientWidth;
             const work = WORKS[currentIndex];
             const ar = (work && work.aspectRatio) ? work.aspectRatio : 1.2;
+            const isLandscape = ar >= 1.0;
+
+            if (wrapper) {
+                if (isLandscape) {
+                    wrapper.classList.add('is-landscape');
+                    wrapper.classList.remove('is-portrait');
+                } else {
+                    wrapper.classList.add('is-portrait');
+                    wrapper.classList.remove('is-landscape');
+                }
+            }
 
             const navTopH = 44;
             const navBottomH = 44;
-            const topPadding = Math.min(64, Math.max(36, Math.round(vh * 0.065)));
-            const bottomPadding = 32;
             const horizontalBuffer = 40; // 20px left + 20px right margin
-
-            const availH = vh - navTopH - navBottomH - topPadding - bottomPadding;
-            const availW = vw - horizontalBuffer;
+            const availW = Math.max(100, vw - horizontalBuffer);
 
             // Protected footprint for metadata text and grid row gap
             const metaH = metaContainer && metaContainer.offsetHeight > 0 ? metaContainer.offsetHeight : 52;
             const metaGap = 10;
 
-            const maxCardH = Math.max(100, availH - metaH - metaGap);
-            const maxCardW = Math.max(100, availW);
-
             let w, h;
-            if (maxCardH * ar <= maxCardW) {
-                h = Math.floor(maxCardH);
-                w = Math.floor(maxCardH * ar);
+
+            if (isLandscape) {
+                // Landscape / Wide: Available vertical space between navbars with subtle optical balance
+                const opticalPadding = Math.round(vh * 0.04) + 24;
+                const maxLandscapeH = Math.max(100, vh - navTopH - navBottomH - opticalPadding - metaH - metaGap);
+
+                if (availW / ar <= maxLandscapeH) {
+                    w = Math.floor(availW);
+                    h = Math.floor(availW / ar);
+                } else {
+                    h = Math.floor(maxLandscapeH);
+                    w = Math.floor(maxLandscapeH * ar);
+                }
             } else {
-                w = Math.floor(maxCardW);
-                h = Math.floor(maxCardW / ar);
+                // Portrait / Tall: Protected top offset and ample clearance above bottom controls
+                const topPadding = Math.min(60, Math.max(32, Math.round(vh * 0.055)));
+                const bottomPadding = 32;
+                const availH = vh - navTopH - navBottomH - topPadding - bottomPadding;
+                const maxPortraitH = Math.max(100, availH - metaH - metaGap);
+
+                if (maxPortraitH * ar <= availW) {
+                    h = Math.floor(maxPortraitH);
+                    w = Math.floor(maxPortraitH * ar);
+                } else {
+                    w = Math.floor(availW);
+                    h = Math.floor(availW / ar);
+                }
             }
 
             card.style.width = `${w}px`;
             card.style.height = `${h}px`;
-            metaContainer.style.width = `${w}px`;
-            metaContainer.style.maxWidth = `${w}px`;
+            if (metaContainer) {
+                metaContainer.style.width = `${w}px`;
+                metaContainer.style.maxWidth = `${w}px`;
+            }
         }
 
         function syncMetaWidth() {
