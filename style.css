@@ -888,7 +888,14 @@ hr {
 .home-hero .gallery-card.is-active .card-caption,
 .image-gallery .gallery-card:active .card-caption,
 .gallery-card:active .card-caption {
-    opacity: 1;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+.image-gallery .gallery-card.is-active img,
+.gallery-card.is-active img,
+.home-hero .gallery-card.is-active img {
+    opacity: 0.88 !important;
 }
 
 .card-caption .project-title {
@@ -1111,10 +1118,13 @@ body.single-work-body {
         width: 100% !important;
         height: calc(100dvh - var(--header-height) - 44px) !important;
         margin: 0 !important;
-        padding: clamp(1.25rem, 4.5vh, 2.5rem) 1.25rem 1.5rem 1.25rem !important;
+        padding-top: var(--grid-gap) !important;
+        padding-bottom: calc(var(--grid-gap) + 2.5rem) !important;
+        padding-left: 1.25rem !important;
+        padding-right: 1.25rem !important;
         display: flex !important;
         flex-direction: column !important;
-        justify-content: flex-start !important;
+        justify-content: center !important;
         align-items: center !important;
         overflow: hidden !important;
         box-sizing: border-box !important;
@@ -1126,7 +1136,7 @@ body.single-work-body {
         height: 100% !important;
         display: flex !important;
         flex-direction: column !important;
-        justify-content: flex-start !important;
+        justify-content: center !important;
         align-items: center !important;
         overflow: hidden !important;
         box-sizing: border-box !important;

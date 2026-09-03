@@ -233,11 +233,11 @@
 
             const navTopH = 44;
             const navBottomH = 44;
-            const topOffset = Math.min(40, Math.max(20, Math.round(vh * 0.045)));
-            const bottomBuffer = 24;
+            const topPadding = 20; // 1.25rem (~var(--grid-gap))
+            const bottomPadding = 60; // 3.75rem (60/40 visual balance raising the floor)
             const horizontalBuffer = 40; // 20px left + 20px right margin
 
-            const availH = vh - navTopH - navBottomH - topOffset - bottomBuffer;
+            const availH = vh - navTopH - navBottomH - topPadding - bottomPadding;
             const availW = vw - horizontalBuffer;
 
             // Protected footprint for metadata text and grid row gap

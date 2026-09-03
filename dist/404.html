@@ -26,7 +26,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400..800&text=%E2%86%90%E2%86%92%E2%86%91%E2%86%93%E2%86%97&display=swap">
     <link rel="preload" as="image" href="/assets/home_screen-XMss4X4W.jpg">
-  <link rel="stylesheet" crossorigin href="/assets/style-CGuPLxNI.css">
+  <link rel="stylesheet" crossorigin href="/assets/style-DPTpGXNV.css">
 </head>
 
 <body>
@@ -521,16 +521,16 @@
             });
 
             // Mobile Tap-to-Reveal Caption & Tint Overlay (Remains until touching somewhere else)
-            let touchMoved = false;
             let touchStartX = 0;
             let touchStartY = 0;
+            let isScrolling = false;
 
             cards.forEach(card => {
                 card.addEventListener('touchstart', (e) => {
-                    touchMoved = false;
                     if (e.touches.length === 1) {
                         touchStartX = e.touches[0].clientX;
                         touchStartY = e.touches[0].clientY;
+                        isScrolling = false;
                     }
                 }, { passive: true });
 
@@ -538,29 +538,30 @@
                     if (e.touches.length === 1) {
                         const dx = Math.abs(e.touches[0].clientX - touchStartX);
                         const dy = Math.abs(e.touches[0].clientY - touchStartY);
-                        if (dx > 8 || dy > 8) {
-                            touchMoved = true;
+                        // Standard 16px threshold distinguishing intentional tap from scroll gesture
+                        if (dx > 16 || dy > 16) {
+                            isScrolling = true;
                         }
                     }
                 }, { passive: true });
 
                 card.addEventListener('click', (e) => {
-                    const isMobile = window.matchMedia('(hover: none) and (pointer: coarse)').matches || window.innerWidth <= 768;
-                    if (isMobile) {
-                        if (touchMoved) return; // User was scrolling, ignore tap
+                    const isTouch = window.matchMedia('(hover: none) and (pointer: coarse)').matches || ('ontouchstart' in window) || (window.innerWidth <= 768);
+                    if (isTouch) {
+                        if (isScrolling) return; // User was scrolling, ignore tap
 
                         if (!card.classList.contains('is-active')) {
-                            // First tap: reveal tint overlay & text and KEEP IT ACTIVE until user touches somewhere else
+                            // First tap: reveal tint overlay & caption, and keep it active until touching elsewhere
                             e.preventDefault();
                             cards.forEach(c => c.classList.remove('is-active'));
                             card.classList.add('is-active');
                         }
-                        // Second tap on the active card: naturally navigates to the inspect page
+                        // Second tap on active card proceeds naturally to the inspect page
                     }
                 });
             });
 
-            // Touching or clicking anywhere else dismisses the active card's tint and text
+            // Touching or clicking anywhere else dismisses the active card's tint and caption
             const dismissActiveCards = (e) => {
                 if (!e.target.closest('.gallery-card')) {
                     cards.forEach(c => c.classList.remove('is-active'));
