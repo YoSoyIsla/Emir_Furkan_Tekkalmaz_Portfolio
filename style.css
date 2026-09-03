@@ -65,9 +65,9 @@
     /* Ultra-smooth cubic bezier easing */
 
     /* Adaptive Corner Radii Design Tokens */
-    --radius-card: clamp(1px, 0.4vw + 0.5px, 2px);
-    --radius-container: clamp(1px, 0.5vw + 0.5px, 3px);
-    --radius-button: clamp(0.5px, 0.25vw + 0.25px, 1.5px);
+    --radius-card: clamp(1px, 0.2vw + 0.5px, 2px);
+    --radius-container: clamp(1px, 0.2vw + 0.5px, 2px);
+    --radius-button: clamp(0.5px, 0.1vw + 0.1px, 0.5px);
 }
 
 [data-theme="dark"] {
@@ -93,18 +93,18 @@
         --nav-gap: clamp(1.85rem, 0.6vw + 1rem, 2.8rem);
         --work-nav-arrow-size: clamp(2.75rem, 0.8vw + 1.6rem, 3.8rem);
         --outer-margin: clamp(3.5rem, 3.5vw, 7rem);
-        --radius-card: clamp(12px, 1vw + 4px, 28px);
-        --radius-container: clamp(14px, 1.1vw + 4px, 32px);
-        --radius-button: clamp(6px, 0.35vw + 3px, 12px);
+        --radius-card: clamp(2.5px, 0.12vw + 1px, 4px);
+        --radius-container: clamp(2.5px, 0.15vw + 1px, 4.5px);
+        --radius-button: clamp(1px, 0.05vw + 0.5px, 2px);
     }
 }
 
 /* Ultra-wide Displays (2560px+) - Cap container and center flanking navigators */
 @media (min-width: 2560px) {
     :root {
-        --radius-card: clamp(18px, 0.8vw + 6px, 32px);
-        --radius-container: clamp(20px, 0.9vw + 8px, 36px);
-        --radius-button: clamp(8px, 0.3vw + 4px, 14px);
+        --radius-card: clamp(3.5px, 0.08vw + 2px, 5.5px);
+        --radius-container: clamp(4px, 0.1vw + 2px, 6px);
+        --radius-button: clamp(1.5px, 0.05vw + 0.5px, 2.5px);
     }
 
     .container_width {
