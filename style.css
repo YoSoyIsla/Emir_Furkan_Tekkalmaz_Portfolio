@@ -1175,11 +1175,11 @@ body.single-work-body {
         padding-bottom: 2rem !important;
     }
 
-    /* Landscape / Wide Artworks (aspect-ratio >= 1.0): True optical center with slight upward bias */
+    /* Landscape / Wide Artworks (aspect-ratio >= 1.0): True optical center with upward bias */
     .single-work-wrapper.is-landscape {
         justify-content: center !important;
         padding-top: 0 !important;
-        padding-bottom: clamp(4.5rem, 11vh, 7.5rem) !important;
+        padding-bottom: clamp(6.5rem, 16vh, 10.5rem) !important;
     }
 
     /* 2-Row CSS Grid Stage: Row 1 = dynamic image space, Row 2 = protected auto footprint */
