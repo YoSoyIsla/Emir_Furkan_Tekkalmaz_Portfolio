@@ -729,7 +729,9 @@ hr {
     }
 }
 
-@media (hover: none), (pointer: coarse), (max-width: 1024px) {
+@media (hover: none),
+(pointer: coarse),
+(max-width: 1024px) {
 
     /* Touch devices & mobile viewports: strictly disable zoom transformation on grid thumbnails (image stays static) */
     .image-gallery .gallery-card img,
@@ -749,9 +751,7 @@ hr {
     .gallery-card.is-progressive img,
     .home-hero .gallery-card.is-progressive img,
     .image-gallery .gallery-card.is-active img,
-    .gallery-card.is-active img,
-    .single-work-card:hover img,
-    .single-work-card.is-progressive img {
+    .gallery-card.is-active img {
         transform: none !important;
     }
 }
@@ -833,18 +833,26 @@ hr {
 
     .image-gallery .gallery-card:hover img,
     .gallery-card:hover img,
-    .home-hero .gallery-card:hover img,
-    .single-work-card:hover img {
+    .home-hero .gallery-card:hover img {
         transform: scale(var(--zoom-initial-scale)) !important;
         transition: transform var(--zoom-speed-initial) var(--zoom-easing), transform-origin 0.2s var(--zoom-easing) !important;
     }
 
+    .single-work-card:hover img {
+        transform: scale(var(--zoom-initial-scale));
+        transition: transform var(--zoom-speed-initial) var(--zoom-easing), transform-origin 0.2s var(--zoom-easing);
+    }
+
     .image-gallery .gallery-card.is-progressive img,
     .gallery-card.is-progressive img,
-    .home-hero .gallery-card.is-progressive img,
-    .single-work-card.is-progressive img {
+    .home-hero .gallery-card.is-progressive img {
         transform: scale(var(--zoom-progressive-scale)) !important;
         transition: transform var(--zoom-speed-progressive) var(--zoom-easing), transform-origin 0.2s var(--zoom-easing) !important;
+    }
+
+    .single-work-card.is-progressive img {
+        transform: scale(var(--zoom-progressive-scale));
+        transition: transform var(--zoom-speed-progressive) var(--zoom-easing), transform-origin 0.2s var(--zoom-easing);
     }
 
 }
@@ -1000,6 +1008,13 @@ body.single-work-body {
     image-rendering: high-quality;
     transform-origin: 50% 50%;
     transition: transform var(--zoom-speed-unhover) var(--zoom-easing);
+    -webkit-user-drag: none !important;
+    user-drag: none !important;
+    -webkit-touch-callout: none !important;
+    -webkit-user-select: none !important;
+    user-select: none !important;
+    touch-action: none !important;
+    pointer-events: auto;
 }
 
 /* Cycling Navigation Indicators (Matching Contact navigator typography & styling) */
@@ -1339,7 +1354,7 @@ body.single-work-body {
 }
 
 .about-bio h1 {
-    font-size: 2.15rem;
+    font-size: 2.05rem;
     line-height: 1.2;
     font-weight: 500;
     letter-spacing: -0.015rem;
@@ -1349,9 +1364,10 @@ body.single-work-body {
 
 /* High-Resolution and Ultra-wide Scaling (Cascade order placed directly after base styles) */
 @media (min-width: 1200px) {
+
     .about-bio h1,
-    .about-bio > h1 {
-        font-size: clamp(3.8rem, 2.2vw + 1.5rem, 6.2rem) !important;
+    .about-bio>h1 {
+        font-size: clamp(2.4rem, 1.0vw + 1.5rem, 4.6rem) !important;
         line-height: 1.15 !important;
         letter-spacing: -0.02rem !important;
     }
@@ -1364,9 +1380,10 @@ body.single-work-body {
 }
 
 @media (min-width: 2560px) {
+
     .about-bio h1,
-    .about-bio > h1 {
-        font-size: clamp(6.8rem, 2.4vw + 2.5rem, 9.6rem) !important;
+    .about-bio>h1 {
+        font-size: clamp(4.4rem, 1.0vw + 2.5rem, 6.8rem) !important;
         line-height: 1.12 !important;
         letter-spacing: -0.03rem !important;
     }
