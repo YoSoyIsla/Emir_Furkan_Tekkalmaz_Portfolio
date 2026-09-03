@@ -106,7 +106,7 @@
 
     .about-bio,
     .about-bio p {
-        font-size: clamp(1.85rem, 0.7vw + 1rem, 3rem);
+        font-size: clamp(1.4rem, 0.7vw + 1rem, 3rem);
         line-height: 1.44;
     }
 }
@@ -751,13 +751,16 @@ hr {
 }
 
 @media (hover: none) {
+
     /* Touch devices: keep zoom strictly for desktop hover */
     .image-gallery .gallery-card:hover img,
     .gallery-card:hover img,
     .home-hero .gallery-card:hover img,
     .image-gallery .gallery-card.is-progressive img,
     .gallery-card.is-progressive img,
-    .home-hero .gallery-card.is-progressive img {
+    .home-hero .gallery-card.is-progressive img,
+    .single-work-card:hover img,
+    .single-work-card.is-progressive img {
         transform: none !important;
     }
 }
@@ -836,20 +839,21 @@ hr {
 
 /* Hover Zoom States - Controllable via :root variables (Desktop Hover) */
 @media (hover: hover) and (pointer: fine) {
+
     .image-gallery .gallery-card:hover img,
     .gallery-card:hover img,
     .home-hero .gallery-card:hover img,
     .single-work-card:hover img {
-        transform: scale(var(--zoom-initial-scale));
-        transition: transform var(--zoom-speed-initial) var(--zoom-easing), transform-origin 0.2s var(--zoom-easing);
+        transform: scale(var(--zoom-initial-scale)) !important;
+        transition: transform var(--zoom-speed-initial) var(--zoom-easing), transform-origin 0.2s var(--zoom-easing) !important;
     }
 
     .image-gallery .gallery-card.is-progressive img,
     .gallery-card.is-progressive img,
     .home-hero .gallery-card.is-progressive img,
     .single-work-card.is-progressive img {
-        transform: scale(var(--zoom-progressive-scale));
-        transition: transform var(--zoom-speed-progressive) var(--zoom-easing), transform-origin 0.2s var(--zoom-easing);
+        transform: scale(var(--zoom-progressive-scale)) !important;
+        transition: transform var(--zoom-speed-progressive) var(--zoom-easing), transform-origin 0.2s var(--zoom-easing) !important;
     }
 
     .image-gallery .gallery-card:hover .card-caption,

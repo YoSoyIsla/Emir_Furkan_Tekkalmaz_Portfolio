@@ -476,6 +476,11 @@
         }
 
         function applyTransform(animated = false) {
+            if (currentScale === 1 && currentPanX === 0 && currentPanY === 0) {
+                img.style.transform = '';
+                img.style.transition = '';
+                return;
+            }
             if (animated) {
                 img.style.transition = 'transform 0.28s cubic-bezier(0.16, 1, 0.3, 1)';
             } else {
@@ -491,13 +496,15 @@
             currentPanY = 0;
             isPinching = false;
             isPanning = false;
-            applyTransform(animated);
             if (animated) {
+                img.style.transition = 'transform 0.28s cubic-bezier(0.16, 1, 0.3, 1)';
+                img.style.transform = '';
                 setTimeout(() => {
                     img.style.transition = '';
                 }, 300);
             } else {
                 img.style.transition = '';
+                img.style.transform = '';
             }
         }
 
