@@ -169,13 +169,22 @@ html {
 h1,
 h2,
 h3,
+h4,
 p,
 a,
 span,
 address,
 li,
 label,
-.contact-address {
+.about-section-title,
+.experience-list,
+.experience-item,
+.exhibition-date,
+.exhibition-name,
+.talks-list,
+.contact-address,
+.inquiries-text,
+.contact-link {
     transition: color 0.3s ease, stroke 0.3s ease;
 }
 
@@ -1398,7 +1407,7 @@ body.single-work-body {
 .about-bio a {
     color: var(--text-primary);
     border-bottom: none;
-    transition: color 0.25s ease, opacity 0.25s ease;
+    transition: color 0.3s ease, opacity 0.25s ease;
 }
 
 .about-bio a:hover {
@@ -1455,11 +1464,21 @@ body.single-work-body {
     text-transform: none;
     letter-spacing: 0;
     color: var(--text-muted);
+    transition: color 0.3s ease;
 }
 
 .about-exhibitions-col .about-section-title {
     margin-bottom: 2.25rem;
     text-align: left;
+}
+
+.experience-list,
+.experience-item,
+.experience-item .exhibition-date,
+.experience-item .exhibition-name,
+.exhibition-date,
+.exhibition-name {
+    transition: color 0.3s ease;
 }
 
 @media (min-width: 769px) {
@@ -1537,7 +1556,7 @@ body.single-work-body {
 
 .talks-list a {
     border-bottom: none;
-    transition: color 0.25s ease, opacity 0.25s ease;
+    transition: color 0.3s ease, opacity 0.25s ease;
 }
 
 .talks-list a:hover {
@@ -1569,25 +1588,23 @@ body.single-work-body {
 }
 
 .contact-info {
-    font-size: 1.2rem;
     line-height: 1.5;
+}
+
+/* Inquiries intro text & contact links: matched typography and line-height across all viewports */
+.inquiries-text,
+.contact-link {
+    font-family: var(--font-serif);
+    font-size: 1.4rem;
+    line-height: 1.4;
+    font-weight: 500;
 }
 
 .inquiries-text {
-    font-size: 1rem;
-    line-height: 1.5;
+    color: var(--text-primary);
     margin-top: 2rem;
     margin-bottom: 2rem;
-}
-
-@media (max-width: 768px) {
-    .inquiries-text {
-        display: none !important;
-    }
-
-    .contact-links-list {
-        margin-top: 1.5rem !important;
-    }
+    transition: color 0.3s ease;
 }
 
 .contact-links-list {
@@ -1598,14 +1615,11 @@ body.single-work-body {
 }
 
 .contact-link {
-    font-family: var(--font-serif);
-    font-size: 1.4rem;
-    font-weight: 500;
     color: var(--text-primary);
     display: inline-block;
     border-bottom: none;
     font-variant-emoji: text;
-    transition: color 0.25s ease, opacity 0.25s ease;
+    transition: color 0.3s ease, opacity 0.25s ease;
 }
 
 .contact-link .arrow-glyph,
@@ -1621,6 +1635,37 @@ body.single-work-body {
 .contact-link:hover {
     color: var(--text-muted);
     opacity: 0.8;
+}
+
+@media (min-width: 1200px) {
+    .inquiries-text,
+    .contact-link {
+        font-size: clamp(1.4rem, 0.7vw + 1rem, 2.6rem) !important;
+        line-height: 1.44 !important;
+    }
+}
+
+@media (min-width: 2560px) {
+    .inquiries-text,
+    .contact-link {
+        font-size: clamp(2.4rem, 1.0vw + 1rem, 4.2rem) !important;
+        line-height: 1.46 !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .inquiries-text {
+        display: none !important;
+    }
+
+    .contact-link {
+        font-size: 1.3rem !important;
+        line-height: 1.4 !important;
+    }
+
+    .contact-links-list {
+        margin-top: 1.5rem !important;
+    }
 }
 
 .studio-info-block {
