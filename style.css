@@ -727,19 +727,17 @@ hr {
         scroll-margin-top: calc(var(--header-height) + var(--grid-gap));
     }
 
-    /* Disable scale/zoom effect on images in grid/list views on mobile viewports */
+    /* Suppress hover captions and zoom on mobile/touch viewports so the native link triggers immediately on first tap */
+    .gallery-card .card-caption,
+    .image-gallery .gallery-card .card-caption,
+    .home-hero .gallery-card .card-caption {
+        display: none !important;
+    }
+
     .image-gallery .gallery-card img,
     .gallery-card img,
     .home-hero .gallery-card img,
-    .home-hero-img,
-    .image-gallery .gallery-card:hover img,
-    .gallery-card:hover img,
-    .home-hero .gallery-card:hover img,
-    .image-gallery .gallery-card.is-progressive img,
-    .gallery-card.is-progressive img,
-    .home-hero .gallery-card.is-progressive img,
-    .image-gallery .gallery-card.is-active img,
-    .gallery-card.is-active img {
+    .home-hero-img {
         transform: none !important;
         transition: opacity 0.6s var(--zoom-easing) !important;
     }
@@ -751,16 +749,17 @@ hr {
 }
 
 @media (hover: none) {
+    /* Touch devices: strictly scope hover captions and zoom to desktop mouse pointers */
+    .gallery-card .card-caption,
+    .image-gallery .gallery-card .card-caption,
+    .home-hero .gallery-card .card-caption {
+        display: none !important;
+    }
 
-    /* Touch devices: keep zoom strictly for desktop hover */
-    .image-gallery .gallery-card:hover img,
-    .gallery-card:hover img,
-    .home-hero .gallery-card:hover img,
-    .image-gallery .gallery-card.is-progressive img,
-    .gallery-card.is-progressive img,
-    .home-hero .gallery-card.is-progressive img,
-    .single-work-card:hover img,
-    .single-work-card.is-progressive img {
+    .image-gallery .gallery-card img,
+    .gallery-card img,
+    .home-hero .gallery-card img,
+    .single-work-card img {
         transform: none !important;
     }
 }
