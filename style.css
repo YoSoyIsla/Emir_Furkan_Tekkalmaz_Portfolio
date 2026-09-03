@@ -1406,6 +1406,16 @@ body.single-work-body {
     margin-bottom: 2rem;
 }
 
+@media (max-width: 768px) {
+    .inquiries-text {
+        display: none !important;
+    }
+
+    .contact-links-list {
+        margin-top: 1.5rem !important;
+    }
+}
+
 .contact-links-list {
     display: flex;
     flex-direction: column;
