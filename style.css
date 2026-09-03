@@ -1064,7 +1064,7 @@ body.single-work-body {
         height: 100dvh !important;
         max-height: 100dvh !important;
         padding-top: calc(var(--header-height) + var(--grid-gap)) !important;
-        padding-bottom: calc(44px + 0.35rem) !important;
+        padding-bottom: calc(44px + var(--grid-gap)) !important;
         padding-left: 1.25rem !important;
         padding-right: 1.25rem !important;
         display: flex !important;
@@ -1078,6 +1078,7 @@ body.single-work-body {
     .single-work-wrapper {
         width: 100% !important;
         height: 100% !important;
+        max-height: 100% !important;
         display: flex !important;
         flex-direction: column !important;
         justify-content: center !important;
@@ -1102,7 +1103,7 @@ body.single-work-body {
         width: auto !important;
         max-width: 100% !important;
         height: auto !important;
-        max-height: calc(100dvh - var(--header-height) - 44px - 85px) !important;
+        max-height: calc(100dvh - var(--header-height) - (var(--grid-gap) * 2) - 44px - 75px) !important;
         aspect-ratio: var(--ar, 1.2) !important;
         margin: 0 !important;
         overflow: hidden;
@@ -1111,13 +1112,14 @@ body.single-work-body {
         align-items: center !important;
         justify-content: center !important;
         box-sizing: border-box;
+        flex-shrink: 1 !important;
     }
 
     .single-work-card img {
         width: 100% !important;
         height: 100% !important;
         max-width: 100% !important;
-        max-height: calc(100dvh - var(--header-height) - 44px - 85px) !important;
+        max-height: calc(100dvh - var(--header-height) - (var(--grid-gap) * 2) - 44px - 75px) !important;
         aspect-ratio: var(--ar, 1.2) !important;
         object-fit: contain !important;
         display: block;
@@ -1127,13 +1129,15 @@ body.single-work-body {
     .single-work-meta-container {
         width: 100% !important;
         max-width: 100% !important;
-        margin-top: 0.65rem !important;
+        margin-top: 0.5rem !important;
         padding: 0 !important;
         box-sizing: border-box !important;
         display: flex !important;
         flex-direction: column !important;
         align-items: flex-start !important;
         text-align: left !important;
+        gap: 0.15rem !important;
+        flex-shrink: 0 !important;
     }
 
     .single-work-title {

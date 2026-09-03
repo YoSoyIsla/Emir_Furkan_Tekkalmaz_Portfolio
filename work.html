@@ -215,8 +215,10 @@
             if (!metaContainer || !card) return;
             const rect = card.getBoundingClientRect();
             if (rect.width > 0) {
-                metaContainer.style.maxWidth = `${rect.width}px`;
-                metaContainer.style.width = `${rect.width}px`;
+                const isMobile = window.innerWidth <= 768;
+                const targetWidth = isMobile ? Math.min(Math.max(rect.width, 240), window.innerWidth - 40) : rect.width;
+                metaContainer.style.maxWidth = `${targetWidth}px`;
+                metaContainer.style.width = isMobile ? '100%' : `${rect.width}px`;
             }
         }
 
