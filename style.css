@@ -1509,14 +1509,30 @@ body.single-work-body {
     font-size: 1.4rem;
     font-weight: 500;
     color: var(--text-primary);
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
     border-bottom: none;
     transition: color 0.25s ease, opacity 0.25s ease;
+}
+
+.external-arrow-icon {
+    display: inline-block;
+    width: 0.75em;
+    height: 0.75em;
+    stroke: currentColor;
+    flex-shrink: 0;
+    transition: transform 0.25s cubic-bezier(0.25, 1, 0.5, 1);
+    vertical-align: middle;
 }
 
 .contact-link:hover {
     color: var(--text-muted);
     opacity: 0.8;
+}
+
+.contact-link:hover .external-arrow-icon {
+    transform: translate(2px, -2px);
 }
 
 .studio-info-block {
