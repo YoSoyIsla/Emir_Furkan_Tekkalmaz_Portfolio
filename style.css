@@ -712,7 +712,15 @@ hr {
     .image-gallery .gallery-card img,
     .gallery-card img,
     .home-hero .gallery-card img,
-    .home-hero-img {
+    .home-hero-img,
+    .image-gallery .gallery-card:hover img,
+    .gallery-card:hover img,
+    .home-hero .gallery-card:hover img,
+    .image-gallery .gallery-card.is-progressive img,
+    .gallery-card.is-progressive img,
+    .home-hero .gallery-card.is-progressive img,
+    .image-gallery .gallery-card.is-active img,
+    .gallery-card.is-active img {
         transform: none !important;
         transition: opacity 0.6s var(--zoom-easing) !important;
     }
@@ -720,6 +728,18 @@ hr {
     /* Confine inspect pinch gestures inside container */
     .single-work-card {
         touch-action: none;
+    }
+}
+
+@media (hover: none) {
+    /* Touch devices: keep zoom strictly for desktop hover */
+    .image-gallery .gallery-card:hover img,
+    .gallery-card:hover img,
+    .home-hero .gallery-card:hover img,
+    .image-gallery .gallery-card.is-progressive img,
+    .gallery-card.is-progressive img,
+    .home-hero .gallery-card.is-progressive img {
+        transform: none !important;
     }
 }
 
@@ -795,7 +815,7 @@ hr {
     opacity: 1;
 }
 
-/* Hover Zoom & Caption Reveal - Strictly wrapped in (hover: hover) and (pointer: fine) */
+/* Hover Zoom States - Controllable via :root variables (Desktop Hover) */
 @media (hover: hover) and (pointer: fine) {
     .image-gallery .gallery-card:hover img,
     .gallery-card:hover img,
@@ -820,19 +840,12 @@ hr {
     }
 }
 
-/* Touch / Mobile Environments: No simulated hover delay; single tap navigates directly */
-@media (hover: none), (pointer: coarse) {
-    .card-caption {
-        display: none !important;
-    }
-}
-
 .card-caption {
     position: absolute;
     bottom: 0;
     left: 0;
     width: 100%;
-    padding: 1.5rem 1.25rem 1rem 1.25rem;
+    padding: 1.5rem 1.2rem 1rem 1.2rem;
     background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0) 100%);
     color: #FAF9F6;
     opacity: 0;
@@ -844,6 +857,15 @@ hr {
     pointer-events: none;
     border-bottom-left-radius: var(--radius-card);
     border-bottom-right-radius: var(--radius-card);
+}
+
+/* Touch & Active reveal */
+.image-gallery .gallery-card.is-active .card-caption,
+.gallery-card.is-active .card-caption,
+.home-hero .gallery-card.is-active .card-caption,
+.image-gallery .gallery-card:active .card-caption,
+.gallery-card:active .card-caption {
+    opacity: 1;
 }
 
 .card-caption .project-title {

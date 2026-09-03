@@ -519,6 +519,48 @@
                     if (animationFrameId) cancelAnimationFrame(animationFrameId);
                 });
             });
+
+            // Mobile Tap-to-Reveal Caption & Tint Overlay
+            let touchMoved = false;
+            let touchStartX = 0;
+            let touchStartY = 0;
+
+            cards.forEach(card => {
+                card.addEventListener('touchstart', (e) => {
+                    touchMoved = false;
+                    if (e.touches.length === 1) {
+                        touchStartX = e.touches[0].clientX;
+                        touchStartY = e.touches[0].clientY;
+                        // Provide instant touch animation feedback
+                        cards.forEach(c => c.classList.remove('is-active'));
+                        card.classList.add('is-active');
+                    }
+                }, { passive: true });
+
+                card.addEventListener('touchmove', (e) => {
+                    if (e.touches.length === 1) {
+                        const dx = Math.abs(e.touches[0].clientX - touchStartX);
+                        const dy = Math.abs(e.touches[0].clientY - touchStartY);
+                        if (dx > 8 || dy > 8) {
+                            touchMoved = true;
+                            card.classList.remove('is-active');
+                        }
+                    }
+                }, { passive: true });
+
+                card.addEventListener('touchend', () => {
+                    if (touchMoved) {
+                        card.classList.remove('is-active');
+                    }
+                }, { passive: true });
+            });
+
+            // Tap outside any card clears active state
+            document.addEventListener('click', (e) => {
+                if (!e.target.closest('.gallery-card')) {
+                    cards.forEach(c => c.classList.remove('is-active'));
+                }
+            });
         });
     </script>
 
