@@ -8,7 +8,7 @@ export const WORKS = [
         dimensions: "72x116 cm",
         medium: "Pencil, Charcoal, Acrylic Paint on Canvas",
         collection: "Studio Archive",
-        image: "./works/home_screen.jpg",
+        image: "/works/home_screen.webp",
         aspectRatio: 1.61
     },
     {
@@ -19,7 +19,7 @@ export const WORKS = [
         dimensions: "142x250 cm",
         medium: "Oil & Acrylic on Canvas",
         collection: "Private Collection",
-        image: "./works/rhythm_ix.png",
+        image: "/works/rhythm_ix.webp",
         aspectRatio: 0.781
     },
     {
@@ -30,7 +30,7 @@ export const WORKS = [
         dimensions: "140x180 cm",
         medium: "Oil & Acrylic on Canvas",
         collection: "Private Collection",
-        image: "./works/rhythm_vii.png",
+        image: "/works/rhythm_vii.webp",
         aspectRatio: 1.207
     },
     {
@@ -41,7 +41,7 @@ export const WORKS = [
         dimensions: "200x190 cm",
         medium: "Pencil, Charcoal, Acrylic Paint on Canvas",
         collection: "Studio Archive",
-        image: "./works/pas_de_quatre.png",
+        image: "/works/pas_de_quatre.webp",
         aspectRatio: 1.253
     },
     {
@@ -52,7 +52,7 @@ export const WORKS = [
         dimensions: "200x190 cm",
         medium: "Pencil, Charcoal, Acrylic Paint on Canvas",
         collection: "Studio Archive",
-        image: "./works/pas_de_quatre_no2.png",
+        image: "/works/pas_de_quatre_no2.webp",
         aspectRatio: 1.207
     },
     {
@@ -63,7 +63,7 @@ export const WORKS = [
         dimensions: "110x150 cm",
         medium: "Pencil, Charcoal, Acrylic Paint on Canvas",
         collection: "Studio Archive",
-        image: "./works/traces_of_elegance.png",
+        image: "/works/traces_of_elegance.webp",
         aspectRatio: 1.127
     },
     {
@@ -74,7 +74,7 @@ export const WORKS = [
         dimensions: "81x100 cm",
         medium: "Oil & Mixed Media on Canvas",
         collection: "Private Collection",
-        image: "./works/forty_figures_on_a_canvas.png",
+        image: "/works/forty_figures_on_a_canvas.webp",
         aspectRatio: 1.290
     },
     {
@@ -85,7 +85,7 @@ export const WORKS = [
         dimensions: "60x80 cm",
         medium: "Pencil, Charcoal, Acrylic Paint on Canvas",
         collection: "Studio Archive",
-        image: "./works/rhythm_xix.png",
+        image: "/works/rhythm_xix.webp",
         aspectRatio: 1.358
     },
     {
@@ -96,7 +96,7 @@ export const WORKS = [
         dimensions: "200x270 cm",
         medium: "Oil & Mixed Media on Canvas",
         collection: "Mustafa Taviloğlu Collection",
-        image: "./works/rhythm_2022.png",
+        image: "/works/rhythm_2022.webp",
         aspectRatio: 0.796
     },
     {
@@ -107,7 +107,7 @@ export const WORKS = [
         dimensions: "200x270 cm",
         medium: "Oil & Mixed Media on Canvas",
         collection: "Gökhan Gündoğdu Museum Collection",
-        image: "./works/rhythm_x.png",
+        image: "/works/rhythm_x.webp",
         aspectRatio: 1.186
     },
     {
@@ -118,7 +118,7 @@ export const WORKS = [
         dimensions: "200x270 cm",
         medium: "Oil & Mixed Media on Canvas",
         collection: "Private Collection",
-        image: "./works/lonj.png",
+        image: "/works/lonj.webp",
         aspectRatio: 1.288
     },
     {
@@ -129,7 +129,7 @@ export const WORKS = [
         dimensions: "200x270 cm",
         medium: "Elgar Cello Concerto in E minor, Op. 85",
         collection: "Private Collection",
-        image: "./works/istanbul_state_symphony_orchestra.png",
+        image: "/works/istanbul_state_symphony_orchestra.webp",
         aspectRatio: 1.241
     },
     {
@@ -140,7 +140,7 @@ export const WORKS = [
         dimensions: "80x60 cm",
         medium: "Pencil, Charcoal, Acrylic Paint on Canvas",
         collection: "Studio Archive",
-        image: "./works/giselle_no2.png",
+        image: "/works/giselle_no2.webp",
         aspectRatio: 0.961
     },
     {
@@ -151,7 +151,7 @@ export const WORKS = [
         dimensions: "100x80 cm",
         medium: "Oil on Canvas",
         collection: "Private Collection",
-        image: "./works/rhythm_xi.png",
+        image: "/works/rhythm_xi.webp",
         aspectRatio: 1.248
     },
     {
@@ -162,7 +162,7 @@ export const WORKS = [
         dimensions: "110x130 cm",
         medium: "Pencil, Charcoal, Acrylic Paint on Canvas",
         collection: "Private Collection",
-        image: "./works/contemporary_dance_no1.png",
+        image: "/works/contemporary_dance_no1.webp",
         aspectRatio: 0.755
     },
     {
@@ -173,7 +173,7 @@ export const WORKS = [
         dimensions: "197x240 cm",
         medium: "Pencil, Charcoal, Acrylic Paint on Canvas",
         collection: "Studio Archive",
-        image: "./works/flow.png",
+        image: "/works/flow.webp",
         aspectRatio: 0.749
     },
     {
@@ -184,7 +184,7 @@ export const WORKS = [
         dimensions: "130x150 cm",
         medium: "Pencil, Charcoal, Acrylic Paint on Canvas",
         collection: "Studio Archive",
-        image: "./works/giselle.png",
+        image: "/works/giselle.webp",
         aspectRatio: 1.359
     },
     {
@@ -195,7 +195,7 @@ export const WORKS = [
         dimensions: "140x180 cm",
         medium: "Oil on Canvas",
         collection: "Private Collection",
-        image: "./works/rhythm_iv.png",
+        image: "/works/rhythm_iv.webp",
         aspectRatio: 1.361
     },
     {
@@ -206,7 +206,7 @@ export const WORKS = [
         dimensions: "146x114 cm",
         medium: "Oil on Canvas",
         collection: "Private Collection",
-        image: "./works/rakkase.png",
+        image: "/works/rakkase.webp",
         aspectRatio: 1.263
     },
     {
@@ -217,7 +217,7 @@ export const WORKS = [
         dimensions: "100x80 cm",
         medium: "Mozart: Symphony No:41 'Jupiter'",
         collection: "Private Collection",
-        image: "./works/philharmonic_orchestra.png",
+        image: "/works/philharmonic_orchestra.webp",
         aspectRatio: 1.356
     },
     {
@@ -228,7 +228,7 @@ export const WORKS = [
         dimensions: "81x100 cm",
         medium: "Oil on Canvas",
         collection: "Private Collection",
-        image: "./works/rhythm_v.png",
+        image: "/works/rhythm_v.webp",
         aspectRatio: 1.358
     },
     {
@@ -239,7 +239,7 @@ export const WORKS = [
         dimensions: "50x60 cm",
         medium: "Oil on Canvas",
         collection: "Private Collection",
-        image: "./works/rhythm_vi.png",
+        image: "/works/rhythm_vi.webp",
         aspectRatio: 1.198
     },
     {
@@ -250,7 +250,7 @@ export const WORKS = [
         dimensions: "114x146 cm",
         medium: "Pencil, Charcoal, Acrylic Paint on Canvas",
         collection: "Studio Archive",
-        image: "./works/ophelia.png",
+        image: "/works/ophelia.webp",
         aspectRatio: 0.794
     },
     {
@@ -261,7 +261,7 @@ export const WORKS = [
         dimensions: "146x114 cm",
         medium: "Pencil, Charcoal, Acrylic Paint on Canvas",
         collection: "Studio Archive",
-        image: "./works/ophelia_no2.png",
+        image: "/works/ophelia_no2.webp",
         aspectRatio: 1.209
     },
     {
@@ -272,7 +272,7 @@ export const WORKS = [
         dimensions: "50x60 cm",
         medium: "Pencil, Charcoal, Acrylic Paint on Canvas",
         collection: "Private Collection",
-        image: "./works/rhythm_xvii.png",
+        image: "/works/rhythm_xvii.webp",
         aspectRatio: 1.281
     },
     {
@@ -283,7 +283,7 @@ export const WORKS = [
         dimensions: "110x130 cm",
         medium: "Pencil, Charcoal, Acrylic Paint on Canvas",
         collection: "Private Collection",
-        image: "./works/rhythm_xvii_no2.png",
+        image: "/works/rhythm_xvii_no2.webp",
         aspectRatio: 1.754
     },
     {
@@ -294,7 +294,7 @@ export const WORKS = [
         dimensions: "50x60 cm",
         medium: "Oil on Canvas",
         collection: "Private Collection",
-        image: "./works/reflection.png",
+        image: "/works/reflection.webp",
         aspectRatio: 1.233
     }
 ];
