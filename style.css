@@ -142,7 +142,7 @@ body {
     overflow-x: hidden;
 }
 
-/* Synchronized background transition across html, body, header, nav, and drawer */
+/* Synchronized 300ms transition across all theme backgrounds, colors, and borders */
 html,
 body,
 header,
@@ -150,7 +150,8 @@ nav,
 .navbar,
 .nav-container,
 .pinned_top,
-.mobile-drawer {
+.mobile-drawer,
+.mobile-nav-bar {
     background-color: var(--bg-color);
     transition: background-color 0.3s ease;
 }
@@ -159,7 +160,7 @@ html {
     background-color: var(--bg-color);
 }
 
-/* Text & Icon color transition */
+/* Synchronized 300ms transition across all text, links, headings, sublines, arrows, and icons */
 .nav-link,
 .theme-toggle-btn,
 .theme-icon,
@@ -173,7 +174,11 @@ span,
 address,
 li,
 label,
+.single-work-title,
+.single-work-subline,
+.work-nav-arrow,
 .about-section-title,
+.about-bio,
 .experience-list,
 .experience-item,
 .exhibition-date,
@@ -181,8 +186,10 @@ label,
 .talks-list,
 .contact-address,
 .inquiries-text,
-.contact-link {
-    transition: color 0.3s ease, stroke 0.3s ease;
+.contact-link,
+.arrow-glyph,
+.drawer-link {
+    transition: color 0.3s ease, stroke 0.3s ease, fill 0.3s ease;
 }
 
 /* Strip all borders, shadows, outlines, and pseudo-elements on header & nav elements */
@@ -266,9 +273,12 @@ a:focus-visible {
     align-items: center;
     justify-content: flex-end;
     border-radius: var(--radius-button);
-    transition: color 0.3s ease, opacity 0.3s ease;
+    transition: opacity 0.3s ease, color 0.3s ease;
     transform: none !important;
     line-height: 1;
+    position: relative;
+    width: calc(var(--nav-icon-size, 18px) + 0.5rem);
+    height: calc(var(--nav-icon-size, 18px) + 0.5rem);
 }
 
 .theme-toggle-btn:hover {
@@ -282,23 +292,35 @@ a:focus-visible {
     height: var(--nav-icon-size, 18px);
     stroke: currentColor;
     display: block;
-    transition: stroke 0.3s ease, color 0.3s ease;
+    position: absolute;
+    right: 0.25rem;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: opacity 0.3s ease, transform 0.3s ease, stroke 0.3s ease, color 0.3s ease;
 }
 
 .sun-icon {
-    display: block;
+    opacity: 1;
+    transform: translateY(-50%) rotate(0deg) scale(1);
+    pointer-events: auto;
 }
 
 .moon-icon {
-    display: none;
+    opacity: 0;
+    transform: translateY(-50%) rotate(-45deg) scale(0.85);
+    pointer-events: none;
 }
 
 [data-theme="dark"] .sun-icon {
-    display: none;
+    opacity: 0;
+    transform: translateY(-50%) rotate(45deg) scale(0.85);
+    pointer-events: none;
 }
 
 [data-theme="dark"] .moon-icon {
-    display: block;
+    opacity: 1;
+    transform: translateY(-50%) rotate(0deg) scale(1);
+    pointer-events: auto;
 }
 
 /* --- Layout Containers & Page Transition --- */
@@ -598,7 +620,7 @@ a,
 .nav-link {
     color: var(--text-primary);
     text-decoration: none;
-    transition: color 0.3s ease, opacity 0.3s ease;
+    transition: opacity 0.3s ease, color 0.3s ease;
 }
 
 a:hover,
@@ -669,18 +691,27 @@ hr {
     overflow: hidden;
     display: block;
     text-decoration: none;
-    background-color: transparent;
-    cursor: crosshair;
+    background-color: #000000 !important;
+    cursor: default !important;
 }
 
 .home-hero .gallery-card img,
-.home-hero-img {
+.home-hero .gallery-card video,
+.home-hero-img,
+.home-hero-video {
     width: 100%;
     height: 100%;
     object-fit: cover;
     object-position: center;
     display: block;
     border-radius: var(--radius-card);
+    cursor: default !important;
+    transition: opacity 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+    opacity: 1;
+}
+
+.home-hero-video.is-black {
+    opacity: 0 !important;
 }
 
 #artworks {
@@ -874,6 +905,10 @@ hr {
 }
 
 /* Card Caption Overlay: Reveal dark tint and info text on desktop hover, mobile tap/touch, and active states */
+.home-hero .card-caption {
+    display: none !important;
+}
+
 .image-gallery .gallery-card:hover .card-caption,
 .gallery-card:hover .card-caption,
 .home-hero .gallery-card:hover .card-caption,
@@ -949,13 +984,13 @@ body.single-work-body {
 .single-work-main {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     height: 100vh;
     height: 100dvh;
     max-height: 100dvh;
-    padding-top: var(--header-height);
-    padding-bottom: calc(var(--header-height) + 2.5rem);
+    padding-top: calc(var(--header-height) + var(--outer-margin));
+    padding-bottom: var(--outer-margin);
     overflow: hidden;
     position: relative;
     box-sizing: border-box;
@@ -968,7 +1003,7 @@ body.single-work-body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     overflow: hidden;
 }
 
@@ -976,7 +1011,7 @@ body.single-work-body {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    justify-content: center;
+    justify-content: flex-start;
     width: fit-content;
     max-width: 100%;
     max-height: 100%;
@@ -996,7 +1031,8 @@ body.single-work-body {
     background-color: transparent !important;
     border-radius: var(--radius-card);
     cursor: crosshair;
-    max-height: min(74vh, calc(100dvh - var(--header-height) - 120px));
+    max-height: calc(100vh - var(--header-height) - (var(--outer-margin) * 2) - 4.5rem);
+    max-height: calc(100dvh - var(--header-height) - (var(--outer-margin) * 2) - 4.5rem);
     width: auto;
     height: auto;
     aspect-ratio: var(--ar, 1.2);
@@ -1054,7 +1090,7 @@ body.single-work-body {
     color: var(--text-primary);
     cursor: pointer;
     text-decoration: none;
-    transition: color 0.3s ease, opacity 0.3s ease;
+    transition: opacity 0.3s ease, color 0.3s ease;
     user-select: none;
     -webkit-user-select: none;
     opacity: 1;
@@ -1276,7 +1312,6 @@ body.single-work-body {
         width: 100%;
         height: 44px;
         background-color: var(--bg-color);
-        transition: background-color 0.3s ease;
         z-index: 1000;
         display: flex;
         justify-content: space-between;
@@ -1304,7 +1339,7 @@ body.single-work-body {
         background: transparent !important;
         border: none !important;
         padding: 0.5rem 0;
-        transition: opacity 0.15s ease;
+        transition: opacity 0.3s ease, color 0.3s ease;
         text-decoration: none;
         -webkit-tap-highlight-color: transparent;
         outline: none !important;
@@ -1423,7 +1458,7 @@ body.single-work-body {
 .about-bio a {
     color: var(--text-primary);
     border-bottom: none;
-    transition: color 0.3s ease, opacity 0.25s ease;
+    transition: opacity 0.3s ease, color 0.3s ease;
 }
 
 .about-bio a:hover {
@@ -1480,21 +1515,11 @@ body.single-work-body {
     text-transform: none;
     letter-spacing: 0;
     color: var(--text-muted);
-    transition: color 0.3s ease;
 }
 
 .about-exhibitions-col .about-section-title {
     margin-bottom: 2.25rem;
     text-align: left;
-}
-
-.experience-list,
-.experience-item,
-.experience-item .exhibition-date,
-.experience-item .exhibition-name,
-.exhibition-date,
-.exhibition-name {
-    transition: color 0.3s ease;
 }
 
 @media (min-width: 769px) {
@@ -1572,7 +1597,7 @@ body.single-work-body {
 
 .talks-list a {
     border-bottom: none;
-    transition: color 0.3s ease, opacity 0.25s ease;
+    transition: opacity 0.3s ease, color 0.3s ease;
 }
 
 .talks-list a:hover {
@@ -1618,7 +1643,6 @@ p.inquiries-text,
     color: var(--text-primary);
     margin-top: 1.25rem;
     margin-bottom: 1.15rem;
-    transition: color 0.3s ease;
 }
 
 .contact-links-list {
@@ -1638,7 +1662,7 @@ p.inquiries-text,
     display: inline-block;
     border-bottom: none;
     font-variant-emoji: text;
-    transition: color 0.3s ease, opacity 0.25s ease;
+    transition: opacity 0.3s ease, color 0.3s ease;
 }
 
 .contact-link .arrow-glyph,
@@ -1740,7 +1764,6 @@ p.inquiries-text,
     font-size: 1.1rem;
     color: var(--text-primary);
     outline: none;
-    transition: border-bottom-color 0.3s ease;
 }
 
 .form-input:focus {
@@ -1755,7 +1778,7 @@ p.inquiries-text,
     font-size: 1.1rem;
     color: var(--text-muted);
     pointer-events: none;
-    transition: all 0.3s ease;
+    transition: top 0.2s ease, font-size 0.2s ease;
 }
 
 /* Float label logic when input is focused or not empty */
@@ -1776,7 +1799,7 @@ p.inquiries-text,
     font-weight: 500;
     font-size: 1rem;
     cursor: pointer;
-    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    transition: opacity 0.3s ease, color 0.3s ease;
 }
 
 .submit-btn:hover {
@@ -1919,12 +1942,15 @@ p.inquiries-text,
     height: 16px;
     padding: 0;
     margin: 0;
-    display: block;
-    outline: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    outline: none !important;
     z-index: 2200;
     box-sizing: border-box;
-    isolation: isolate;
-    -webkit-tap-highlight-color: transparent;
+    color: var(--text-primary);
+    transition: color 0.3s ease;
+    -webkit-tap-highlight-color: transparent !important;
 }
 
 /* Expanded comfortable touch hit area on mobile */
@@ -1937,36 +1963,37 @@ p.inquiries-text,
     right: -10px;
 }
 
-.hamburger-btn span {
-    position: absolute;
-    left: 0;
-    top: 7px;
-    width: 100%;
-    height: 1.5px;
-    background-color: var(--text-primary);
-    border-radius: 1px;
-    transform-origin: 50% 50%;
-    -webkit-transform-origin: 50% 50%;
-    transition: transform 0.32s cubic-bezier(0.25, 1, 0.5, 1), background-color 0.3s ease;
-    will-change: transform;
+.hamburger-icon {
+    display: block;
+    width: 22px;
+    height: 16px;
+    overflow: visible;
     pointer-events: none;
+    color: var(--text-primary);
 }
 
-.hamburger-btn span:nth-child(1) {
-    transform: translateY(-4px) rotate(0deg);
+.hamburger-icon line {
+    transform-box: view-box;
+    transform-origin: 11px 8px;
+    transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+    stroke: currentColor;
 }
 
-.hamburger-btn span:nth-child(2) {
-    transform: translateY(4px) rotate(0deg);
+.hamburger-icon .line-1 {
+    transform: translateY(0) rotate(0deg);
 }
 
-/* Two-line fluid cross transition: unified translation & rotation */
-.hamburger-btn.open span:nth-child(1) {
-    transform: translateY(0) rotate(45deg);
+.hamburger-icon .line-2 {
+    transform: translateY(0) rotate(0deg);
 }
 
-.hamburger-btn.open span:nth-child(2) {
-    transform: translateY(0) rotate(-45deg);
+/* Two-line fluid cross transition: mathematically constant vector thickness across all states */
+.hamburger-btn.open .hamburger-icon .line-1 {
+    transform: translateY(4px) rotate(45deg);
+}
+
+.hamburger-btn.open .hamburger-icon .line-2 {
+    transform: translateY(-4px) rotate(-45deg);
 }
 
 /* --- Slide-Down Top Menu Drawer --- */
@@ -1984,7 +2011,7 @@ p.inquiries-text,
     opacity: 1 !important;
     visibility: hidden;
     pointer-events: none;
-    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.35s ease, background-color 0.3s ease;
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.35s ease;
     border: none !important;
     border-bottom: none !important;
     box-shadow: none !important;
@@ -2072,7 +2099,7 @@ p.inquiries-text,
     background: transparent !important;
     background-color: transparent !important;
     border: none;
-    transition: color 0.3s ease, stroke 0.3s ease, opacity 0.3s ease;
+    transition: opacity 0.3s ease, color 0.3s ease;
 }
 
 .drawer-link.active {
@@ -2093,5 +2120,10 @@ p.inquiries-text,
     background: transparent !important;
     background-color: transparent !important;
     border: none !important;
-    transition: color 0.3s ease, stroke 0.3s ease, opacity 0.3s ease;
+    transition: opacity 0.3s ease, color 0.3s ease;
+}
+
+.drawer-nav .theme-toggle-btn .theme-icon {
+    left: 0;
+    right: auto;
 }
