@@ -1942,15 +1942,13 @@ p.inquiries-text,
     height: 16px;
     padding: 0;
     margin: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: block;
     outline: none !important;
     z-index: 2200;
     box-sizing: border-box;
-    color: var(--text-primary);
-    transition: color 0.3s ease;
     -webkit-tap-highlight-color: transparent !important;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
 }
 
 /* Expanded comfortable touch hit area on mobile */
@@ -1963,37 +1961,37 @@ p.inquiries-text,
     right: -10px;
 }
 
-.hamburger-icon {
-    display: block;
-    width: 22px;
-    height: 16px;
-    overflow: visible;
+.hamburger-btn span {
+    position: absolute;
+    left: 0;
+    top: 7px;
+    width: 100%;
+    height: 1.5px;
+    background-color: var(--text-primary);
+    border-radius: 1px;
+    transform-origin: 50% 50%;
+    -webkit-transform-origin: 50% 50%;
+    transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), background-color 0.3s ease;
     pointer-events: none;
-    color: var(--text-primary);
+    will-change: transform;
+    -webkit-font-smoothing: antialiased;
 }
 
-.hamburger-icon line {
-    transform-box: view-box;
-    transform-origin: 11px 8px;
-    transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
-    stroke: currentColor;
+.hamburger-btn span:nth-child(1) {
+    transform: translateY(-4px) rotate(0deg);
 }
 
-.hamburger-icon .line-1 {
-    transform: translateY(0) rotate(0deg);
+.hamburger-btn span:nth-child(2) {
+    transform: translateY(4px) rotate(0deg);
 }
 
-.hamburger-icon .line-2 {
-    transform: translateY(0) rotate(0deg);
+/* Two-line fluid cross transition: unified translation & rotation */
+.hamburger-btn.open span:nth-child(1) {
+    transform: translateY(0) rotate(45deg);
 }
 
-/* Two-line fluid cross transition: mathematically constant vector thickness across all states */
-.hamburger-btn.open .hamburger-icon .line-1 {
-    transform: translateY(4px) rotate(45deg);
-}
-
-.hamburger-btn.open .hamburger-icon .line-2 {
-    transform: translateY(-4px) rotate(-45deg);
+.hamburger-btn.open span:nth-child(2) {
+    transform: translateY(0) rotate(-45deg);
 }
 
 /* --- Slide-Down Top Menu Drawer --- */
@@ -2011,7 +2009,7 @@ p.inquiries-text,
     opacity: 1 !important;
     visibility: hidden;
     pointer-events: none;
-    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.35s ease;
+    transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), visibility 0.3s ease;
     border: none !important;
     border-bottom: none !important;
     box-shadow: none !important;
@@ -2049,7 +2047,7 @@ p.inquiries-text,
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
-    transition: opacity 0.4s ease, visibility 0.4s ease;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
 .drawer-backdrop.show {
