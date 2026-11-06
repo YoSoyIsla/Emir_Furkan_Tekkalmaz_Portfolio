@@ -52,12 +52,12 @@
     /* Immediate hover zoom level */
     --zoom-progressive-scale: 1.07;
     /* Sustained progressive zoom level */
-    --zoom-speed-initial: 0.2s;
-    /* Initial zoom transition duration */
-    --zoom-speed-progressive: 0.5s;
-    /* Progressive zoom transition duration */
-    --zoom-speed-unhover: 0.85s;
-    /* Slower, gentle unhover zoom-out duration */
+    --zoom-speed-initial: 0.3s;
+    /* Initial zoom transition duration synchronized to 300ms */
+    --zoom-speed-progressive: 0.3s;
+    /* Progressive zoom transition duration synchronized to 300ms */
+    --zoom-speed-unhover: 0.3s;
+    /* Gentle unhover zoom-out duration synchronized to 300ms */
     --zoom-easing: cubic-bezier(0.25, 1, 0.5, 1);
     /* Ultra-smooth cubic bezier easing */
 
@@ -151,9 +151,10 @@ nav,
 .nav-container,
 .pinned_top,
 .mobile-drawer,
-.mobile-nav-bar {
+.mobile-nav-bar,
+.portrait-placeholder {
     background-color: var(--bg-color);
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 html {
@@ -189,7 +190,7 @@ label,
 .contact-link,
 .arrow-glyph,
 .drawer-link {
-    transition: color 0.3s ease, stroke 0.3s ease, fill 0.3s ease;
+    transition: color 0.3s cubic-bezier(0.25, 1, 0.5, 1), stroke 0.3s cubic-bezier(0.25, 1, 0.5, 1), fill 0.3s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 /* Strip all borders, shadows, outlines, and pseudo-elements on header & nav elements */
@@ -273,7 +274,7 @@ a:focus-visible {
     align-items: center;
     justify-content: flex-end;
     border-radius: var(--radius-button);
-    transition: opacity 0.3s ease, color 0.3s ease;
+    transition: opacity 0.3s cubic-bezier(0.25, 1, 0.5, 1), color 0.3s cubic-bezier(0.25, 1, 0.5, 1);
     transform: none !important;
     line-height: 1;
     position: relative;
@@ -296,30 +297,30 @@ a:focus-visible {
     right: 0.25rem;
     top: 50%;
     transform: translateY(-50%);
-    transition: opacity 0.3s ease, transform 0.3s ease, stroke 0.3s ease, color 0.3s ease;
+    transition: opacity 0.3s cubic-bezier(0.25, 1, 0.5, 1), stroke 0.3s cubic-bezier(0.25, 1, 0.5, 1), color 0.3s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .sun-icon {
     opacity: 1;
-    transform: translateY(-50%) rotate(0deg) scale(1);
+    transform: translateY(-50%);
     pointer-events: auto;
 }
 
 .moon-icon {
     opacity: 0;
-    transform: translateY(-50%) rotate(-45deg) scale(0.85);
+    transform: translateY(-50%);
     pointer-events: none;
 }
 
 [data-theme="dark"] .sun-icon {
     opacity: 0;
-    transform: translateY(-50%) rotate(45deg) scale(0.85);
+    transform: translateY(-50%);
     pointer-events: none;
 }
 
 [data-theme="dark"] .moon-icon {
     opacity: 1;
-    transform: translateY(-50%) rotate(0deg) scale(1);
+    transform: translateY(-50%);
     pointer-events: auto;
 }
 
@@ -620,7 +621,7 @@ a,
 .nav-link {
     color: var(--text-primary);
     text-decoration: none;
-    transition: opacity 0.3s ease, color 0.3s ease;
+    transition: opacity 0.3s cubic-bezier(0.25, 1, 0.5, 1), color 0.3s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 a:hover,
@@ -660,6 +661,7 @@ hr {
     border: none;
     border-top: 1px solid var(--border-color);
     margin: 4rem 0;
+    transition: border-color 0.3s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 @media (max-width: 768px) {
@@ -882,24 +884,24 @@ hr {
     .gallery-card:hover img,
     .home-hero .gallery-card:hover img {
         transform: scale(var(--zoom-initial-scale)) !important;
-        transition: transform var(--zoom-speed-initial) var(--zoom-easing), transform-origin 0.2s var(--zoom-easing) !important;
+        transition: transform var(--zoom-speed-initial) var(--zoom-easing), transform-origin var(--zoom-speed-initial) var(--zoom-easing) !important;
     }
 
     .single-work-card:hover img {
         transform: scale(var(--zoom-initial-scale));
-        transition: transform var(--zoom-speed-initial) var(--zoom-easing), transform-origin 0.2s var(--zoom-easing);
+        transition: transform var(--zoom-speed-initial) var(--zoom-easing), transform-origin var(--zoom-speed-initial) var(--zoom-easing);
     }
 
     .image-gallery .gallery-card.is-progressive img,
     .gallery-card.is-progressive img,
     .home-hero .gallery-card.is-progressive img {
         transform: scale(var(--zoom-progressive-scale)) !important;
-        transition: transform var(--zoom-speed-progressive) var(--zoom-easing), transform-origin 0.2s var(--zoom-easing) !important;
+        transition: transform var(--zoom-speed-progressive) var(--zoom-easing), transform-origin var(--zoom-speed-progressive) var(--zoom-easing) !important;
     }
 
     .single-work-card.is-progressive img {
         transform: scale(var(--zoom-progressive-scale));
-        transition: transform var(--zoom-speed-progressive) var(--zoom-easing), transform-origin 0.2s var(--zoom-easing);
+        transition: transform var(--zoom-speed-progressive) var(--zoom-easing), transform-origin var(--zoom-speed-progressive) var(--zoom-easing);
     }
 
 }
@@ -933,7 +935,7 @@ hr {
     background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0) 100%);
     color: #FAF9F6;
     opacity: 0;
-    transition: opacity 0.3s ease;
+    transition: opacity 0.3s cubic-bezier(0.25, 1, 0.5, 1);
     display: flex;
     flex-direction: column;
     gap: 0.3rem;
@@ -1017,7 +1019,7 @@ body.single-work-body {
     max-height: 100%;
     margin: 0 auto;
     opacity: 0;
-    transition: opacity 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    transition: opacity 0.3s cubic-bezier(0.25, 1, 0.5, 1);
     will-change: opacity;
 }
 
@@ -1090,7 +1092,7 @@ body.single-work-body {
     color: var(--text-primary);
     cursor: pointer;
     text-decoration: none;
-    transition: opacity 0.3s ease, color 0.3s ease;
+    transition: opacity 0.3s cubic-bezier(0.25, 1, 0.5, 1), color 0.3s cubic-bezier(0.25, 1, 0.5, 1);
     user-select: none;
     -webkit-user-select: none;
     opacity: 1;
@@ -1458,7 +1460,7 @@ body.single-work-body {
 .about-bio a {
     color: var(--text-primary);
     border-bottom: none;
-    transition: opacity 0.3s ease, color 0.3s ease;
+    transition: opacity 0.3s cubic-bezier(0.25, 1, 0.5, 1), color 0.3s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .about-bio a:hover {
@@ -1597,7 +1599,7 @@ body.single-work-body {
 
 .talks-list a {
     border-bottom: none;
-    transition: opacity 0.3s ease, color 0.3s ease;
+    transition: opacity 0.3s cubic-bezier(0.25, 1, 0.5, 1), color 0.3s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .talks-list a:hover {
@@ -1662,7 +1664,7 @@ p.inquiries-text,
     display: inline-block;
     border-bottom: none;
     font-variant-emoji: text;
-    transition: opacity 0.3s ease, color 0.3s ease;
+    transition: opacity 0.3s cubic-bezier(0.25, 1, 0.5, 1), color 0.3s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .contact-link .arrow-glyph,
@@ -1764,6 +1766,7 @@ p.inquiries-text,
     font-size: 1.1rem;
     color: var(--text-primary);
     outline: none;
+    transition: border-color 0.3s cubic-bezier(0.25, 1, 0.5, 1), color 0.3s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .form-input:focus {
@@ -1778,7 +1781,7 @@ p.inquiries-text,
     font-size: 1.1rem;
     color: var(--text-muted);
     pointer-events: none;
-    transition: top 0.2s ease, font-size 0.2s ease;
+    transition: top 0.3s cubic-bezier(0.25, 1, 0.5, 1), font-size 0.3s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 /* Float label logic when input is focused or not empty */
@@ -1799,7 +1802,7 @@ p.inquiries-text,
     font-weight: 500;
     font-size: 1rem;
     cursor: pointer;
-    transition: opacity 0.3s ease, color 0.3s ease;
+    transition: opacity 0.3s cubic-bezier(0.25, 1, 0.5, 1), color 0.3s cubic-bezier(0.25, 1, 0.5, 1), background-color 0.3s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.3s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .submit-btn:hover {
@@ -2047,7 +2050,7 @@ p.inquiries-text,
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
+    transition: opacity 0.3s cubic-bezier(0.25, 1, 0.5, 1), visibility 0.3s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .drawer-backdrop.show {
@@ -2097,7 +2100,7 @@ p.inquiries-text,
     background: transparent !important;
     background-color: transparent !important;
     border: none;
-    transition: opacity 0.3s ease, color 0.3s ease;
+    transition: opacity 0.3s cubic-bezier(0.25, 1, 0.5, 1), color 0.3s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .drawer-link.active {
@@ -2118,7 +2121,7 @@ p.inquiries-text,
     background: transparent !important;
     background-color: transparent !important;
     border: none !important;
-    transition: opacity 0.3s ease, color 0.3s ease;
+    transition: opacity 0.3s cubic-bezier(0.25, 1, 0.5, 1), color 0.3s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .drawer-nav .theme-toggle-btn .theme-icon {
