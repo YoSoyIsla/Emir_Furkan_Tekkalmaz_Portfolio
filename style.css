@@ -16,6 +16,30 @@
 }
 
 /* --- Custom Variables & Reset --- */
+@property --bg-color {
+    syntax: '<color>';
+    inherits: true;
+    initial-value: #FAF9F6;
+}
+
+@property --text-primary {
+    syntax: '<color>';
+    inherits: true;
+    initial-value: #000000;
+}
+
+@property --text-muted {
+    syntax: '<color>';
+    inherits: true;
+    initial-value: #767676;
+}
+
+@property --border-color {
+    syntax: '<color>';
+    inherits: true;
+    initial-value: #FAF9F6;
+}
+
 :root {
     color-scheme: light;
     /* Light Mode (Default): Background #FAF9F6, Text #000000 */
@@ -52,12 +76,12 @@
     /* Immediate hover zoom level */
     --zoom-progressive-scale: 1.07;
     /* Sustained progressive zoom level */
-    --zoom-speed-initial: 0.3s;
-    /* Initial zoom transition duration synchronized to 300ms */
-    --zoom-speed-progressive: 0.3s;
-    /* Progressive zoom transition duration synchronized to 300ms */
-    --zoom-speed-unhover: 0.3s;
-    /* Gentle unhover zoom-out duration synchronized to 300ms */
+    --zoom-speed-initial: 0.2s;
+    /* Initial zoom transition duration */
+    --zoom-speed-progressive: 0.5s;
+    /* Progressive zoom transition duration */
+    --zoom-speed-unhover: 0.85s;
+    /* Slower, gentle unhover zoom-out duration */
     --zoom-easing: cubic-bezier(0.25, 1, 0.5, 1);
     /* Ultra-smooth cubic bezier easing */
 
@@ -143,10 +167,20 @@ body {
 }
 
 /* Synchronized 300ms transition across all theme backgrounds, colors, and borders */
+:root,
+html {
+    transition: --bg-color 0.3s cubic-bezier(0.25, 1, 0.5, 1),
+                --text-primary 0.3s cubic-bezier(0.25, 1, 0.5, 1),
+                --text-muted 0.3s cubic-bezier(0.25, 1, 0.5, 1),
+                --border-color 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
 html,
 body,
 header,
 nav,
+main,
+section,
 .navbar,
 .nav-container,
 .pinned_top,
@@ -162,6 +196,7 @@ html {
 }
 
 /* Synchronized 300ms transition across all text, links, headings, sublines, arrows, and icons */
+body,
 .nav-link,
 .theme-toggle-btn,
 .theme-icon,
@@ -190,7 +225,7 @@ label,
 .contact-link,
 .arrow-glyph,
 .drawer-link {
-    transition: color 0.3s cubic-bezier(0.25, 1, 0.5, 1), stroke 0.3s cubic-bezier(0.25, 1, 0.5, 1), fill 0.3s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+    transition: color 0.3s cubic-bezier(0.25, 1, 0.5, 1), stroke 0.3s cubic-bezier(0.25, 1, 0.5, 1), fill 0.3s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 /* Strip all borders, shadows, outlines, and pseudo-elements on header & nav elements */
@@ -282,10 +317,12 @@ a:focus-visible {
     height: calc(var(--nav-icon-size, 18px) + 0.5rem);
 }
 
-.theme-toggle-btn:hover {
-    color: var(--text-muted);
-    opacity: 0.7;
-    transform: none !important;
+@media (hover: hover) and (pointer: fine) {
+    .theme-toggle-btn:hover {
+        color: var(--text-muted);
+        opacity: 0.7;
+        transform: none !important;
+    }
 }
 
 .theme-icon {
@@ -768,32 +805,6 @@ hr {
     }
 }
 
-@media (hover: none),
-(pointer: coarse),
-(max-width: 1024px) {
-
-    /* Touch devices & mobile viewports: strictly disable zoom transformation on grid thumbnails (image stays static) */
-    .image-gallery .gallery-card img,
-    .gallery-card img,
-    .home-hero .gallery-card img,
-    .home-hero-img,
-    .image-gallery .gallery-card:hover img,
-    .gallery-card:hover img,
-    .home-hero .gallery-card:hover img,
-    .image-gallery .gallery-card:active img,
-    .gallery-card:active img,
-    .home-hero .gallery-card:active img,
-    .image-gallery .gallery-card.is-touched img,
-    .gallery-card.is-touched img,
-    .home-hero .gallery-card.is-touched img,
-    .image-gallery .gallery-card.is-progressive img,
-    .gallery-card.is-progressive img,
-    .home-hero .gallery-card.is-progressive img,
-    .image-gallery .gallery-card.is-active img,
-    .gallery-card.is-active img {
-        transform: none !important;
-    }
-}
 
 /* --- Dynamic Intrinsic Aspect Ratio Container Layout --- */
 .image-gallery {
@@ -866,44 +877,26 @@ hr {
     opacity: 1;
 }
 
-/* Hover Zoom States - Controllable via :root variables (Desktop Hover) */
-@media (hover: hover) and (pointer: fine) {
+/* Hover Zoom States - Controllable via :root variables */
+.image-gallery .gallery-card:hover img,
+.gallery-card:hover img,
+.single-work-card:hover img {
+    transform: scale(var(--zoom-initial-scale)) !important;
+    transition: transform var(--zoom-speed-initial) var(--zoom-easing), transform-origin 0.2s var(--zoom-easing) !important;
+}
 
-    .image-gallery .gallery-card:hover img,
-    .gallery-card:hover img,
-    .home-hero .gallery-card:hover img,
-    .single-work-card:hover img,
-    .image-gallery .gallery-card.is-progressive img,
-    .gallery-card.is-progressive img,
-    .home-hero .gallery-card.is-progressive img,
-    .single-work-card.is-progressive img {
-        will-change: transform, transform-origin;
-    }
+.image-gallery .gallery-card.is-progressive img,
+.gallery-card.is-progressive img,
+.single-work-card.is-progressive img {
+    transform: scale(var(--zoom-progressive-scale)) !important;
+    transition: transform var(--zoom-speed-progressive) var(--zoom-easing), transform-origin 0.2s var(--zoom-easing) !important;
+}
 
-    .image-gallery .gallery-card:hover img,
-    .gallery-card:hover img,
-    .home-hero .gallery-card:hover img {
-        transform: scale(var(--zoom-initial-scale)) !important;
-        transition: transform var(--zoom-speed-initial) var(--zoom-easing), transform-origin var(--zoom-speed-initial) var(--zoom-easing) !important;
-    }
-
-    .single-work-card:hover img {
-        transform: scale(var(--zoom-initial-scale));
-        transition: transform var(--zoom-speed-initial) var(--zoom-easing), transform-origin var(--zoom-speed-initial) var(--zoom-easing);
-    }
-
-    .image-gallery .gallery-card.is-progressive img,
-    .gallery-card.is-progressive img,
-    .home-hero .gallery-card.is-progressive img {
-        transform: scale(var(--zoom-progressive-scale)) !important;
-        transition: transform var(--zoom-speed-progressive) var(--zoom-easing), transform-origin var(--zoom-speed-progressive) var(--zoom-easing) !important;
-    }
-
-    .single-work-card.is-progressive img {
-        transform: scale(var(--zoom-progressive-scale));
-        transition: transform var(--zoom-speed-progressive) var(--zoom-easing), transform-origin var(--zoom-speed-progressive) var(--zoom-easing);
-    }
-
+.home-hero .gallery-card:hover img,
+.home-hero .gallery-card.is-progressive img,
+.home-hero .gallery-card:hover video,
+.home-hero .gallery-card.is-progressive video {
+    transform: none !important;
 }
 
 /* Card Caption Overlay: Reveal dark tint and info text on desktop hover, mobile tap/touch, and active states */
@@ -935,7 +928,7 @@ hr {
     background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0) 100%);
     color: #FAF9F6;
     opacity: 0;
-    transition: opacity 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+    transition: opacity 0.3s ease;
     display: flex;
     flex-direction: column;
     gap: 0.3rem;
@@ -1019,7 +1012,7 @@ body.single-work-body {
     max-height: 100%;
     margin: 0 auto;
     opacity: 0;
-    transition: opacity 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+    transition: opacity 0.4s cubic-bezier(0.25, 1, 0.5, 1);
     will-change: opacity;
 }
 
@@ -1340,7 +1333,7 @@ body.single-work-body {
         background: transparent !important;
         border: none !important;
         padding: 0.5rem 0;
-        transition: opacity 0.3s ease, color 0.3s ease;
+        transition: opacity 0.3s cubic-bezier(0.25, 1, 0.5, 1), color 0.3s cubic-bezier(0.25, 1, 0.5, 1);
         text-decoration: none;
         -webkit-tap-highlight-color: transparent;
         outline: none !important;
@@ -1973,7 +1966,7 @@ p.inquiries-text,
     border-radius: 1px;
     transform-origin: 50% 50%;
     -webkit-transform-origin: 50% 50%;
-    transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), background-color 0.3s ease;
+    transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), background-color 0.3s cubic-bezier(0.25, 1, 0.5, 1);
     pointer-events: none;
     will-change: transform;
     -webkit-font-smoothing: antialiased;

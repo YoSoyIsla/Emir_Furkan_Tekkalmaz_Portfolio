@@ -378,7 +378,7 @@
                     }
                 };
 
-                setTimeout(onExitDone, 300);
+                setTimeout(onExitDone, 280);
             } else {
                 // Initial entrance
                 if (newImg.complete) {
@@ -389,43 +389,40 @@
             }
         }
 
-        // Setup Zoom Tracking for the Single Work Card (Desktop Mouse Hover strictly)
-        const isDesktopHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+        // Setup Zoom Tracking for the Single Work Card
         let progressiveTimer = null;
         let animationFrameId = null;
 
-        if (isDesktopHover) {
-            function updateOrigin(e) {
-                const rect = card.getBoundingClientRect();
-                const x = Math.max(0, Math.min(100, ((e.clientX - rect.left) / rect.width) * 100));
-                const y = Math.max(0, Math.min(100, ((e.clientY - rect.top) / rect.height) * 100));
+        function updateOrigin(e) {
+            const rect = card.getBoundingClientRect();
+            const x = Math.max(0, Math.min(100, ((e.clientX - rect.left) / rect.width) * 100));
+            const y = Math.max(0, Math.min(100, ((e.clientY - rect.top) / rect.height) * 100));
 
-                if (animationFrameId) cancelAnimationFrame(animationFrameId);
-                animationFrameId = requestAnimationFrame(() => {
-                    img.style.transformOrigin = `${x}% ${y}%`;
-                });
-            }
-
-            card.addEventListener('mouseenter', (e) => {
-                updateOrigin(e);
-                progressiveTimer = setTimeout(() => {
-                    card.classList.add('is-progressive');
-                }, 120);
-            });
-
-            card.addEventListener('mousemove', (e) => {
-                updateOrigin(e);
-            });
-
-            card.addEventListener('mouseleave', () => {
-                if (progressiveTimer) {
-                    clearTimeout(progressiveTimer);
-                    progressiveTimer = null;
-                }
-                card.classList.remove('is-progressive');
-                if (animationFrameId) cancelAnimationFrame(animationFrameId);
+            if (animationFrameId) cancelAnimationFrame(animationFrameId);
+            animationFrameId = requestAnimationFrame(() => {
+                img.style.transformOrigin = `${x}% ${y}%`;
             });
         }
+
+        card.addEventListener('mouseenter', (e) => {
+            updateOrigin(e);
+            progressiveTimer = setTimeout(() => {
+                card.classList.add('is-progressive');
+            }, 120);
+        });
+
+        card.addEventListener('mousemove', (e) => {
+            updateOrigin(e);
+        });
+
+        card.addEventListener('mouseleave', () => {
+            if (progressiveTimer) {
+                clearTimeout(progressiveTimer);
+                progressiveTimer = null;
+            }
+            card.classList.remove('is-progressive');
+            if (animationFrameId) cancelAnimationFrame(animationFrameId);
+        });
 
         // Navigation triggers
         function goToNext() {

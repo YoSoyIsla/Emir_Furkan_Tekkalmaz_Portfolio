@@ -34,7 +34,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&display=swap">
-  <link rel="stylesheet" crossorigin href="/assets/style-wxjotbpg.css">
+  <link rel="stylesheet" crossorigin href="/assets/style-CTtIvFVk.css">
 </head>
 
 <body>
@@ -604,10 +604,8 @@
                     card.classList.remove('is-touched');
                 }, { passive: true });
 
-                if (isDesktopHover) {
-                    const img = card.querySelector('img');
-                    if (!img) return;
-
+                const img = card.querySelector('img');
+                if (img) {
                     let progressiveTimer = null;
                     let animationFrameId = null;
 
