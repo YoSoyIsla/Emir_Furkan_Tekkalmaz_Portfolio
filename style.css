@@ -2007,14 +2007,18 @@ p.inquiries-text,
     left: 0;
     width: 100%;
     height: auto;
-    background-color: var(--bg-color) !important;
+    background-color: var(--bg-color);
     z-index: 2000;
     transform: translateY(-100%);
-    /* Slides up behind header */
-    opacity: 1 !important;
+    -webkit-transform: translateY(-100%);
+    will-change: transform;
+    opacity: 1;
     visibility: hidden;
     pointer-events: none;
-    transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), visibility 0.3s cubic-bezier(0.25, 1, 0.5, 1), background-color 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+    transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1),
+                -webkit-transform 0.3s cubic-bezier(0.25, 1, 0.5, 1),
+                visibility 0s linear 0.3s,
+                background-color 0.3s cubic-bezier(0.25, 1, 0.5, 1);
     border: none !important;
     border-bottom: none !important;
     box-shadow: none !important;
@@ -2023,9 +2027,14 @@ p.inquiries-text,
 
 .mobile-drawer.open {
     transform: translateY(0);
-    opacity: 1 !important;
+    -webkit-transform: translateY(0);
+    opacity: 1;
     visibility: visible;
     pointer-events: auto;
+    transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1),
+                -webkit-transform 0.3s cubic-bezier(0.25, 1, 0.5, 1),
+                visibility 0s linear 0s,
+                background-color 0.3s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 @media (min-width: 769px) {
@@ -2052,12 +2061,16 @@ p.inquiries-text,
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
-    transition: opacity 0.3s cubic-bezier(0.25, 1, 0.5, 1), visibility 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+    transition: opacity 0.3s cubic-bezier(0.25, 1, 0.5, 1),
+                visibility 0s linear 0.3s;
 }
 
 .drawer-backdrop.show {
     opacity: 1;
     visibility: visible;
+    pointer-events: auto;
+    transition: opacity 0.3s cubic-bezier(0.25, 1, 0.5, 1),
+                visibility 0s linear 0s;
 }
 
 .mobile-drawer .container_width {
