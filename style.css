@@ -337,15 +337,6 @@ a:focus-visible {
     transition: opacity 0.3s cubic-bezier(0.25, 1, 0.5, 1), stroke 0.3s cubic-bezier(0.25, 1, 0.5, 1), color 0.3s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-.theme-icon,
-.theme-icon *,
-.theme-icon path,
-.theme-icon line,
-.theme-icon circle {
-    stroke: currentColor;
-    transition: opacity 0.3s cubic-bezier(0.25, 1, 0.5, 1), stroke 0.3s cubic-bezier(0.25, 1, 0.5, 1), color 0.3s cubic-bezier(0.25, 1, 0.5, 1), fill 0.3s cubic-bezier(0.25, 1, 0.5, 1);
-}
-
 .sun-icon {
     opacity: 1;
     transform: translateY(-50%);
@@ -1324,7 +1315,6 @@ body.single-work-body {
         margin: 0;
         border: none !important;
         box-shadow: none !important;
-        transition: background-color 0.3s cubic-bezier(0.25, 1, 0.5, 1);
     }
 
     .mobile-nav-bar .work-nav-arrow {
@@ -1783,7 +1773,7 @@ p.inquiries-text,
     font-size: 1.1rem;
     color: var(--text-muted);
     pointer-events: none;
-    transition: top 0.3s cubic-bezier(0.25, 1, 0.5, 1), font-size 0.3s cubic-bezier(0.25, 1, 0.5, 1), color 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+    transition: top 0.3s cubic-bezier(0.25, 1, 0.5, 1), font-size 0.3s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 /* Float label logic when input is focused or not empty */
@@ -2007,18 +1997,14 @@ p.inquiries-text,
     left: 0;
     width: 100%;
     height: auto;
-    background-color: var(--bg-color);
+    background-color: var(--bg-color) !important;
     z-index: 2000;
     transform: translateY(-100%);
-    -webkit-transform: translateY(-100%);
-    will-change: transform;
-    opacity: 1;
+    /* Slides up behind header */
+    opacity: 1 !important;
     visibility: hidden;
     pointer-events: none;
-    transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1),
-                -webkit-transform 0.3s cubic-bezier(0.25, 1, 0.5, 1),
-                visibility 0s linear 0.3s,
-                background-color 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+    transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), visibility 0.3s ease;
     border: none !important;
     border-bottom: none !important;
     box-shadow: none !important;
@@ -2027,14 +2013,9 @@ p.inquiries-text,
 
 .mobile-drawer.open {
     transform: translateY(0);
-    -webkit-transform: translateY(0);
-    opacity: 1;
+    opacity: 1 !important;
     visibility: visible;
     pointer-events: auto;
-    transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1),
-                -webkit-transform 0.3s cubic-bezier(0.25, 1, 0.5, 1),
-                visibility 0s linear 0s,
-                background-color 0.3s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 @media (min-width: 769px) {
@@ -2061,16 +2042,12 @@ p.inquiries-text,
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
-    transition: opacity 0.3s cubic-bezier(0.25, 1, 0.5, 1),
-                visibility 0s linear 0.3s;
+    transition: opacity 0.3s cubic-bezier(0.25, 1, 0.5, 1), visibility 0.3s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .drawer-backdrop.show {
     opacity: 1;
     visibility: visible;
-    pointer-events: auto;
-    transition: opacity 0.3s cubic-bezier(0.25, 1, 0.5, 1),
-                visibility 0s linear 0s;
 }
 
 .mobile-drawer .container_width {
@@ -2128,16 +2105,14 @@ p.inquiries-text,
     padding: 0.35rem 0 !important;
     margin: 0 !important;
     width: 100% !important;
-    min-height: calc(1.18rem * 1.2 + 0.7rem);
-    height: calc(1.18rem * 1.2 + 0.7rem);
     display: flex !important;
     align-items: center;
     cursor: pointer;
     line-height: 1 !important;
+    height: auto !important;
     background: transparent !important;
     background-color: transparent !important;
     border: none !important;
-    position: relative;
     transition: opacity 0.3s cubic-bezier(0.25, 1, 0.5, 1), color 0.3s cubic-bezier(0.25, 1, 0.5, 1);
 }
 

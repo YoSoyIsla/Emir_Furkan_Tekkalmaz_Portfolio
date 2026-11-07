@@ -262,6 +262,7 @@
                 const isOpen = drawer.classList.toggle('open');
                 backdrop.classList.toggle('show', isOpen);
                 btn.classList.toggle('open', isOpen);
+                document.body.style.overflow = isOpen ? 'hidden' : '';
             }
         }
 
