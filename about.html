@@ -6,9 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="index, follow">
     <title>About</title>
-    <meta name="description" content="Biography and exhibitions of Emir Furkan Tekkalmaz, Istanbul-based contemporary painter and visual artist.">
+    <meta name="description"
+        content="Biography and exhibitions of Emir Furkan Tekkalmaz, Istanbul-based contemporary painter and visual artist.">
     <meta property="og:title" content="About">
-    <meta property="og:description" content="Biography and exhibitions of Emir Furkan Tekkalmaz, Istanbul-based contemporary painter and visual artist.">
+    <meta property="og:description"
+        content="Biography and exhibitions of Emir Furkan Tekkalmaz, Istanbul-based contemporary painter and visual artist.">
     <meta property="og:image" content="https://emirfurkantekkalmaz.com/assets/about_image.webp">
     <meta property="og:type" content="profile">
     <meta name="twitter:card" content="summary_large_image">
@@ -18,23 +20,27 @@
     <!-- Google Tag Manager / Analytics -->
     <script async src="https://www.googletagmanager.com/gtm.js?id=GTM-KPWTHMQW"></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
     </script>
     <script>
         (function () {
             try {
                 var theme = localStorage.getItem('theme');
-                if (theme === 'dark') {
+                var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+                if (theme === 'dark' || (!theme && prefersDark)) {
                     document.documentElement.setAttribute('data-theme', 'dark');
+                } else {
+                    document.documentElement.removeAttribute('data-theme');
                 }
             } catch (e) { }
         })();
     </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&display=swap">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&display=swap">
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -229,30 +235,45 @@
 
     <script>
         // Dark / Light Mode Switcher Logic
-        function initTheme() {
-            const savedTheme = localStorage.getItem('theme') || 'light';
-            if (savedTheme === 'dark') {
+        function getPreferredTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark' || savedTheme === 'light') {
+                return savedTheme;
+            }
+            return (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+        }
+
+        function applyTheme(theme) {
+            if (theme === 'dark') {
                 document.documentElement.setAttribute('data-theme', 'dark');
             } else {
                 document.documentElement.removeAttribute('data-theme');
             }
         }
 
+        function initTheme() {
+            applyTheme(getPreferredTheme());
+        }
+
         function toggleTheme() {
-            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-            if (isDark) {
-                document.documentElement.removeAttribute('data-theme');
-                localStorage.setItem('theme', 'light');
-            } else {
-                document.documentElement.setAttribute('data-theme', 'dark');
-                localStorage.setItem('theme', 'dark');
-            }
+            const currentTheme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            applyTheme(newTheme);
+            localStorage.setItem('theme', newTheme);
             if (document.activeElement && document.activeElement.blur) {
                 document.activeElement.blur();
             }
         }
 
         initTheme();
+
+        if (window.matchMedia) {
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+                if (!localStorage.getItem('theme')) {
+                    applyTheme(e.matches ? 'dark' : 'light');
+                }
+            });
+        }
 
         function toggleMobileMenu() {
             const drawer = document.getElementById('mobileDrawer');
