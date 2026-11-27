@@ -3,14 +3,28 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
-    <title id="pageTitle">Artwork</title>
-    <meta name="description" id="metaDescription" content="Artwork by Emir Furkan Tekkalmaz.">
-    <meta property="og:title" id="ogTitle" content="Artwork">
-    <meta property="og:description" id="ogDescription" content="Artwork by Emir Furkan Tekkalmaz.">
-    <meta property="og:image" content="https://emirfurkantekkalmaz.com/assets/home_screen.webp">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <title id="pageTitle">Artworks | Emir Furkan Tekkalmaz</title>
+    <meta name="description" id="metaDescription" content="Artwork by Emir Furkan Tekkalmaz, Istanbul-based contemporary painter working in pencil, charcoal and acrylic on canvas.">
+    <meta name="author" content="Emir Furkan Tekkalmaz">
+    <link rel="canonical" id="canonicalLink" href="https://emirfurkantekkalmaz.com/work">
+    <meta name="theme-color" content="#FAF9F6">
+    <meta property="og:site_name" content="Emir Furkan Tekkalmaz">
+    <meta property="og:locale" content="en_US">
     <meta property="og:type" content="article">
+    <meta property="og:url" id="ogUrl" content="https://emirfurkantekkalmaz.com/work">
+    <meta property="og:title" id="ogTitle" content="Artworks | Emir Furkan Tekkalmaz">
+    <meta property="og:description" id="ogDescription" content="Artwork by Emir Furkan Tekkalmaz, Istanbul-based contemporary painter working in pencil, charcoal and acrylic on canvas.">
+    <meta property="og:image" id="ogImage" content="https://emirfurkantekkalmaz.com/works/aria-og.jpg">
+    <meta property="og:image:width" id="ogImageWidth" content="1200">
+    <meta property="og:image:height" id="ogImageHeight" content="746">
+    <meta property="og:image:alt" id="ogImageAlt" content="Aria by Emir Furkan Tekkalmaz">
     <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" id="twTitle" content="Artworks | Emir Furkan Tekkalmaz">
+    <meta name="twitter:description" id="twDescription" content="Artwork by Emir Furkan Tekkalmaz, Istanbul-based contemporary painter working in pencil, charcoal and acrylic on canvas.">
+    <meta name="twitter:image" id="twImage" content="https://emirfurkantekkalmaz.com/works/aria-og.jpg">
+    <script type="application/ld+json" id="workJsonLd">{}</script>
     <link rel="icon" type="image/png" href="/assets/Emir_Logo.png">
     <link rel="apple-touch-icon" href="/assets/Emir_Logo.png">
     <!-- Google Tag Manager / Analytics -->
@@ -25,11 +39,14 @@
             try {
                 var theme = localStorage.getItem('theme');
                 var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-                if (theme === 'dark' || (!theme && prefersDark)) {
+                var dark = theme === 'dark' || (!theme && prefersDark);
+                if (dark) {
                     document.documentElement.setAttribute('data-theme', 'dark');
                 } else {
                     document.documentElement.removeAttribute('data-theme');
                 }
+                var meta = document.querySelector('meta[name="theme-color"]');
+                if (meta) meta.setAttribute('content', dark ? '#000000' : '#FAF9F6');
             } catch (e) { }
         })();
     </script>
@@ -37,7 +54,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&display=swap">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/style.css">
+    <script type="module" src="/theme.js"></script>
 </head>
 
 <body class="single-work-body">
@@ -102,7 +120,7 @@
             <!-- Center Prominent Artwork Frame (Left-aligned text matched to card width) -->
             <div class="single-work-frame" id="singleWorkFrame">
                 <div class="single-work-card" id="singleWorkCard">
-                    <img id="singleWorkImg" src="" alt="" loading="eager" draggable="false">
+                    <img id="singleWorkImg" alt="" loading="eager" draggable="false">
                 </div>
 
                 <!-- Two-line metadata aligned directly to the left side of the painting -->
@@ -157,48 +175,18 @@
     </div>
 
     <script type="module">
-        import { WORKS } from './works-data.js';
-
-        // Theme management
-        function getPreferredTheme() {
-            const savedTheme = localStorage.getItem('theme');
-            if (savedTheme === 'dark' || savedTheme === 'light') {
-                return savedTheme;
-            }
-            return (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
-        }
-
-        function applyTheme(theme) {
-            if (theme === 'dark') {
-                document.documentElement.setAttribute('data-theme', 'dark');
-            } else {
-                document.documentElement.removeAttribute('data-theme');
-            }
-        }
-
-        function initTheme() {
-            applyTheme(getPreferredTheme());
-        }
-
-        window.toggleTheme = function () {
-            const currentTheme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            applyTheme(newTheme);
-            localStorage.setItem('theme', newTheme);
-            if (document.activeElement && document.activeElement.blur) {
-                document.activeElement.blur();
-            }
-        };
-
-        initTheme();
-
-        if (window.matchMedia) {
-            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-                if (!localStorage.getItem('theme')) {
-                    applyTheme(e.matches ? 'dark' : 'light');
-                }
-            });
-        }
+        import {
+            WORKS,
+            ARTIST,
+            SITE_URL,
+            imageSet,
+            altText,
+            sublineText,
+            fullTitle,
+            metaDescription,
+            workUrl,
+            artworkJsonLd,
+        } from '/works-data.js';
 
         window.toggleMobileMenu = function () {
             const drawer = document.getElementById('mobileDrawer');
@@ -212,12 +200,19 @@
             }
         };
 
+        // ------------------------------------------------------------------
         // Artwork View Logic
+        // ------------------------------------------------------------------
         let currentIndex = 0;
 
+        function idFromLocation() {
+            const m = /^\/work\/([^/]+?)(?:\.html)?\/?$/.exec(window.location.pathname);
+            if (m) return decodeURIComponent(m[1]);
+            return new URLSearchParams(window.location.search).get('id');
+        }
+
         function getInitialIndex() {
-            const params = new URLSearchParams(window.location.search);
-            const idParam = params.get('id');
+            const idParam = idFromLocation();
             if (idParam) {
                 const foundIndex = WORKS.findIndex(w => w.id.toLowerCase() === idParam.toLowerCase());
                 if (foundIndex !== -1) return foundIndex;
@@ -229,48 +224,19 @@
             return 0;
         }
 
+        const stage = document.querySelector('.single-work-main');
+        const wrapper = document.querySelector('.single-work-wrapper');
         const frame = document.getElementById('singleWorkFrame');
         const img = document.getElementById('singleWorkImg');
         const card = document.getElementById('singleWorkCard');
         const titleEl = document.getElementById('singleWorkTitle');
         const sublineEl = document.getElementById('singleWorkSubline');
         const metaContainer = document.getElementById('singleWorkMetaContainer');
-        const pageTitle = document.getElementById('pageTitle');
 
-        function updateMobileLayout() {
-            const isMobile = window.innerWidth <= 768;
-            const wrapper = document.querySelector('.single-work-wrapper');
-            if (!isMobile) {
-                card.style.width = '';
-                card.style.height = '';
-                if (wrapper) {
-                    wrapper.classList.remove('is-landscape', 'is-portrait');
-                }
-                if (metaContainer && card) {
-                    const rect = card.getBoundingClientRect();
-                    if (rect.width > 0) {
-                        metaContainer.style.maxWidth = `${rect.width}px`;
-                        metaContainer.style.width = `${rect.width}px`;
-                    }
-                }
-                return;
-            }
-
+        function computeMobileCardSize(ar) {
             const vh = window.innerHeight || document.documentElement.clientHeight;
             const vw = window.innerWidth || document.documentElement.clientWidth;
-            const work = WORKS[currentIndex];
-            const ar = (work && work.aspectRatio) ? work.aspectRatio : 1.2;
             const isLandscape = ar >= 1.0;
-
-            if (wrapper) {
-                if (isLandscape) {
-                    wrapper.classList.add('is-landscape');
-                    wrapper.classList.remove('is-portrait');
-                } else {
-                    wrapper.classList.add('is-portrait');
-                    wrapper.classList.remove('is-landscape');
-                }
-            }
 
             const navTopH = 44;
             const navBottomH = 44;
@@ -310,6 +276,47 @@
                     h = Math.floor(availW / ar);
                 }
             }
+            return { w, h, isLandscape };
+        }
+
+        function isMobileViewport() {
+            return window.innerWidth <= 768;
+        }
+
+        /** Expected on-screen width (CSS px) of the artwork card, used for responsive image selection. */
+        function expectedCardWidth(work) {
+            const ar = work.aspectRatio || 1.2;
+            if (isMobileViewport()) return computeMobileCardSize(ar).w;
+            const maxH = parseFloat(getComputedStyle(card).maxHeight) || window.innerHeight * 0.75;
+            const availW = (wrapper && wrapper.clientWidth) || window.innerWidth;
+            return Math.min(availW, maxH * ar);
+        }
+
+        function updateMobileLayout() {
+            if (!isMobileViewport()) {
+                card.style.width = '';
+                card.style.height = '';
+                if (wrapper) {
+                    wrapper.classList.remove('is-landscape', 'is-portrait');
+                }
+                if (metaContainer && card) {
+                    const rect = card.getBoundingClientRect();
+                    if (rect.width > 0) {
+                        metaContainer.style.maxWidth = `${rect.width}px`;
+                        metaContainer.style.width = `${rect.width}px`;
+                    }
+                }
+                return;
+            }
+
+            const work = WORKS[currentIndex];
+            const ar = (work && work.aspectRatio) ? work.aspectRatio : 1.2;
+            const { w, h, isLandscape } = computeMobileCardSize(ar);
+
+            if (wrapper) {
+                wrapper.classList.toggle('is-landscape', isLandscape);
+                wrapper.classList.toggle('is-portrait', !isLandscape);
+            }
 
             card.style.width = `${w}px`;
             card.style.height = `${h}px`;
@@ -326,6 +333,8 @@
                 requestAnimationFrame(() => {
                     updateMobileLayout();
                     resizeTicking = false;
+                    // Keep a zoomed image inside the (possibly resized) frame.
+                    if (zoomActive) setView(view.s, view.x, view.y, { clampToBounds: true });
                 });
             }
         }
@@ -335,42 +344,144 @@
             setTimeout(syncMetaWidth, 50);
         });
 
+        // --- Responsive image handling -------------------------------------
+        // The <img> uses a width-described srcset; `sizes` is set to the real card width so the
+        // browser picks the smallest sufficient file, and is raised while zooming so a sharper
+        // version (up to the full-resolution master) is fetched only when it is actually needed.
+        let sizesPx = 0;
+
+        function setImageSizes(px) {
+            const rounded = Math.ceil(px / 50) * 50;
+            if (rounded > sizesPx) {
+                sizesPx = rounded;
+                img.sizes = `${rounded}px`;
+            }
+        }
+
+        function candidateWidth(url, set) {
+            const m = /-(\d+)\.webp(?:$|\?)/.exec(url || '');
+            return m ? parseInt(m[1], 10) : (url ? set.width : 0);
+        }
+
+        function maybeUpgradeResolution(scale) {
+            if (scale <= 1.15) return;
+            const width = card.getBoundingClientRect().width || card.offsetWidth;
+            if (width > 0) setImageSizes(width * Math.min(scale, 3));
+        }
+
+        function preloadWork(work) {
+            if (!work) return;
+            const set = imageSet(work);
+            const pre = new Image();
+            pre.decoding = 'async';
+            pre.sizes = `${Math.ceil(expectedCardWidth(work) / 50) * 50}px`;
+            pre.srcset = set.srcset;
+            pre.src = set.src;
+        }
+
+        // --- Document head (title, description, canonical, social, JSON-LD) -
+        function setMeta(id, value, attr = 'content') {
+            const el = document.getElementById(id);
+            if (el) el.setAttribute(attr, value);
+        }
+
+        function updateHead(work) {
+            const set = imageSet(work);
+            const title = `${work.title} (${work.year}) | ${ARTIST.name}`;
+            const description = metaDescription(work);
+            const url = workUrl(work);
+            const ogImage = `${SITE_URL}${set.og}`;
+            document.title = title;
+            setMeta('metaDescription', description);
+            setMeta('canonicalLink', url, 'href');
+            setMeta('ogTitle', title);
+            setMeta('ogDescription', description);
+            setMeta('ogUrl', url);
+            setMeta('ogImage', ogImage);
+            setMeta('ogImageWidth', String(Math.min(1200, set.width)));
+            setMeta('ogImageHeight', String(Math.round((Math.min(1200, set.width) * set.height) / set.width)));
+            setMeta('ogImageAlt', altText(work));
+            setMeta('twTitle', title);
+            setMeta('twDescription', description);
+            setMeta('twImage', ogImage);
+            const ld = document.getElementById('workJsonLd');
+            if (ld) {
+                ld.textContent = JSON.stringify({
+                    '@context': 'https://schema.org',
+                    '@graph': [
+                        {
+                            '@type': 'WebPage',
+                            '@id': `${url}#webpage`,
+                            url,
+                            name: title,
+                            description,
+                            isPartOf: { '@id': `${SITE_URL}/#website` },
+                            primaryImageOfPage: `${SITE_URL}${set.full}`,
+                            mainEntity: { '@id': `${url}#artwork` },
+                        },
+                        artworkJsonLd(work),
+                    ],
+                });
+            }
+        }
+
         let isSwitching = false;
+        let renderToken = 0;
 
         function renderWork(index, updateHistory = true) {
-            if (typeof resetZoom === 'function') resetZoom(false);
+            resetZoom(false);
             if (index < 0) index = WORKS.length - 1;
             if (index >= WORKS.length) index = 0;
             currentIndex = index;
 
             const work = WORKS[currentIndex];
+            const set = imageSet(work);
+            const token = ++renderToken;
 
             if (updateHistory) {
-                const newUrl = `/work?id=${work.id}`;
-                window.history.pushState({ index: currentIndex }, '', newUrl);
+                window.history.pushState({ index: currentIndex }, '', `/work/${work.id}`);
+            } else if (/[?&]id=/.test(window.location.search)) {
+                // Legacy /work?id=<id> links: normalise the address bar to the canonical URL.
+                window.history.replaceState({ index: currentIndex }, '', `/work/${work.id}`);
             }
 
-            document.title = work.title;
-            if (pageTitle) pageTitle.textContent = work.title;
-            const ogTitle = document.getElementById('ogTitle');
-            if (ogTitle) ogTitle.setAttribute('content', work.title);
+            updateHead(work);
 
-            // Preload new artwork image
-            const newImg = new Image();
-            newImg.src = work.image;
+            // Pre-rendered page: the <img> already holds this artwork, keep its request.
+            const alreadyRendered = img.getAttribute('srcset') === set.srcset;
+            const sizes = `${Math.ceil(expectedCardWidth(work) / 50) * 50}px`;
+
+            // Preload new artwork image (same srcset/sizes as the visible <img> => one request).
+            // A pre-rendered page is already loading it in the visible <img>, so wait on that.
+            let loader = img;
+            if (!alreadyRendered) {
+                loader = new Image();
+                loader.decoding = 'async';
+                loader.sizes = sizes;
+                loader.srcset = set.srcset;
+                loader.src = set.src;
+            }
 
             const applyContent = () => {
-                img.src = work.image;
-                img.alt = `${work.title}, ${work.year}`;
+                if (token !== renderToken) return;
+                if (!alreadyRendered) {
+                    sizesPx = 0;
+                    img.sizes = sizes;
+                    img.srcset = set.srcset;
+                    img.src = set.src;
+                    img.width = set.width;
+                    img.height = set.height;
+                } else {
+                    // Pre-rendered page: start the zoom upgrade threshold at what is already displayed.
+                    const shown = candidateWidth(img.currentSrc || img.src, set);
+                    sizesPx = Math.max(parseInt(sizes, 10) || 0, Math.floor(shown / (window.devicePixelRatio || 1)));
+                }
+                img.alt = altText(work);
                 img.classList.add('is-loaded');
 
                 // Update typography/metadata
                 titleEl.textContent = work.title;
-                const sublineParts = [];
-                if (work.dimensions) sublineParts.push(work.dimensions);
-                if (work.medium) sublineParts.push(work.medium);
-                if (work.year) sublineParts.push(work.year);
-                sublineEl.textContent = sublineParts.join(', ');
+                sublineEl.textContent = sublineText(work);
 
                 card.style.setProperty('--ar', work.aspectRatio || 1.2);
                 syncMetaWidth();
@@ -380,66 +491,624 @@
                     frame.classList.add('is-visible');
                     isSwitching = false;
                 });
+
+                // Warm the cache for the neighbours so prev/next feel instant.
+                const n = WORKS.length;
+                setTimeout(() => {
+                    preloadWork(WORKS[(currentIndex + 1) % n]);
+                    preloadWork(WORKS[(currentIndex - 1 + n) % n]);
+                }, 400);
+            };
+
+            const whenReady = (fn) => {
+                if (loader.complete && loader.naturalWidth > 0) {
+                    fn();
+                } else {
+                    loader.addEventListener('load', fn, { once: true });
+                    loader.addEventListener('error', fn, { once: true });
+                }
             };
 
             if (frame.classList.contains('is-visible')) {
                 // Switching between artworks: smooth synchronized exit then entry
                 isSwitching = true;
                 frame.classList.remove('is-visible');
-                card.classList.remove('is-progressive');
-
-                const onExitDone = () => {
-                    if (newImg.complete) {
-                        applyContent();
-                    } else {
-                        newImg.onload = applyContent;
-                    }
-                };
-
-                setTimeout(onExitDone, 280);
+                cancelHover();
+                setTimeout(() => whenReady(applyContent), 280);
             } else {
                 // Initial entrance
-                if (newImg.complete) {
-                    applyContent();
-                } else {
-                    newImg.onload = applyContent;
-                }
+                whenReady(applyContent);
             }
         }
 
-        // Setup Zoom Tracking for the Single Work Card
+        // ------------------------------------------------------------------
+        // Desktop hover zoom (mouse only; never triggered by touch taps)
+        // ------------------------------------------------------------------
+        const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
         let progressiveTimer = null;
-        let animationFrameId = null;
+        let originFrame = 0;
+
+        function cancelHover() {
+            if (progressiveTimer) {
+                clearTimeout(progressiveTimer);
+                progressiveTimer = null;
+            }
+            card.classList.remove('is-progressive');
+            if (originFrame) cancelAnimationFrame(originFrame);
+            originFrame = 0;
+        }
 
         function updateOrigin(e) {
             const rect = card.getBoundingClientRect();
             const x = Math.max(0, Math.min(100, ((e.clientX - rect.left) / rect.width) * 100));
             const y = Math.max(0, Math.min(100, ((e.clientY - rect.top) / rect.height) * 100));
 
-            if (animationFrameId) cancelAnimationFrame(animationFrameId);
-            animationFrameId = requestAnimationFrame(() => {
-                img.style.transformOrigin = `${x}% ${y}%`;
+            if (originFrame) cancelAnimationFrame(originFrame);
+            originFrame = requestAnimationFrame(() => {
+                originFrame = 0;
+                if (!zoomActive) img.style.transformOrigin = `${x}% ${y}%`;
             });
         }
 
-        card.addEventListener('mouseenter', (e) => {
-            updateOrigin(e);
+        function armProgressive() {
+            if (progressiveTimer || card.classList.contains('is-progressive')) return;
             progressiveTimer = setTimeout(() => {
-                card.classList.add('is-progressive');
-            }, 120);
-        });
-
-        card.addEventListener('mousemove', (e) => {
-            updateOrigin(e);
-        });
-
-        card.addEventListener('mouseleave', () => {
-            if (progressiveTimer) {
-                clearTimeout(progressiveTimer);
                 progressiveTimer = null;
+                if (!zoomActive) card.classList.add('is-progressive');
+            }, 120);
+        }
+
+        const isMouseHover = (e) => e.pointerType === 'mouse' && finePointer.matches && !zoomActive && !isSwitching;
+
+        card.addEventListener('pointerenter', (e) => {
+            if (!isMouseHover(e)) return;
+            updateOrigin(e);
+            armProgressive();
+        });
+
+        card.addEventListener('pointermove', (e) => {
+            if (!isMouseHover(e) || pointers.size) return;
+            updateOrigin(e);
+            armProgressive();
+        });
+
+        card.addEventListener('pointerleave', (e) => {
+            if (e.pointerType === 'mouse') cancelHover();
+        });
+
+        card.addEventListener('dragstart', (e) => e.preventDefault());
+
+        // ------------------------------------------------------------------
+        // Full-view zoom & pan engine
+        //   Mouse wheel / trackpad pinch (ctrl+wheel) / Safari gesture events,
+        //   touch pinch with focal point, one-finger & mouse drag panning with
+        //   inertia, double-tap / double-click zoom, keyboard + / - / 0.
+        // The image is transformed inside the card (overflow: hidden), so the page
+        // viewport itself never zooms or scrolls.
+        // ------------------------------------------------------------------
+        const MAX_SCALE = 5;
+        const TAP_ZOOM_SCALE = 2.5;
+        const view = { s: 1, x: 0, y: 0 };
+        let zoomActive = false;
+        let goal = null;
+        let animFrame = 0;
+        let lastFrameTs = 0;
+        let inertiaFrame = 0;
+
+        const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
+
+        function cardGeometry() {
+            const r = card.getBoundingClientRect();
+            const w = r.width || card.offsetWidth;
+            const h = r.height || card.offsetHeight;
+            return { left: r.left, top: r.top, w, h, cx: r.left + w / 2, cy: r.top + h / 2 };
+        }
+
+        function panBounds(s) {
+            const { w, h } = cardGeometry();
+            return { mx: Math.max(0, (w * (s - 1)) / 2), my: Math.max(0, (h * (s - 1)) / 2) };
+        }
+
+        function rubberBand(v, max) {
+            const a = Math.abs(v);
+            return a <= max ? v : Math.sign(v) * (max + (a - max) * 0.35);
+        }
+
+        /** Point relative to the card centre, clamped to the card. */
+        function focalPoint(clientX, clientY) {
+            const g = cardGeometry();
+            return {
+                x: clamp(clientX, g.left, g.left + g.w) - g.cx,
+                y: clamp(clientY, g.top, g.top + g.h) - g.cy,
+            };
+        }
+
+        function isIdentity(s, x, y) {
+            return Math.abs(s - 1) < 0.0005 && Math.abs(x) < 0.3 && Math.abs(y) < 0.3;
+        }
+
+        // Take over seamlessly from the CSS hover zoom (scale around the cursor) so the
+        // image never jumps when a wheel / pinch / drag gesture starts.
+        function captureHoverTransform() {
+            if (zoomActive) return;
+            const cs = getComputedStyle(img);
+            let a = 1, e = 0, f = 0;
+            if (cs.transform && cs.transform !== 'none') {
+                const m = new DOMMatrixReadOnly(cs.transform);
+                a = m.a; e = m.e; f = m.f;
             }
-            card.classList.remove('is-progressive');
-            if (animationFrameId) cancelAnimationFrame(animationFrameId);
+            const [ox, oy] = cs.transformOrigin.split(' ').map(parseFloat);
+            const relX = (isNaN(ox) ? img.offsetWidth / 2 : ox) - img.offsetWidth / 2;
+            const relY = (isNaN(oy) ? img.offsetHeight / 2 : oy) - img.offsetHeight / 2;
+            view.s = a;
+            view.x = (1 - a) * relX + e;
+            view.y = (1 - a) * relY + f;
+        }
+
+        function beginZoomStyles() {
+            if (zoomActive) return;
+            zoomActive = true;
+            cancelHover();
+            card.classList.add('is-zoomed');
+            img.style.setProperty('transition', 'none', 'important');
+            img.style.setProperty('transform-origin', '50% 50%', 'important');
+            img.style.setProperty('will-change', 'transform');
+        }
+
+        function endZoomStyles() {
+            zoomActive = false;
+            view.s = 1;
+            view.x = 0;
+            view.y = 0;
+            card.classList.remove('is-zoomed', 'is-dragging');
+            img.style.removeProperty('transform');
+            img.style.removeProperty('-webkit-transform');
+            img.style.removeProperty('transition');
+            img.style.removeProperty('transform-origin');
+            img.style.removeProperty('will-change');
+        }
+
+        function paint() {
+            if (!zoomActive) beginZoomStyles();
+            const t = `translate3d(${view.x.toFixed(2)}px, ${view.y.toFixed(2)}px, 0) scale(${view.s.toFixed(4)})`;
+            img.style.setProperty('transform', t, 'important');
+            maybeUpgradeResolution(view.s);
+        }
+
+        function stopAnimation() {
+            if (animFrame) cancelAnimationFrame(animFrame);
+            animFrame = 0;
+            goal = null;
+        }
+
+        function stopInertia() {
+            if (inertiaFrame) cancelAnimationFrame(inertiaFrame);
+            inertiaFrame = 0;
+        }
+
+        /** Jump straight to a view (used while fingers / mouse are moving). */
+        function setView(s, x, y, { clampToBounds = false } = {}) {
+            stopAnimation();
+            if (clampToBounds) {
+                const { mx, my } = panBounds(s);
+                x = clamp(x, -mx, mx);
+                y = clamp(y, -my, my);
+            }
+            if (isIdentity(s, x, y)) {
+                if (zoomActive) endZoomStyles();
+                else { view.s = 1; view.x = 0; view.y = 0; }
+                return;
+            }
+            view.s = s;
+            view.x = x;
+            view.y = y;
+            paint();
+        }
+
+        /** Ease smoothly towards a view (wheel steps, double-tap, settling). */
+        function animateTo(s, x, y) {
+            stopInertia();
+            if (!zoomActive && isIdentity(s, x, y)) {
+                view.s = 1; view.x = 0; view.y = 0;
+                return;
+            }
+            goal = { s, x, y };
+            // (Re)start the loop; the time check guards against a stalled frame on throttled devices.
+            if (!animFrame || performance.now() - lastFrameTs > 250) {
+                if (animFrame) cancelAnimationFrame(animFrame);
+                lastFrameTs = performance.now();
+                animFrame = requestAnimationFrame(stepAnimation);
+            }
+        }
+
+        function stepAnimation(ts) {
+            if (!goal) {
+                animFrame = 0;
+                return;
+            }
+            const dt = Math.min(120, Math.max(1, ts - lastFrameTs));
+            lastFrameTs = ts;
+            const k = 1 - Math.exp(-dt / 70);
+            view.s += (goal.s - view.s) * k;
+            view.x += (goal.x - view.x) * k;
+            view.y += (goal.y - view.y) * k;
+            const done =
+                Math.abs(goal.s - view.s) < 0.0015 &&
+                Math.abs(goal.x - view.x) < 0.4 &&
+                Math.abs(goal.y - view.y) < 0.4;
+            if (done) {
+                const g = goal;
+                goal = null;
+                animFrame = 0;
+                if (isIdentity(g.s, g.x, g.y)) {
+                    endZoomStyles();
+                } else {
+                    view.s = g.s;
+                    view.x = g.x;
+                    view.y = g.y;
+                    paint();
+                }
+                return;
+            }
+            paint();
+            animFrame = requestAnimationFrame(stepAnimation);
+        }
+
+        /** The view the user is heading to (animation goal) or currently seeing. */
+        function baseView() {
+            return goal ? { ...goal } : { s: view.s, x: view.x, y: view.y };
+        }
+
+        /** New view after scaling by `factor` around a focal point (relative to the card centre). */
+        function zoomedView(base, newScale, focal) {
+            const ratio = newScale / base.s;
+            let x = focal.x - (focal.x - base.x) * ratio;
+            let y = focal.y - (focal.y - base.y) * ratio;
+            if (newScale <= 1) return { s: 1, x: 0, y: 0 };
+            const { mx, my } = panBounds(newScale);
+            return { s: newScale, x: clamp(x, -mx, mx), y: clamp(y, -my, my) };
+        }
+
+        function zoomBy(factor, clientX, clientY, { smooth = true } = {}) {
+            captureHoverTransform();
+            stopInertia();
+            const base = baseView();
+            const s = clamp(base.s * factor, 1, MAX_SCALE);
+            const next = zoomedView(base, s, focalPoint(clientX, clientY));
+            if (smooth) animateTo(next.s, next.x, next.y);
+            else setView(next.s, next.x, next.y);
+        }
+
+        function toggleZoomAt(clientX, clientY) {
+            if (zoomActive && view.s > 1.05) {
+                animateTo(1, 0, 0);
+            } else {
+                captureHoverTransform();
+                const next = zoomedView(baseView(), TAP_ZOOM_SCALE, focalPoint(clientX, clientY));
+                animateTo(next.s, next.x, next.y);
+            }
+        }
+
+        /** Snap back inside the limits after a gesture ends. */
+        function settle() {
+            let s = clamp(view.s, 1, MAX_SCALE);
+            if (s < 1.03) s = 1;
+            if (s === 1) {
+                animateTo(1, 0, 0);
+                return;
+            }
+            // Keep the point under the gesture centre fixed while correcting an over-zoom.
+            const ratio = s / view.s;
+            const { mx, my } = panBounds(s);
+            animateTo(s, clamp(view.x * ratio, -mx, mx), clamp(view.y * ratio, -my, my));
+        }
+
+        function resetZoom(animated = true) {
+            stopInertia();
+            pointers.clear();
+            gesture = null;
+            if (animated && zoomActive) {
+                animateTo(1, 0, 0);
+            } else {
+                stopAnimation();
+                if (zoomActive) endZoomStyles();
+            }
+        }
+
+        // --- Mouse wheel & trackpad pinch ---------------------------------
+        stage.addEventListener('wheel', (e) => {
+            if (e.target.closest('button, a')) return;
+            e.preventDefault(); // never scroll or browser-zoom the page from the artwork stage
+            if (isSwitching) return;
+
+            const unit = e.deltaMode === 1 ? 16 : e.deltaMode === 2 ? window.innerHeight : 1;
+            const dx = e.deltaX * unit;
+            const dy = e.deltaY * unit;
+
+            if (e.ctrlKey) {
+                // Trackpad pinch (and ctrl + wheel): continuous, follow the fingers directly.
+                zoomBy(Math.exp(-dy * 0.01), e.clientX, e.clientY, { smooth: false });
+                return;
+            }
+
+            if (zoomActive && Math.abs(dx) > Math.abs(dy)) {
+                // Horizontal two-finger scroll while zoomed: pan sideways.
+                const base = baseView();
+                setView(base.s, base.x - dx, base.y, { clampToBounds: true });
+                return;
+            }
+
+            // Mouse wheel: smooth, eased zoom steps around the cursor.
+            zoomBy(Math.exp(-clamp(dy, -120, 120) * 0.0022), e.clientX, e.clientY, { smooth: true });
+        }, { passive: false });
+
+        // --- Safari (macOS) trackpad pinch: WebKit gesture events --------
+        // Also blocks iOS Safari's native page pinch-zoom on this page.
+        let gestureBase = null;
+        const onGestureStart = (e) => {
+            e.preventDefault();
+            if (pointers.size || !stage.contains(e.target)) return; // touch pinch is handled by pointer events
+            captureHoverTransform();
+            stopAnimation();
+            stopInertia();
+            gestureBase = { s: view.s, x: view.x, y: view.y };
+        };
+        const onGestureChange = (e) => {
+            e.preventDefault();
+            if (pointers.size || !gestureBase) return;
+            const s = clamp(gestureBase.s * e.scale, 1, MAX_SCALE);
+            const next = zoomedView(gestureBase, s, focalPoint(e.clientX, e.clientY));
+            setView(next.s, next.x, next.y);
+        };
+        const onGestureEnd = (e) => {
+            e.preventDefault();
+            if (!gestureBase) return;
+            gestureBase = null;
+            if (!pointers.size) settle();
+        };
+        [['gesturestart', onGestureStart], ['gesturechange', onGestureChange], ['gestureend', onGestureEnd]].forEach(([type, fn]) => {
+            document.addEventListener(type, fn, { passive: false, capture: true });
+        });
+
+        // --- Pointer gestures (touch pinch / pan / swipe / double-tap, mouse drag) --
+        const pointers = new Map();
+        let gesture = null;
+        let lastTap = null;
+        let lastPointerType = 'mouse';
+        const velocitySamples = [];
+
+        const ignoreTarget = (target) => !!target.closest('button, a, .mobile-nav-bar, .pinned_top, .mobile-drawer');
+
+        function recordVelocity(x, y) {
+            const now = performance.now();
+            velocitySamples.push({ t: now, x, y });
+            while (velocitySamples.length && now - velocitySamples[0].t > 90) velocitySamples.shift();
+        }
+
+        function releaseVelocity() {
+            if (velocitySamples.length < 2) return { vx: 0, vy: 0 };
+            const a = velocitySamples[0];
+            const b = velocitySamples[velocitySamples.length - 1];
+            const dt = b.t - a.t;
+            if (dt < 8 || performance.now() - b.t > 60) return { vx: 0, vy: 0 };
+            return { vx: (b.x - a.x) / dt, vy: (b.y - a.y) / dt };
+        }
+
+        function startInertia(vx, vy) {
+            stopInertia();
+            let last = performance.now();
+            const step = (ts) => {
+                const dt = Math.min(48, Math.max(1, ts - last));
+                last = ts;
+                const decay = Math.pow(0.95, dt / 16);
+                vx *= decay;
+                vy *= decay;
+                const { mx, my } = panBounds(view.s);
+                let x = view.x + vx * dt;
+                let y = view.y + vy * dt;
+                if (Math.abs(x) >= mx) { x = clamp(x, -mx, mx); vx = 0; }
+                if (Math.abs(y) >= my) { y = clamp(y, -my, my); vy = 0; }
+                view.x = x;
+                view.y = y;
+                paint();
+                if (Math.hypot(vx, vy) < 0.02) {
+                    inertiaFrame = 0;
+                    return;
+                }
+                inertiaFrame = requestAnimationFrame(step);
+            };
+            inertiaFrame = requestAnimationFrame(step);
+        }
+
+        function startPan(p, pointerType) {
+            gesture = {
+                type: 'pan',
+                pointerType,
+                startX: p.x,
+                startY: p.y,
+                startPanX: view.x,
+                startPanY: view.y,
+                startTime: performance.now(),
+                moved: false,
+            };
+            velocitySamples.length = 0;
+            recordVelocity(view.x, view.y);
+            if (pointerType === 'mouse') card.classList.add('is-dragging');
+        }
+
+        function startPinch() {
+            const [p1, p2] = [...pointers.values()];
+            captureHoverTransform();
+            stopAnimation();
+            stopInertia();
+            const g = cardGeometry();
+            const midX = (p1.x + p2.x) / 2 - g.cx;
+            const midY = (p1.y + p2.y) / 2 - g.cy;
+            gesture = {
+                type: 'pinch',
+                startDist: Math.max(1, Math.hypot(p2.x - p1.x, p2.y - p1.y)),
+                startScale: view.s,
+                // Artwork point (in unscaled card coordinates) under the fingers' midpoint
+                focalImgX: (midX - view.x) / view.s,
+                focalImgY: (midY - view.y) / view.s,
+            };
+            card.classList.remove('is-dragging');
+        }
+
+        stage.addEventListener('pointerdown', (e) => {
+            if (ignoreTarget(e.target)) return;
+            if (e.pointerType === 'mouse' && e.button !== 0) return;
+            lastPointerType = e.pointerType;
+
+            // A mouse only drags when zoomed in; plain clicks keep the hover zoom untouched.
+            if (e.pointerType === 'mouse' && !(zoomActive && view.s > 1.01)) return;
+            if (e.pointerType !== 'mouse') cancelHover();
+            if (pointers.size >= 2) return; // ignore extra fingers
+
+            pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+            try { stage.setPointerCapture(e.pointerId); } catch (err) { /* ignore */ }
+
+            if (pointers.size === 2) {
+                e.preventDefault();
+                startPinch();
+                return;
+            }
+
+            stopInertia();
+            const p = { x: e.clientX, y: e.clientY };
+            if (zoomActive && view.s > 1.01) {
+                e.preventDefault();
+                stopAnimation();
+                startPan(p, e.pointerType);
+            } else {
+                // Not zoomed: a touch may become a swipe (navigate) or a (double) tap.
+                gesture = { type: 'idle', pointerType: e.pointerType, startX: p.x, startY: p.y, startTime: performance.now(), moved: false };
+            }
+        });
+
+        stage.addEventListener('pointermove', (e) => {
+            const p = pointers.get(e.pointerId);
+            if (!p || !gesture) return;
+            p.x = e.clientX;
+            p.y = e.clientY;
+
+            if (gesture.type === 'pinch' && pointers.size >= 2) {
+                const [p1, p2] = [...pointers.values()];
+                const dist = Math.hypot(p2.x - p1.x, p2.y - p1.y);
+                let s = gesture.startScale * (dist / gesture.startDist);
+                // Soft limits: rubber-band below 1x and above the max zoom
+                if (s < 1) s = Math.max(0.6, 1 - (1 - s) * 0.5);
+                if (s > MAX_SCALE) s = MAX_SCALE + (s - MAX_SCALE) * 0.3;
+                const g = cardGeometry();
+                const midX = (p1.x + p2.x) / 2 - g.cx;
+                const midY = (p1.y + p2.y) / 2 - g.cy;
+                // Keep the artwork point under the fingers pinned to the fingers
+                const { mx, my } = panBounds(Math.max(1, s));
+                const x = rubberBand(midX - gesture.focalImgX * s, mx);
+                const y = rubberBand(midY - gesture.focalImgY * s, my);
+                view.s = s;
+                view.x = x;
+                view.y = y;
+                stopAnimation();
+                paint();
+                return;
+            }
+
+            const dx = e.clientX - gesture.startX;
+            const dy = e.clientY - gesture.startY;
+            if (Math.hypot(dx, dy) > 8) gesture.moved = true;
+
+            if (gesture.type === 'pan') {
+                const { mx, my } = panBounds(view.s);
+                view.x = rubberBand(gesture.startPanX + dx, mx);
+                view.y = rubberBand(gesture.startPanY + dy, my);
+                recordVelocity(view.x, view.y);
+                paint();
+            }
+        });
+
+        function finishPointer(e, cancelled) {
+            if (!pointers.has(e.pointerId)) return;
+            pointers.delete(e.pointerId);
+            try { stage.releasePointerCapture(e.pointerId); } catch (err) { /* ignore */ }
+            if (!gesture) return;
+
+            if (gesture.type === 'pinch') {
+                if (pointers.size === 1 && !cancelled) {
+                    // One finger lifted: hand over to single-finger panning without a jump.
+                    const [rest] = [...pointers.values()];
+                    if (view.s > 1.02) {
+                        const { mx, my } = panBounds(view.s);
+                        view.x = clamp(view.x, -mx, mx);
+                        view.y = clamp(view.y, -my, my);
+                        paint();
+                        startPan(rest, 'touch');
+                        gesture.moved = true;
+                    } else {
+                        gesture = { type: 'idle', pointerType: 'touch', startX: rest.x, startY: rest.y, startTime: performance.now(), moved: true, noSwipe: true };
+                        settle();
+                    }
+                } else if (pointers.size === 0) {
+                    gesture = null;
+                    settle();
+                }
+                return;
+            }
+
+            if (pointers.size > 0) return;
+            const g = gesture;
+            gesture = null;
+            card.classList.remove('is-dragging');
+            if (cancelled) {
+                settle();
+                return;
+            }
+
+            const dx = e.clientX - g.startX;
+            const dy = e.clientY - g.startY;
+            const duration = performance.now() - g.startTime;
+            const isTap = !g.moved && duration < 300;
+
+            if (g.type === 'pan') {
+                const { mx, my } = panBounds(view.s);
+                const overscrolled = Math.abs(view.x) > mx + 0.5 || Math.abs(view.y) > my + 0.5;
+                const outOfRange = view.s > MAX_SCALE + 0.001 || view.s < 1;
+                const { vx, vy } = releaseVelocity();
+                if (overscrolled || outOfRange) {
+                    settle();
+                } else if (Math.hypot(vx, vy) > 0.25 && g.moved) {
+                    startInertia(vx, vy);
+                }
+            } else if (g.type === 'idle' && g.pointerType !== 'mouse' && !g.noSwipe) {
+                // Swipe navigation between artworks (only when not zoomed)
+                if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy) * 1.3 && duration < 500) {
+                    if (dx < 0) goToNext();
+                    else goToPrev();
+                    lastTap = null;
+                    return;
+                }
+            }
+
+            // Double-tap (touch / pen): zoom in at the tap point, or back out when zoomed.
+            if (isTap && g.pointerType !== 'mouse') {
+                const now = performance.now();
+                if (lastTap && now - lastTap.t < 320 && Math.hypot(e.clientX - lastTap.x, e.clientY - lastTap.y) < 30) {
+                    lastTap = null;
+                    toggleZoomAt(e.clientX, e.clientY);
+                } else {
+                    lastTap = { t: now, x: e.clientX, y: e.clientY };
+                }
+            }
+        }
+
+        stage.addEventListener('pointerup', (e) => finishPointer(e, false));
+        stage.addEventListener('pointercancel', (e) => finishPointer(e, true));
+
+        // Desktop double-click toggles zoom at the cursor.
+        card.addEventListener('dblclick', (e) => {
+            if (lastPointerType !== 'mouse') return; // touch double-taps are handled above
+            e.preventDefault();
+            toggleZoomAt(e.clientX, e.clientY);
         });
 
         // Navigation triggers
@@ -451,55 +1120,43 @@
             renderWork(currentIndex - 1);
         }
 
-        const prevWorkBtn = document.getElementById('prevWorkBtn');
-        const nextWorkBtn = document.getElementById('nextWorkBtn');
-        const mobilePrevBtn = document.getElementById('mobilePrevBtn');
-        const mobileNextBtn = document.getElementById('mobileNextBtn');
-
-        if (prevWorkBtn) {
-            prevWorkBtn.addEventListener('click', () => {
-                goToPrev();
+        const navButtons = [
+            ['prevWorkBtn', goToPrev],
+            ['nextWorkBtn', goToNext],
+            ['mobilePrevBtn', goToPrev],
+            ['mobileNextBtn', goToNext],
+        ];
+        navButtons.forEach(([id, action]) => {
+            const btn = document.getElementById(id);
+            if (!btn) return;
+            btn.addEventListener('click', () => {
+                action();
                 if (document.activeElement && document.activeElement.blur) {
                     document.activeElement.blur();
                 }
             });
-        }
+        });
 
-        if (nextWorkBtn) {
-            nextWorkBtn.addEventListener('click', () => {
-                goToNext();
-                if (document.activeElement && document.activeElement.blur) {
-                    document.activeElement.blur();
-                }
-            });
-        }
-
-        if (mobilePrevBtn) {
-            mobilePrevBtn.addEventListener('click', () => {
-                goToPrev();
-                if (document.activeElement && document.activeElement.blur) {
-                    document.activeElement.blur();
-                }
-            });
-        }
-
-        if (mobileNextBtn) {
-            mobileNextBtn.addEventListener('click', () => {
-                goToNext();
-                if (document.activeElement && document.activeElement.blur) {
-                    document.activeElement.blur();
-                }
-            });
-        }
-
-        // Keyboard navigation
+        // Keyboard navigation & zoom
         window.addEventListener('keydown', (e) => {
+            if (e.metaKey || e.ctrlKey || e.altKey) return;
+            const g = cardGeometry();
             if (e.key === 'ArrowRight') {
                 goToNext();
             } else if (e.key === 'ArrowLeft') {
                 goToPrev();
+            } else if (e.key === '+' || e.key === '=') {
+                zoomBy(1.4, g.cx, g.cy);
+            } else if (e.key === '-' || e.key === '_') {
+                zoomBy(1 / 1.4, g.cx, g.cy);
+            } else if (e.key === '0') {
+                resetZoom(true);
             } else if (e.key === 'Escape') {
-                window.location.href = '/';
+                if (zoomActive) {
+                    resetZoom(true);
+                } else {
+                    window.location.href = '/';
+                }
             }
         });
 
@@ -510,341 +1167,6 @@
             } else {
                 renderWork(getInitialIndex(), false);
             }
-        });
-
-        // --- Mobile Multi-Touch Engine (Focal Pinch-Zoom & Fluid Pan) ---
-        let currentScale = 1;
-        let currentPanX = 0;
-        let currentPanY = 0;
-
-        let pinchInitialDist = 0;
-        let pinchInitialScale = 1;
-        let pinchFocalImgX = 0;
-        let pinchFocalImgY = 0;
-
-        let touchStartX = 0;
-        let touchStartY = 0;
-        let touchStartPanX = 0;
-        let touchStartPanY = 0;
-        let touchStartTime = 0;
-
-        let isPinching = false;
-        let isPanning = false;
-        let lastTapTime = 0;
-
-        function getMaxPanForScale(s) {
-            if (!card) return { maxPanX: 0, maxPanY: 0 };
-            const rect = card.getBoundingClientRect();
-            const w = (rect && rect.width > 0) ? rect.width : (card.offsetWidth || window.innerWidth);
-            const h = (rect && rect.height > 0) ? rect.height : (card.offsetHeight || window.innerHeight);
-            const maxPanX = Math.max(0, (w * (s - 1)) / 2);
-            const maxPanY = Math.max(0, (h * (s - 1)) / 2);
-            return { maxPanX, maxPanY };
-        }
-
-        function getMaxPan() {
-            return getMaxPanForScale(currentScale);
-        }
-
-        function clampPanWithElasticity(panX, panY, scale) {
-            const { maxPanX, maxPanY } = getMaxPanForScale(scale);
-            let cx = panX;
-            let cy = panY;
-            if (Math.abs(panX) > maxPanX) {
-                const over = Math.abs(panX) - maxPanX;
-                cx = Math.sign(panX) * (maxPanX + over * 0.35);
-            }
-            if (Math.abs(panY) > maxPanY) {
-                const over = Math.abs(panY) - maxPanY;
-                cy = Math.sign(panY) * (maxPanY + over * 0.35);
-            }
-            return { x: cx, y: cy };
-        }
-
-        function applyTransform(animated = false) {
-            if (currentScale <= 1.001 && Math.abs(currentPanX) < 0.5 && Math.abs(currentPanY) < 0.5) {
-                img.style.transition = animated ? 'transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), -webkit-transform 0.25s cubic-bezier(0.16, 1, 0.3, 1)' : '';
-                img.style.removeProperty('transform');
-                img.style.removeProperty('-webkit-transform');
-                return;
-            }
-            if (animated) {
-                img.style.transition = 'transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), -webkit-transform 0.28s cubic-bezier(0.16, 1, 0.3, 1)';
-            } else {
-                img.style.transition = 'none';
-            }
-            const transformVal = `translate3d(${Math.round(currentPanX * 10) / 10}px, ${Math.round(currentPanY * 10) / 10}px, 0) scale(${Math.round(currentScale * 1000) / 1000})`;
-            img.style.setProperty('transform', transformVal, 'important');
-            img.style.setProperty('-webkit-transform', transformVal, 'important');
-            img.style.transformOrigin = '50% 50%';
-        }
-
-        function resetZoom(animated = true) {
-            currentScale = 1;
-            currentPanX = 0;
-            currentPanY = 0;
-            isPinching = false;
-            isPanning = false;
-            if (animated) {
-                img.style.transition = 'transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), -webkit-transform 0.28s cubic-bezier(0.16, 1, 0.3, 1)';
-                img.style.setProperty('transform', 'translate3d(0, 0, 0) scale(1)', 'important');
-                img.style.setProperty('-webkit-transform', 'translate3d(0, 0, 0) scale(1)', 'important');
-                setTimeout(() => {
-                    img.style.transition = '';
-                    img.style.removeProperty('transform');
-                    img.style.removeProperty('-webkit-transform');
-                }, 300);
-            } else {
-                img.style.transition = '';
-                img.style.removeProperty('transform');
-                img.style.removeProperty('-webkit-transform');
-            }
-        }
-
-        function settleZoom() {
-            if (currentScale < 1.03) {
-                resetZoom(true);
-            } else {
-                currentScale = Math.min(4.0, Math.max(1.0, currentScale));
-                const { maxPanX, maxPanY } = getMaxPanForScale(currentScale);
-                currentPanX = Math.max(-maxPanX, Math.min(maxPanX, currentPanX));
-                currentPanY = Math.max(-maxPanY, Math.min(maxPanY, currentPanY));
-                applyTransform(true);
-            }
-        }
-
-        // True Focal-Point Pinch Initialization
-        function startPinch(t1, t2) {
-            isPinching = true;
-            isPanning = false;
-            img.style.transition = 'none';
-
-            pinchInitialDist = Math.hypot(t2.clientX - t1.clientX, t2.clientY - t1.clientY);
-            pinchInitialScale = currentScale;
-
-            const rect = card.getBoundingClientRect();
-            const cx = rect.left + rect.width / 2;
-            const cy = rect.top + rect.height / 2;
-
-            const midX = (t1.clientX + t2.clientX) / 2;
-            const midY = (t1.clientY + t2.clientY) / 2;
-            const focalX = midX - cx;
-            const focalY = midY - cy;
-
-            // Compute the unscaled artwork point currently directly under the finger midpoint
-            pinchFocalImgX = (focalX - currentPanX) / currentScale;
-            pinchFocalImgY = (focalY - currentPanY) / currentScale;
-        }
-
-        function startPan(t) {
-            isPanning = true;
-            isPinching = false;
-            touchStartX = t.clientX;
-            touchStartY = t.clientY;
-            touchStartPanX = currentPanX;
-            touchStartPanY = currentPanY;
-            touchStartTime = Date.now();
-            img.style.transition = 'none';
-        }
-
-        // Block iOS Safari gesture hijacking
-        const blockNativeGesture = (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-        };
-        ['gesturestart', 'gesturechange', 'gestureend'].forEach((type) => {
-            window.addEventListener(type, blockNativeGesture, { passive: false, capture: true });
-            document.addEventListener(type, blockNativeGesture, { passive: false, capture: true });
-        });
-
-        // Window & Stage Touch Listeners
-        window.addEventListener('touchstart', (e) => {
-            if (e.target.closest('button, a, .mobile-nav-bar, .pinned_top, .mobile-drawer')) {
-                return;
-            }
-
-            if (progressiveTimer) {
-                clearTimeout(progressiveTimer);
-                progressiveTimer = null;
-            }
-            card.classList.remove('is-progressive');
-            if (animationFrameId) cancelAnimationFrame(animationFrameId);
-
-            if (e.touches.length >= 2) {
-                e.preventDefault();
-                startPinch(e.touches[0], e.touches[1]);
-            } else if (e.touches.length === 1) {
-                const t = e.touches[0];
-                touchStartX = t.clientX;
-                touchStartY = t.clientY;
-                touchStartPanX = currentPanX;
-                touchStartPanY = currentPanY;
-                touchStartTime = Date.now();
-
-                if (currentScale > 1.02) {
-                    // Zoomed in: immediately capture for panning
-                    e.preventDefault();
-                    isPanning = true;
-                    isPinching = false;
-                    img.style.transition = 'none';
-                } else {
-                    isPanning = false;
-                    isPinching = false;
-                }
-            }
-        }, { passive: false });
-
-        window.addEventListener('touchmove', (e) => {
-            if (e.touches.length >= 2) {
-                // Two-finger Focal Pinch Zoom
-                e.preventDefault();
-                if (!isPinching) {
-                    startPinch(e.touches[0], e.touches[1]);
-                    return;
-                }
-
-                const t1 = e.touches[0];
-                const t2 = e.touches[1];
-                const currentDist = Math.hypot(t2.clientX - t1.clientX, t2.clientY - t1.clientY);
-
-                if (pinchInitialDist > 5) {
-                    const factor = currentDist / pinchInitialDist;
-                    let targetScale = pinchInitialScale * factor;
-                    targetScale = Math.max(0.85, Math.min(4.5, targetScale));
-
-                    const rect = card.getBoundingClientRect();
-                    const cx = rect.left + rect.width / 2;
-                    const cy = rect.top + rect.height / 2;
-
-                    const midX = (t1.clientX + t2.clientX) / 2;
-                    const midY = (t1.clientY + t2.clientY) / 2;
-                    const curFocalX = midX - cx;
-                    const curFocalY = midY - cy;
-
-                    // Keep focal point pinned to the fingers
-                    const targetPanX = curFocalX - pinchFocalImgX * targetScale;
-                    const targetPanY = curFocalY - pinchFocalImgY * targetScale;
-
-                    const clamped = clampPanWithElasticity(targetPanX, targetPanY, targetScale);
-                    currentScale = targetScale;
-                    currentPanX = clamped.x;
-                    currentPanY = clamped.y;
-
-                    applyTransform(false);
-                }
-            } else if (e.touches.length === 1) {
-                if (currentScale > 1.02) {
-                    e.preventDefault();
-                    if (!isPanning) {
-                        // Safety handoff: ensure panning is engaged
-                        startPan(e.touches[0]);
-                        return;
-                    }
-
-                    const t = e.touches[0];
-                    const dx = t.clientX - touchStartX;
-                    const dy = t.clientY - touchStartY;
-                    const nextX = touchStartPanX + dx;
-                    const nextY = touchStartPanY + dy;
-
-                    const clamped = clampPanWithElasticity(nextX, nextY, currentScale);
-                    currentPanX = clamped.x;
-                    currentPanY = clamped.y;
-                    applyTransform(false);
-                }
-                // When scale <= 1.02: do not preventDefault, standard scroll/swipe applies
-            }
-        }, { passive: false });
-
-        window.addEventListener('touchend', (e) => {
-            if (isPinching) {
-                if (e.touches.length === 1) {
-                    // Seamless finger lift: 1 finger remains, seamlessly transfer to single-finger pan!
-                    isPinching = false;
-                    if (currentScale > 1.02) {
-                        startPan(e.touches[0]);
-                    } else {
-                        settleZoom();
-                    }
-                    return;
-                } else if (e.touches.length === 0) {
-                    isPinching = false;
-                    isPanning = false;
-                    settleZoom();
-                    return;
-                }
-            }
-
-            if (isPanning) {
-                if (e.touches.length === 0) {
-                    isPanning = false;
-                    settleZoom();
-                    return;
-                }
-            }
-
-            if (e.touches.length === 0) {
-                isPinching = false;
-                isPanning = false;
-
-                if (e.changedTouches && e.changedTouches.length === 1) {
-                    const t = e.changedTouches[0];
-                    const diffX = t.clientX - touchStartX;
-                    const diffY = t.clientY - touchStartY;
-                    const duration = Date.now() - touchStartTime;
-
-                    if (currentScale <= 1.02) {
-                        // Swipe navigation between artworks
-                        if (Math.abs(diffX) > 45 && Math.abs(diffX) > Math.abs(diffY) * 1.3 && duration < 500) {
-                            if (diffX < 0) {
-                                goToNext();
-                            } else {
-                                goToPrev();
-                            }
-                            return;
-                        }
-
-                        // Double-tap zoom centered at tap point
-                        if (Math.abs(diffX) < 15 && Math.abs(diffY) < 15 && duration < 300) {
-                            const now = Date.now();
-                            if (now - lastTapTime < 320) {
-                                const targetScale = 2.5;
-                                const rect = card.getBoundingClientRect();
-                                const cx = rect.left + rect.width / 2;
-                                const cy = rect.top + rect.height / 2;
-                                const tapX = t.clientX - cx;
-                                const tapY = t.clientY - cy;
-
-                                const { maxPanX, maxPanY } = getMaxPanForScale(targetScale);
-                                currentScale = targetScale;
-                                currentPanX = Math.max(-maxPanX, Math.min(maxPanX, -tapX * (targetScale - 1)));
-                                currentPanY = Math.max(-maxPanY, Math.min(maxPanY, -tapY * (targetScale - 1)));
-                                applyTransform(true);
-                                lastTapTime = 0;
-                                return;
-                            }
-                            lastTapTime = now;
-                        }
-                    } else {
-                        // Double-tap while zoomed in: smoothly reset back to 1.0
-                        if (Math.abs(diffX) < 15 && Math.abs(diffY) < 15 && duration < 300) {
-                            const now = Date.now();
-                            if (now - lastTapTime < 320) {
-                                resetZoom(true);
-                                lastTapTime = 0;
-                                return;
-                            }
-                            lastTapTime = now;
-                        }
-                    }
-                }
-            }
-        });
-
-        window.addEventListener('touchcancel', () => {
-            isPinching = false;
-            isPanning = false;
-            settleZoom();
         });
 
         // Initialize view
