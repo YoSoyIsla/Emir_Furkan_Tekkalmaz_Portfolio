@@ -4,16 +4,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="robots" content="index, follow">
-    <title>About</title>
-    <meta name="description"
-        content="Biography and exhibitions of Emir Furkan Tekkalmaz, Istanbul-based contemporary painter and visual artist.">
-    <meta property="og:title" content="About">
-    <meta property="og:description"
-        content="Biography and exhibitions of Emir Furkan Tekkalmaz, Istanbul-based contemporary painter and visual artist.">
-    <meta property="og:image" content="https://emirfurkantekkalmaz.com/assets/about_image.webp">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <title>About | Emir Furkan Tekkalmaz</title>
+    <meta name="description" content="Biography and exhibitions of Emir Furkan Tekkalmaz, Istanbul-based contemporary painter and visual artist, trained at Mimar Sinan Fine Arts University.">
+    <meta name="author" content="Emir Furkan Tekkalmaz">
+    <link rel="canonical" href="https://emirfurkantekkalmaz.com/about">
+    <meta name="theme-color" content="#FAF9F6">
+    <meta property="og:site_name" content="Emir Furkan Tekkalmaz">
+    <meta property="og:locale" content="en_US">
     <meta property="og:type" content="profile">
+    <meta property="og:url" content="https://emirfurkantekkalmaz.com/about">
+    <meta property="og:title" content="About | Emir Furkan Tekkalmaz">
+    <meta property="og:description" content="Biography and exhibitions of Emir Furkan Tekkalmaz, Istanbul-based contemporary painter and visual artist, trained at Mimar Sinan Fine Arts University.">
+    <meta property="og:image" content="https://emirfurkantekkalmaz.com/assets/about_image.webp">
+    <meta property="og:image:alt" content="Portrait of Emir Furkan Tekkalmaz">
     <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="About | Emir Furkan Tekkalmaz">
+    <meta name="twitter:description" content="Biography and exhibitions of Emir Furkan Tekkalmaz, Istanbul-based contemporary painter and visual artist, trained at Mimar Sinan Fine Arts University.">
+    <meta name="twitter:image" content="https://emirfurkantekkalmaz.com/assets/about_image.webp">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "ProfilePage",
+          "@id": "https://emirfurkantekkalmaz.com/about#webpage",
+          "url": "https://emirfurkantekkalmaz.com/about",
+          "name": "About | Emir Furkan Tekkalmaz",
+          "isPartOf": {
+            "@id": "https://emirfurkantekkalmaz.com/#website"
+          },
+          "mainEntity": {
+            "@id": "https://emirfurkantekkalmaz.com/#artist"
+          }
+        },
+        {
+          "@type": "Person",
+          "@id": "https://emirfurkantekkalmaz.com/#artist",
+          "name": "Emir Furkan Tekkalmaz",
+          "url": "https://emirfurkantekkalmaz.com/",
+          "jobTitle": "Contemporary Painter",
+          "birthDate": "1997-07-15",
+          "birthPlace": "Eskişehir, Turkey",
+          "homeLocation": {
+            "@type": "Place",
+            "name": "Istanbul, Turkey"
+          },
+          "alumniOf": {
+            "@type": "CollegeOrUniversity",
+            "name": "Mimar Sinan Fine Arts University"
+          },
+          "email": "mailto:emirfurkantekkalmaz@gmail.com",
+          "image": "https://emirfurkantekkalmaz.com/assets/about_image.webp",
+          "sameAs": [
+            "https://www.instagram.com/emir.tekkalmaz/"
+          ]
+        }
+      ]
+    }
+    </script>
     <link rel="icon" type="image/png" href="/assets/Emir_Logo.png">
     <link rel="apple-touch-icon" href="/assets/Emir_Logo.png">
     <link rel="preload" as="image" href="/assets/about_image.webp">
@@ -29,19 +78,23 @@
             try {
                 var theme = localStorage.getItem('theme');
                 var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-                if (theme === 'dark' || (!theme && prefersDark)) {
+                var dark = theme === 'dark' || (!theme && prefersDark);
+                if (dark) {
                     document.documentElement.setAttribute('data-theme', 'dark');
                 } else {
                     document.documentElement.removeAttribute('data-theme');
                 }
+                var meta = document.querySelector('meta[name="theme-color"]');
+                if (meta) meta.setAttribute('content', dark ? '#000000' : '#FAF9F6');
             } catch (e) { }
         })();
     </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&display=swap">
-  <link rel="stylesheet" crossorigin href="/assets/style-CTtIvFVk.css">
+        href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&display=swap">
+  <script type="module" crossorigin src="/assets/theme-uRppqHSV.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/theme-c8dDceA4.css">
 </head>
 
 <body>
@@ -95,8 +148,8 @@
         <div grid-row="" grid-gutter="2" grid-responsive="">
             <div grid-col="5">
                 <div class="about-portrait-card">
-                    <img src="/assets/about_image.webp" alt="Emir Furkan Tekkalmaz" width="1682" height="2524"
-                        loading="eager" onload="this.classList.add('is-loaded')">
+                    <img src="/assets/about_image.webp" alt="Portrait of the painter Emir Furkan Tekkalmaz" width="1682" height="2524"
+                        loading="eager" fetchpriority="high" decoding="async" onload="this.classList.add('is-loaded')">
                 </div>
             </div>
             <div grid-col="1" class="desktop-only"></div>
@@ -234,46 +287,7 @@
     </div>
 
     <script>
-        // Dark / Light Mode Switcher Logic
-        function getPreferredTheme() {
-            const savedTheme = localStorage.getItem('theme');
-            if (savedTheme === 'dark' || savedTheme === 'light') {
-                return savedTheme;
-            }
-            return (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
-        }
-
-        function applyTheme(theme) {
-            if (theme === 'dark') {
-                document.documentElement.setAttribute('data-theme', 'dark');
-            } else {
-                document.documentElement.removeAttribute('data-theme');
-            }
-        }
-
-        function initTheme() {
-            applyTheme(getPreferredTheme());
-        }
-
-        function toggleTheme() {
-            const currentTheme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            applyTheme(newTheme);
-            localStorage.setItem('theme', newTheme);
-            if (document.activeElement && document.activeElement.blur) {
-                document.activeElement.blur();
-            }
-        }
-
-        initTheme();
-
-        if (window.matchMedia) {
-            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-                if (!localStorage.getItem('theme')) {
-                    applyTheme(e.matches ? 'dark' : 'light');
-                }
-            });
-        }
+        // Theme switching lives in /theme.js (shared by every page).
 
         function toggleMobileMenu() {
             const drawer = document.getElementById('mobileDrawer');

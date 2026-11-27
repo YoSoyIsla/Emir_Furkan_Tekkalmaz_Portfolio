@@ -195,6 +195,42 @@ html {
     background-color: var(--bg-color);
 }
 
+/* Theme switch (see theme.js): freeze every transition for the frame in which the theme
+   flips so all elements change together, then cross-fade the whole page as one snapshot
+   (View Transitions) with the same 300ms easing. Unsupported browsers switch instantly. */
+.theme-switching,
+.theme-switching *,
+.theme-switching *::before,
+.theme-switching *::after {
+    transition: none !important;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+    animation-duration: 0.3s;
+    animation-timing-function: cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    ::view-transition-old(root),
+    ::view-transition-new(root) {
+        animation: none;
+    }
+}
+
+/* Accessible, visually hidden headings (structure for screen readers & search engines) */
+.visually-hidden {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+}
+
 /* Synchronized 300ms transition across all text, links, headings, sublines, arrows, and icons */
 body,
 .nav-link,
@@ -661,10 +697,12 @@ a,
     transition: opacity 0.3s cubic-bezier(0.25, 1, 0.5, 1), color 0.3s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-a:hover,
-.nav-link:hover {
-    color: var(--text-muted);
-    opacity: 0.7;
+@media (hover: hover) and (pointer: fine) {
+    a:hover,
+    .nav-link:hover {
+        color: var(--text-muted);
+        opacity: 0.7;
+    }
 }
 
 .nav-link {
@@ -877,19 +915,23 @@ hr {
     opacity: 1;
 }
 
-/* Hover Zoom States - Controllable via :root variables */
-.image-gallery .gallery-card:hover img,
-.gallery-card:hover img,
-.single-work-card:hover img {
-    transform: scale(var(--zoom-initial-scale)) !important;
-    transition: transform var(--zoom-speed-initial) var(--zoom-easing), transform-origin 0.2s var(--zoom-easing) !important;
-}
+/* Hover Zoom States - Controllable via :root variables.
+   Only for devices with a real hovering pointer (mouse / trackpad), so a tap on a
+   touch screen can never leave a thumbnail stuck in its zoomed state. */
+@media (hover: hover) and (pointer: fine) {
+    .image-gallery .gallery-card:hover img,
+    .gallery-card:hover img,
+    .single-work-card:hover img {
+        transform: scale(var(--zoom-initial-scale)) !important;
+        transition: transform var(--zoom-speed-initial) var(--zoom-easing), transform-origin 0.2s var(--zoom-easing) !important;
+    }
 
-.image-gallery .gallery-card.is-progressive img,
-.gallery-card.is-progressive img,
-.single-work-card.is-progressive img {
-    transform: scale(var(--zoom-progressive-scale)) !important;
-    transition: transform var(--zoom-speed-progressive) var(--zoom-easing), transform-origin 0.2s var(--zoom-easing) !important;
+    .image-gallery .gallery-card.is-progressive img,
+    .gallery-card.is-progressive img,
+    .single-work-card.is-progressive img {
+        transform: scale(var(--zoom-progressive-scale)) !important;
+        transition: transform var(--zoom-speed-progressive) var(--zoom-easing), transform-origin 0.2s var(--zoom-easing) !important;
+    }
 }
 
 .home-hero .gallery-card:hover img,
@@ -904,9 +946,14 @@ hr {
     display: none !important;
 }
 
-.image-gallery .gallery-card:hover .card-caption,
-.gallery-card:hover .card-caption,
-.home-hero .gallery-card:hover .card-caption,
+@media (hover: hover) and (pointer: fine) {
+    .image-gallery .gallery-card:hover .card-caption,
+    .gallery-card:hover .card-caption,
+    .home-hero .gallery-card:hover .card-caption {
+        opacity: 1;
+    }
+}
+
 .image-gallery .gallery-card:active .card-caption,
 .gallery-card:active .card-caption,
 .home-hero .gallery-card:active .card-caption,
@@ -1099,12 +1146,23 @@ body.single-work-body {
     color: var(--text-primary);
 }
 
-.work-nav-arrow:hover {
-    color: var(--text-muted);
-    opacity: 0.7;
-    background: transparent !important;
-    box-shadow: none !important;
-    transform: translateY(-50%);
+@media (hover: hover) and (pointer: fine) {
+    .work-nav-arrow:hover {
+        color: var(--text-muted);
+        opacity: 0.7;
+        background: transparent !important;
+        box-shadow: none !important;
+        transform: translateY(-50%);
+    }
+}
+
+/* Full-view zoom (work.html): the image is panned with the mouse once zoomed in */
+.single-work-card.is-zoomed {
+    cursor: grab;
+}
+
+.single-work-card.is-zoomed.is-dragging {
+    cursor: grabbing;
 }
 
 .work-nav-arrow:focus,
@@ -1455,9 +1513,11 @@ body.single-work-body {
     transition: opacity 0.3s cubic-bezier(0.25, 1, 0.5, 1), color 0.3s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-.about-bio a:hover {
-    color: var(--text-muted);
-    opacity: 0.8;
+@media (hover: hover) and (pointer: fine) {
+    .about-bio a:hover {
+        color: var(--text-muted);
+        opacity: 0.8;
+    }
 }
 
 .about-portrait-card,
@@ -1594,9 +1654,11 @@ body.single-work-body {
     transition: opacity 0.3s cubic-bezier(0.25, 1, 0.5, 1), color 0.3s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-.talks-list a:hover {
-    color: var(--text-muted);
-    opacity: 0.8;
+@media (hover: hover) and (pointer: fine) {
+    .talks-list a:hover {
+        color: var(--text-muted);
+        opacity: 0.8;
+    }
 }
 
 .portrait-placeholder {
@@ -1669,9 +1731,11 @@ p.inquiries-text,
     line-height: 1;
 }
 
-.contact-link:hover {
-    color: var(--text-muted);
-    opacity: 0.8;
+@media (hover: hover) and (pointer: fine) {
+    .contact-link:hover {
+        color: var(--text-muted);
+        opacity: 0.8;
+    }
 }
 
 @media (min-width: 1200px) {
@@ -1797,9 +1861,11 @@ p.inquiries-text,
     transition: opacity 0.3s cubic-bezier(0.25, 1, 0.5, 1), color 0.3s cubic-bezier(0.25, 1, 0.5, 1), background-color 0.3s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.3s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-.submit-btn:hover {
-    background-color: transparent;
-    color: var(--text-primary);
+@media (hover: hover) and (pointer: fine) {
+    .submit-btn:hover {
+        background-color: transparent;
+        color: var(--text-primary);
+    }
 }
 
 @media (max-width: 768px) {

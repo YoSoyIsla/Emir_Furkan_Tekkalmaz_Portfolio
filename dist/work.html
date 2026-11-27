@@ -3,14 +3,28 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
-    <title id="pageTitle">Artwork</title>
-    <meta name="description" id="metaDescription" content="Artwork by Emir Furkan Tekkalmaz.">
-    <meta property="og:title" id="ogTitle" content="Artwork">
-    <meta property="og:description" id="ogDescription" content="Artwork by Emir Furkan Tekkalmaz.">
-    <meta property="og:image" content="https://emirfurkantekkalmaz.com/assets/home_screen.webp">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <title id="pageTitle">Artworks | Emir Furkan Tekkalmaz</title>
+    <meta name="description" id="metaDescription" content="Artwork by Emir Furkan Tekkalmaz, Istanbul-based contemporary painter working in pencil, charcoal and acrylic on canvas.">
+    <meta name="author" content="Emir Furkan Tekkalmaz">
+    <link rel="canonical" id="canonicalLink" href="https://emirfurkantekkalmaz.com/work">
+    <meta name="theme-color" content="#FAF9F6">
+    <meta property="og:site_name" content="Emir Furkan Tekkalmaz">
+    <meta property="og:locale" content="en_US">
     <meta property="og:type" content="article">
+    <meta property="og:url" id="ogUrl" content="https://emirfurkantekkalmaz.com/work">
+    <meta property="og:title" id="ogTitle" content="Artworks | Emir Furkan Tekkalmaz">
+    <meta property="og:description" id="ogDescription" content="Artwork by Emir Furkan Tekkalmaz, Istanbul-based contemporary painter working in pencil, charcoal and acrylic on canvas.">
+    <meta property="og:image" id="ogImage" content="https://emirfurkantekkalmaz.com/works/aria-og.jpg">
+    <meta property="og:image:width" id="ogImageWidth" content="1200">
+    <meta property="og:image:height" id="ogImageHeight" content="746">
+    <meta property="og:image:alt" id="ogImageAlt" content="Aria by Emir Furkan Tekkalmaz">
     <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" id="twTitle" content="Artworks | Emir Furkan Tekkalmaz">
+    <meta name="twitter:description" id="twDescription" content="Artwork by Emir Furkan Tekkalmaz, Istanbul-based contemporary painter working in pencil, charcoal and acrylic on canvas.">
+    <meta name="twitter:image" id="twImage" content="https://emirfurkantekkalmaz.com/works/aria-og.jpg">
+    <script type="application/ld+json" id="workJsonLd">{}</script>
     <link rel="icon" type="image/png" href="/assets/Emir_Logo.png">
     <link rel="apple-touch-icon" href="/assets/Emir_Logo.png">
     <!-- Google Tag Manager / Analytics -->
@@ -25,20 +39,24 @@
             try {
                 var theme = localStorage.getItem('theme');
                 var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-                if (theme === 'dark' || (!theme && prefersDark)) {
+                var dark = theme === 'dark' || (!theme && prefersDark);
+                if (dark) {
                     document.documentElement.setAttribute('data-theme', 'dark');
                 } else {
                     document.documentElement.removeAttribute('data-theme');
                 }
+                var meta = document.querySelector('meta[name="theme-color"]');
+                if (meta) meta.setAttribute('content', dark ? '#000000' : '#FAF9F6');
             } catch (e) { }
         })();
     </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&display=swap">
-  <script type="module" crossorigin src="/assets/work-CCm-LFe8.js"></script>
-  <link rel="stylesheet" crossorigin href="/assets/style-CTtIvFVk.css">
+        href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&display=swap">
+  <script type="module" crossorigin src="/assets/work-zjaVu9C7.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/theme-uRppqHSV.js">
+  <link rel="stylesheet" crossorigin href="/assets/theme-c8dDceA4.css">
 </head>
 
 <body class="single-work-body">
@@ -103,7 +121,7 @@
             <!-- Center Prominent Artwork Frame (Left-aligned text matched to card width) -->
             <div class="single-work-frame" id="singleWorkFrame">
                 <div class="single-work-card" id="singleWorkCard">
-                    <img id="singleWorkImg" src="" alt="" loading="eager" draggable="false">
+                    <img id="singleWorkImg" alt="" loading="eager" draggable="false">
                 </div>
 
                 <!-- Two-line metadata aligned directly to the left side of the painting -->
@@ -156,7 +174,7 @@
             </nav>
         </div>
     </div>
-
+
 
 </body>
 
